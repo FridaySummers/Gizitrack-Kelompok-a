@@ -110,14 +110,17 @@ Buka browser → `http://localhost:8000`
 
 ## Struktur Folder Penting
 app/Http/Controllers/
-├── Admin/      → fitur khusus Admin (Fadhillah)
-├── Vendor/     → fitur khusus Vendor (Dapi, Kirana)
-└── Sekolah/    → fitur khusus Sekolah (Sanjaya)
+├── Admin/       # Fitur khusus Admin (Fadhillah)
+├── Vendor/      # Fitur khusus Vendor (Dapi, Kirana)
+└── Sekolah/     # Fitur khusus Sekolah (Sanjaya)
+
 resources/views/
-├── admin/      → halaman Blade untuk Admin
-├── vendor/     → halaman Blade untuk Vendor
-└── sekolah/    → halaman Blade untuk Sekolah
-routes/web.php  → semua route ada di sini, sudah dikelompokkan per role
+├── admin/       # Halaman Blade untuk Admin
+├── vendor/      # Halaman Blade untuk Vendor
+└── sekolah/     # Halaman Blade untuk Sekolah
+
+routes/
+└── web.php      # Semua route (telah dikelompokkan per role)
 
 ---
 
