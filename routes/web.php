@@ -22,7 +22,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 // ── Vendor ───────────────────────────────────────────────
 Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->group(function () {
     Route::get('/dashboard', [VendorDashboard::class, 'index'])->name('dashboard');
-
+    Route::resource('menu', \App\Http\Controllers\Vendor\MenuController::class);
     // contoh: Route::resource('menus', MenuController::class);
 });
 
