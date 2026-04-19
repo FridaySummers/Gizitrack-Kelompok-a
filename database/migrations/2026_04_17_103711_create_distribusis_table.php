@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('sekolah_tujuan');
             $table->integer('jumlah_porsi');
             $table->date('tanggal_pengiriman');
-            $table->enum('status', ['Pending', 'Di Perjalanan', 'Terkirim', 'Kendala'])->default('Pending');
+            $table->enum('status', ['Pending', 'Di Perjalanan', 'Terkirim', 'Diterima', 'Diterima Sebagian', 'Kendala'])->default('Pending');
             $table->text('catatan_kendala')->nullable();
             $table->timestamps();
         });

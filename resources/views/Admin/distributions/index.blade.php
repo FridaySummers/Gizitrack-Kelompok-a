@@ -32,6 +32,8 @@
                                                 'Pending' => ['bg' => '#fef9c3', 'text' => '#854d0e'],
                                                 'Di Perjalanan' => ['bg' => '#dbeafe', 'text' => '#1e40af'],
                                                 'Terkirim' => ['bg' => '#dcfce7', 'text' => '#166534'],
+                                                'Diterima' => ['bg' => '#d1fae5', 'text' => '#065f46'],
+                                                'Diterima Sebagian' => ['bg' => '#fce7f3', 'text' => '#831843'],
                                                 'Kendala' => ['bg' => '#fee2e2', 'text' => '#991b1b'],
                                             ];
                                             $colors = $statusColors[$d->status] ?? ['bg' => '#e5e7eb', 'text' => '#374151'];

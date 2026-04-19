@@ -57,8 +57,9 @@ Route::middleware(['auth', 'role:sekolah'])->prefix('sekolah')->name('sekolah.')
     Route::get('/feedbacks/create', [FeedbackController::class, 'create'])->name('feedbacks.create');
     Route::post('/feedbacks', [FeedbackController::class, 'store'])->name('feedbacks.store');
     
-    // Fitur Lihat Status Distribusi (PBI-20)
+    // Fitur Lihat Status & Konfirmasi Distribusi (PBI-20, PBI-21)
     Route::get('/distributions', [SekolahDistributionController::class, 'index'])->name('distributions.index');
+    Route::patch('/distributions/{distribution}', [SekolahDistributionController::class, 'update'])->name('distributions.update');
 });
 
 // ── 7. AUTH ROUTES ───────────────────────────────────────────────
