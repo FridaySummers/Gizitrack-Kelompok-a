@@ -39,6 +39,8 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->g
 
     // Fitur Kelola Distribusi (PBI-15 sampai PBI-18)
     Route::resource('distribusi', DistribusiController::class);
+    Route::resource('menu', \App\Http\Controllers\Vendor\MenuController::class);
+    // contoh: Route::resource('menus', MenuController::class);
 });
 
 // ── 6. GRUP SEKOLAH ──────────────────────────────────────────────
