@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Vendor\DashboardController as VendorDashboard;
 use App\Http\Controllers\Sekolah\DashboardController as SekolahDashboard;
+use App\Http\Controllers\Sekolah\FeedbackController;
 use App\Http\Controllers\DistribusiController;
 
 // ── 1. PUBLIC ROUTES ──────────────────────────────────────────────
@@ -46,6 +47,10 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->g
 // ── 6. GRUP SEKOLAH ──────────────────────────────────────────────
 Route::middleware(['auth', 'role:sekolah'])->prefix('sekolah')->name('sekolah.')->group(function () {
     Route::get('/dashboard', [SekolahDashboard::class, 'index'])->name('dashboard');
+    
+    // Fitur Feedback (PBI-19)
+    Route::get('/feedbacks/create', [FeedbackController::class, 'create'])->name('feedbacks.create');
+    Route::post('/feedbacks', [FeedbackController::class, 'store'])->name('feedbacks.store');
 });
 
 // ── 7. AUTH ROUTES ───────────────────────────────────────────────
