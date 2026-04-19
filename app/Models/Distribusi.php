@@ -13,4 +13,10 @@ class Distribusi extends Model
         'status', 
         'catatan_kendala'
     ];
+
+    // Relationships
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class);
+    }
 }

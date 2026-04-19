@@ -3,8 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\DistributionController as AdminDistributionController;
 use App\Http\Controllers\Vendor\DashboardController as VendorDashboard;
 use App\Http\Controllers\Sekolah\DashboardController as SekolahDashboard;
+use App\Http\Controllers\Sekolah\FeedbackController;
+use App\Http\Controllers\Sekolah\DistributionController as SekolahDistributionController;
 use App\Http\Controllers\DistribusiController;
 
 // ── 1. PUBLIC ROUTES ──────────────────────────────────────────────
@@ -31,6 +34,9 @@ Route::middleware('auth')->group(function () {
 // ── 4. GRUP ADMIN ────────────────────────────────────────────────
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
+    
+    // Fitur Lihat Status Distribusi (PBI-20)
+    Route::get('/distributions', [AdminDistributionController::class, 'index'])->name('distributions.index');
 });
 
 // ── 5. GRUP VENDOR (KAMAR KIRANA) ────────────────────────────────
@@ -46,6 +52,16 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->g
 // ── 6. GRUP SEKOLAH ──────────────────────────────────────────────
 Route::middleware(['auth', 'role:sekolah'])->prefix('sekolah')->name('sekolah.')->group(function () {
     Route::get('/dashboard', [SekolahDashboard::class, 'index'])->name('dashboard');
+    
+    // Fitur Feedback (PBI-19, PBI-22)
+    Route::get('/feedbacks', [FeedbackController::class, 'index'])->name('feedbacks.index');
+    Route::get('/feedbacks/create', [FeedbackController::class, 'create'])->name('feedbacks.create');
+    Route::post('/feedbacks', [FeedbackController::class, 'store'])->name('feedbacks.store');
+    Route::delete('/feedbacks/{feedback}', [FeedbackController::class, 'destroy'])->name('feedbacks.destroy');
+    
+    // Fitur Lihat Status & Konfirmasi Distribusi (PBI-20, PBI-21)
+    Route::get('/distributions', [SekolahDistributionController::class, 'index'])->name('distributions.index');
+    Route::patch('/distributions/{distribution}', [SekolahDistributionController::class, 'update'])->name('distributions.update');
 });
 
 // ── 7. AUTH ROUTES ───────────────────────────────────────────────
