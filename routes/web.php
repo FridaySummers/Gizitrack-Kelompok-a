@@ -37,6 +37,16 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     
     // Fitur Lihat Status Distribusi (PBI-20)
     Route::get('/distributions', [AdminDistributionController::class, 'index'])->name('distributions.index');
+
+    // API untuk Live Tracking (PBI-25)
+    Route::get('/api/distribusi', [DistribusiController::class, 'apiIndex'])->name('api.distribusi');
+
+    // API Analytics (PBI-23, PBI-24)
+    Route::get('/api/analytics/summary', [\App\Http\Controllers\Admin\AnalyticsController::class, 'summary'])->name('api.analytics.summary');
+    Route::get('/api/analytics/chart', [\App\Http\Controllers\Admin\AnalyticsController::class, 'chartData'])->name('api.analytics.chart');
+
+    // Export Reports (PBI-26)
+    Route::get('/reports/export', [\App\Http\Controllers\Admin\ReportsController::class, 'export'])->name('reports.export');
 });
 
 // ── 5. GRUP VENDOR (KAMAR KIRANA) ────────────────────────────────
