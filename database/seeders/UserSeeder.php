@@ -12,22 +12,22 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name'     => 'Admin GiziTrack',
-            'email'    => 'admin@gizitrack.test',
-            'password' => Hash::make('password'),
+            'email'    => 'admin@gmail.com',
+            'password' => Hash::make('admin123'),
             'role'     => 'admin',
         ]);
 
         User::create([
             'name'     => 'Vendor Sample',
-            'email'    => 'vendor@gizitrack.test',
-            'password' => Hash::make('password'),
+            'email'    => 'vendor@gmail.com',
+            'password' => Hash::make('vendor123'),
             'role'     => 'vendor',
         ]);
 
         User::create([
             'name'     => 'SDN 01 Pagi',
-            'email'    => 'sekolah@gizitrack.test',
-            'password' => Hash::make('password'),
+            'email'    => 'sekolah@gmail.com',
+            'password' => Hash::make('sekolah123'),
             'role'     => 'sekolah',
         ]);
     }
