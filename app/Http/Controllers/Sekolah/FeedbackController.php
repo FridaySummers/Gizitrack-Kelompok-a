@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
 {
+    public function index()
+    {
+        $feedbacks = Feedback::where('user_id', auth()->id())
+            ->with('distribution')
+            ->latest()
+            ->paginate(10);
+        
+        return view('sekolah.feedbacks.index', compact('feedbacks'));
+    }
+
     public function create()
     {
         $distributions = Distribusi::all();
@@ -30,5 +40,16 @@ class FeedbackController extends Controller
 
         return redirect()->back()->with('success', 'Feedback berhasil dikirimkan!');
     }
-}
 
+    public function destroy(Feedback $feedback)
+    {
+        // Authorize: only the feedback owner can delete their own feedback
+        if ($feedback->user_id !== auth()->id()) {
+            abort(403, 'Anda tidak memiliki izin untuk menghapus feedback ini.');
+        }
+
+        $feedback->delete();
+
+        return redirect()->back()->with('success', 'Feedback berhasil dihapus!');
+    }
+}

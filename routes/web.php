@@ -53,9 +53,11 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->g
 Route::middleware(['auth', 'role:sekolah'])->prefix('sekolah')->name('sekolah.')->group(function () {
     Route::get('/dashboard', [SekolahDashboard::class, 'index'])->name('dashboard');
     
-    // Fitur Feedback (PBI-19)
+    // Fitur Feedback (PBI-19, PBI-22)
+    Route::get('/feedbacks', [FeedbackController::class, 'index'])->name('feedbacks.index');
     Route::get('/feedbacks/create', [FeedbackController::class, 'create'])->name('feedbacks.create');
     Route::post('/feedbacks', [FeedbackController::class, 'store'])->name('feedbacks.store');
+    Route::delete('/feedbacks/{feedback}', [FeedbackController::class, 'destroy'])->name('feedbacks.destroy');
     
     // Fitur Lihat Status & Konfirmasi Distribusi (PBI-20, PBI-21)
     Route::get('/distributions', [SekolahDistributionController::class, 'index'])->name('distributions.index');
