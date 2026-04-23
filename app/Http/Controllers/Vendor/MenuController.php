@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Menu;
 
 class MenuController extends Controller
 {
@@ -12,10 +13,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        
-        $menus = \App\Models\Menu::latest()->get(); 
-        
-        
+        $menus = Menu::latest()->get(); 
         return view('vendor.menu.index', compact('menus')); 
     }
 
@@ -24,7 +22,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        // 
     }
 
     /**
@@ -32,7 +30,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 
     }
 
     /**
@@ -48,7 +46,11 @@ class MenuController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // PBI-13: Ambil data menu yang mau diedit
+        $menu = Menu::findOrFail($id);
+        
+        // Arahkan ke halaman form edit
+        return view('vendor.menu.edit', compact('menu'));
     }
 
     /**
@@ -56,7 +58,11 @@ class MenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // PBI-13: Cari data menu lalu update semua isiannya
+        $menu = Menu::findOrFail($id);
+        $menu->update($request->all());
+
+        return redirect()->route('menu.index')->with('success', 'Data menu berhasil diperbarui!');
     }
 
     /**
@@ -64,6 +70,10 @@ class MenuController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // PBI-14: Cari data menu lalu hapus dari database
+        $menu = Menu::findOrFail($id);
+        $menu->delete();
+
+        return redirect()->route('menu.index')->with('success', 'Menu berhasil dihapus!');
     }
 }
