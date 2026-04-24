@@ -22,7 +22,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        // 
+        return view('vendor.menu.create'); 
     }
 
     /**
@@ -30,7 +30,18 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        // Validasi data biar aman
+        $validData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'calories' => 'required|numeric',
+            'price' => 'required|numeric',
+        ]);
+
+        // Simpan data yang sudah divalidasi saja (token otomatis tersaring)
+        Menu::create($validData);
+
+        return redirect()->route('vendor.menu.index')->with('success', 'Menu baru berhasil ditambahkan!');
     }
 
     /**
@@ -46,10 +57,7 @@ class MenuController extends Controller
      */
     public function edit(string $id)
     {
-        // PBI-13: Ambil data menu yang mau diedit
         $menu = Menu::findOrFail($id);
-        
-        // Arahkan ke halaman form edit
         return view('vendor.menu.edit', compact('menu'));
     }
 
@@ -58,11 +66,13 @@ class MenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // PBI-13: Cari data menu lalu update semua isiannya
         $menu = Menu::findOrFail($id);
-        $menu->update($request->all());
+        
+        // PBI-13: Update semua data kecuali _token dan _method dari form
+        $menu->update($request->except(['_token', '_method']));
 
-        return redirect()->route('menu.index')->with('success', 'Data menu berhasil diperbarui!');
+        // Redirectnya dikembalikan ke vendor.menu.index
+        return redirect()->route('vendor.menu.index')->with('success', 'Data menu berhasil diperbarui!');
     }
 
     /**
@@ -70,10 +80,9 @@ class MenuController extends Controller
      */
     public function destroy(string $id)
     {
-        // PBI-14: Cari data menu lalu hapus dari database
         $menu = Menu::findOrFail($id);
         $menu->delete();
 
-        return redirect()->route('menu.index')->with('success', 'Menu berhasil dihapus!');
+        return redirect()->route('vendor.menu.index')->with('success', 'Menu berhasil dihapus!');
     }
 }

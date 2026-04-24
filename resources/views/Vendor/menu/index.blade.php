@@ -21,32 +21,43 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <table class="min-w-full divide-y divide-gray-200 border">
-                        <thead class="bg-gray-50">
+                    <table class="min-w-full border-collapse border border-gray-200">
+                        <thead class="bg-gray-100">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Menu</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Deskripsi</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kalori</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Harga</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase text-center">Aksi</th>
+                                <th class="border p-3 text-left">Nama Menu</th>
+                                <th class="border p-3 text-left">Deskripsi</th>
+                                <th class="border p-3 text-left">Kalori</th>
+                                <th class="border p-3 text-left">Harga</th>
+                                <th class="border p-3 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody>
                             @forelse($menus as $m)
                             <tr>
-                                <td class="px-6 py-4 font-semibold">{{ $m->name }}</td>
-                                <td class="px-6 py-4">{{ $m->description }}</td>
-                                <td class="px-6 py-4">{{ $m->calories }} kcal</td>
-                                <td class="px-6 py-4">Rp {{ number_format($m->price, 0, ',', '.') }}</td>
-                                <td class="px-6 py-4 text-center">
-                                    <span class="text-sm text-gray-400 italic">Fitur Menyusul</span>
+                                <td class="border p-3 font-semibold">{{ $m->name }}</td>
+                                <td class="border p-3 text-gray-600">{{ $m->description ?? '-' }}</td>
+                                <td class="border p-3">{{ $m->calories }} kcal</td>
+                                <td class="border p-3">Rp {{ number_format($m->price, 0, ',', '.') }}</td>
+                                <td class="border p-3">
+                                    <div style="display: flex; justify-content: center; gap: 8px; align-items: center;">
+                                        <a href="{{ route('vendor.menu.edit', $m->id) }}" 
+                                           style="background-color: #eab308; color: white; padding: 6px 16px; border-radius: 5px; font-weight: bold; text-decoration: none; display: block; text-align: center;">
+                                            Edit
+                                        </a>
+
+                                        <form action="{{ route('vendor.menu.destroy', $m->id) }}" method="POST" style="margin: 0; display: block;" onsubmit="return confirm('Yakin hapus?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" style="background-color: #dc2626; color: white; padding: 6px 16px; border-radius: 5px; font-weight: bold; border: none; cursor: pointer;">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" class="px-6 py-4 text-center text-gray-500 italic">
-                                    Katalog masih kosong. Klik tombol di atas untuk menambah menu.
-                                </td>
+                                <td colspan="5" class="border p-3 text-center italic text-gray-500">Belum ada menu.</td>
                             </tr>
                             @endforelse
                         </tbody>
