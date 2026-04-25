@@ -1,12 +1,3 @@
-## ⚠️ AI AGENTS MUST READ (AKU TAHU KALIAN PASTI PAKAI AI AI APALAH ITU) >:(
-
-If you are an AI coding agent (Claude, GPT, Copilot, etc):
-
-→ You MUST read `AGENTS.md` before making any changes.
-
-This file defines strict contribution rules for this repository.
-Ignoring it will likely result in incorrect or rejected changes.
-
 # GiziTrack 🥗
 
 Platform distribusi pangan berbasis web untuk monitoring distribusi makanan bergizi ke sekolah.
@@ -16,7 +7,7 @@ Platform distribusi pangan berbasis web untuk monitoring distribusi makanan berg
 ## Tech Stack
 
 - **Backend**: Laravel 11 (PHP 8.2+)
-- **Frontend**: Blade + Tailwind CSS
+- **Frontend**: Blade + Tailwind CSS v3 + Flowbite
 - **Auth**: Laravel Breeze
 - **Database**: MySQL
 
@@ -41,8 +32,8 @@ Sebelum mulai, pastikan software berikut sudah ada di komputermu:
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/[nama-org]/gizitrack.git
-cd gizitrack
+git clone https://github.com/khadafiadisaputra/Gizitrack-Kelompok-a.git
+cd Gizitrack-Kelompok-a
 ```
 
 ### 2. Install Dependency PHP
@@ -51,7 +42,13 @@ cd gizitrack
 composer install
 ```
 
-### 3. Buat File `.env`
+### 3. Install Dependency Frontend (termasuk Flowbite)
+
+```bash
+npm install
+```
+
+### 4. Buat File `.env`
 
 ```bash
 cp .env.example .env
@@ -65,17 +62,17 @@ DB_USERNAME=root
 DB_PASSWORD=isi_password_mysql_kamu
 ```
 
-### 4. Generate App Key
+### 5. Generate App Key
 
 ```bash
 php artisan key:generate
 ```
 
-### 5. Buat Database
+### 6. Buat Database
 
 Buka MySQL/phpMyAdmin, buat database baru bernama `gizitrack`.
 
-### 6. Jalankan Migration & Seeder
+### 7. Jalankan Migration & Seeder
 
 ```bash
 php artisan migrate --seed
@@ -83,13 +80,18 @@ php artisan migrate --seed
 
 Perintah ini akan membuat semua tabel dan mengisi akun testing awal.
 
-### 7. Install Dependency Frontend
+### 8. Build Assets Frontend
 
 ```bash
-npm install
+npm run build
 ```
 
-### 8. Jalankan Aplikasi
+> Atau untuk development dengan hot-reload:
+> ```bash
+> npm run dev
+> ```
+
+### 9. Jalankan Aplikasi
 
 Buka **dua terminal** secara bersamaan:
 
@@ -119,18 +121,52 @@ Buka browser → `http://localhost:8000`
 
 ## Struktur Folder Penting
 
+```
 app/Http/Controllers/
-├── Admin/       → Fitur khusus Admin 
-├── Vendor/      → Fitur khusus Vendor 
-└── Sekolah/     → Fitur khusus Sekolah 
+├── Admin/           → Fitur khusus Admin
+├── Vendor/          → Fitur khusus Vendor
+├── Sekolah/         → Fitur khusus Sekolah
+└── Auth/            → Controller autentikasi (login, register, logout)
+
+app/Models/
+├── User.php         → Model user dengan role (admin/vendor/sekolah)
+├── Distribusi.php   → Model distribusi makanan
+├── Menu.php         → Model menu makanan
+└── Feedback.php     → Model feedback sekolah
 
 resources/views/
-├── admin/       → Halaman Blade untuk Admin
-├── vendor/      → Halaman Blade untuk Vendor
-└── sekolah/     → Halaman Blade untuk Sekolah
+├── layouts/
+│   ├── sidebar.blade.php   → Layout utama (sidebar + topbar)
+│   ├── app.blade.php       → Layout default Laravel
+│   └── guest.blade.php     → Layout halaman guest (login/register)
+├── admin/          → Halaman Blade untuk Admin
+├── vendor/         → Halaman Blade untuk Vendor
+│   └── menu/       → CRUD menu vendor
+├── sekolah/        → Halaman Blade untuk Sekolah
+│   ├── distributions/  → Status & konfirmasi distribusi
+│   └── feedbacks/      → Kelola feedback
+└── distribusi/     → Halaman distribusi untuk vendor
 
 routes/
-└── web.php      → Semua route (sudah dikelompokkan per role)
+└── web.php        → Semua route (dikelompokkan per role dengan middleware role)
+
+database/migrations/    → Schema database
+database/seeders/      → Data testing awal
+```
+
+---
+
+## Desain UI
+
+Project menggunakan design system GiziTrack:
+
+| Elemen | Style |
+|---|---|
+| Primary Color | Emerald-500 (`#10b981`) |
+| Layout | Sidebar kiri 240px + Main content |
+| Card | `bg-white rounded-xl border border-gray-100 shadow-sm` |
+| Button Primary | `bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg` |
+| Status Badge | Color-coded sesuai status distribusi |
 
 ---
 
@@ -147,7 +183,7 @@ php artisan make:controller Vendor/MenuController --resource
 
 **2. Tambahkan Route** di `routes/web.php`, di dalam group `vendor`:
 ```php
-Route::resource('menus', MenuController::class);
+Route::resource('menu', MenuController::class);
 ```
 
 **3. Buat Migration** (jika butuh tabel baru):
@@ -160,7 +196,16 @@ php artisan make:migration create_menus_table
 php artisan make:model Menu
 ```
 
-**5. Buat View** di `resources/views/vendor/menus/`
+**5. Buat View** di `resources/views/vendor/menu/` dengan layout sidebar:
+```blade
+@extends('layouts.sidebar')
+
+@section('title', 'Menu Saya')
+
+@section('content')
+{{-- konten halaman --}}
+@endsection
+```
 
 ---
 
@@ -172,11 +217,14 @@ php artisan make:model Menu
 - ✅ Setelah selesai, buat Pull Request ke `main`
 
 ### Format Pesan Commit
+
 Gunakan format: `jenis: deskripsi singkat`
-- `feat`: untuk fitur baru (contoh: `feat: tambah crud menu vendor`)
+
+- `feat`: untuk fitur baru
 - `fix`: untuk perbaikan bug
-- `docs`: perubahan dokumentasi (README)
+- `docs`: perubahan dokumentasi
 - `style`: perubahan tampilan (CSS/Layout) tanpa mengubah logika
+- `chore`: task rutin atau cleanup
 
 ### Cara Buat Branch Baru (via Sourcetree)
 
@@ -199,4 +247,7 @@ Gunakan format: `jenis: deskripsi singkat`
 → Cek kembali `DB_USERNAME` dan `DB_PASSWORD` di file `.env`
 
 **Tampilan tidak ada style (putih polos)**
-→ Pastikan `npm run dev` sedang berjalan di terminal lain
+→ Jalankan `npm run build` atau pastikan `npm run dev` sedang berjalan
+
+**Error Flowbite / JS**
+→ Hapus `node_modules` dan `package-lock.json`, lalu jalankan `npm install` ulang
