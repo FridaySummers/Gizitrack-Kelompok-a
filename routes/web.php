@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\DistributionController as AdminDistributionController;
 use App\Http\Controllers\Vendor\DashboardController as VendorDashboard;
+use App\Http\Controllers\Vendor\MenuController;
 use App\Http\Controllers\Sekolah\DashboardController as SekolahDashboard;
 use App\Http\Controllers\Sekolah\FeedbackController;
 use App\Http\Controllers\Sekolah\DistributionController as SekolahDistributionController;
@@ -39,14 +40,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/distributions', [AdminDistributionController::class, 'index'])->name('distributions.index');
 });
 
-// ── 5. GRUP VENDOR (KAMAR KIRANA) ────────────────────────────────
+// ── 5. GRUP VENDOR ───────────────────────────────────────────────
 Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->group(function () {
     Route::get('/dashboard', [VendorDashboard::class, 'index'])->name('dashboard');
 
     // Fitur Kelola Distribusi (PBI-15 sampai PBI-18)
     Route::resource('distribusi', DistribusiController::class);
-    Route::resource('menu', \App\Http\Controllers\Vendor\MenuController::class);
-    // contoh: Route::resource('menus', MenuController::class);
+    
+    // PBI-11 sampai PBI-14: Kelola Menu (Create, Read, Update, Delete)
+    Route::resource('menu', MenuController::class);
 });
 
 // ── 6. GRUP SEKOLAH ──────────────────────────────────────────────
