@@ -3,18 +3,6 @@
 @section('title', 'Distributions')
 
 @section('content')
-@if(session('success'))
-<div class="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg p-4">
-    {{ session('success') }}
-</div>
-@endif
-
-@if(session('error'))
-<div class="mb-4 bg-red-50 border border-red-200 text-red-800 rounded-lg p-4">
-    {{ session('error') }}
-</div>
-@endif
-
 <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
     <table class="w-full divide-y divide-gray-100">
         <thead class="bg-gray-50">
@@ -59,7 +47,7 @@
                         @method('PATCH')
                         <input type="hidden" name="action" value="terima">
                         <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-medium px-3 py-1.5 rounded-lg mr-2">Ya, Konfirmasi</button>
-                        <button type="button" onclick="document.getElementById('confirm-form-{{ $d->id }}').style.display = 'none'; document.querySelector('button[onclick*='confirm-form-{{ $d->id }}']').style.display = 'inline-block'" class="bg-gray-400 hover:bg-gray-500 text-white text-xs font-medium px-3 py-1.5 rounded-lg">Batal</button>
+                        <button type="button" onclick="document.getElementById('confirm-form-{{ $d->id }}').style.display = 'none'; document.querySelector('button[onclick*=confirm-form-{{ $d->id }}]').style.display = 'inline-block'" class="bg-gray-400 hover:bg-gray-500 text-white text-xs font-medium px-3 py-1.5 rounded-lg">Batal</button>
                     </form>
 
                     <form id="catatan-form-{{ $d->id }}" action="{{ route('sekolah.distributions.update', $d) }}" method="POST" style="display: none; margin-top: 8px;">
@@ -68,7 +56,7 @@
                         <input type="hidden" name="action" value="terima_catatan">
                         <textarea name="catatan" placeholder="Jelaskan catatan..." class="w-full border border-gray-200 rounded-lg p-2 text-sm mb-2" rows="2" required></textarea>
                         <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-medium px-3 py-1.5 rounded-lg mr-2">Simpan</button>
-                        <button type="button" onclick="document.getElementById('catatan-form-{{ $d->id }}').style.display = 'none'; document.querySelector('button[onclick*='catatan-form-{{ $d->id }}']').style.display = 'inline-block'" class="bg-gray-400 hover:bg-gray-500 text-white text-xs font-medium px-3 py-1.5 rounded-lg">Batal</button>
+                        <button type="button" onclick="document.getElementById('catatan-form-{{ $d->id }}').style.display = 'none'; document.querySelector('button[onclick*=catatan-form-{{ $d->id }}]').style.display = 'inline-block'" class="bg-gray-400 hover:bg-gray-500 text-white text-xs font-medium px-3 py-1.5 rounded-lg">Batal</button>
                     </form>
                     @else
                     <span class="text-gray-400 text-sm">-</span>
