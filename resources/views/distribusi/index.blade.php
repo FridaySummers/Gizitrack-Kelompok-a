@@ -1,59 +1,49 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Riwayat Distribusi Makanan
-            </h2>
-            
-            <a href="{{ route('vendor.distribusi.create') }}" style="background-color: #2563eb; color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; text-decoration: none; display: inline-block;">
-                + Input Pengiriman Baru
-            </a>
-        </div>
-    </x-slot>
+@extends('layouts.sidebar')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
-            @if(session('success'))
-                <div style="background-color: #d1fae5; color: #065f46; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #10b981;">
-                    {{ session('success') }}
-                </div>
-            @endif
+@section('title', 'Distributions')
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background-color: #f9fafb; border-bottom: 2px solid #e5e7eb;">
-                                <th style="text-align: left; padding: 12px; font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">Tanggal</th>
-                                <th style="text-align: left; padding: 12px; font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">Sekolah Tujuan</th>
-                                <th style="text-align: left; padding: 12px; font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">Jumlah Porsi</th>
-                                <th style="text-align: left; padding: 12px; font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($distribusis as $d)
-                            <tr style="border-bottom: 1px solid #f3f4f6;">
-                                <td style="padding: 12px;">{{ $d->tanggal_pengiriman }}</td>
-                                <td style="padding: 12px;">{{ $d->sekolah_tujuan }}</td>
-                                <td style="padding: 12px;">{{ $d->jumlah_porsi }}</td>
-                                <td style="padding: 12px;">
-                                    <span style="background-color: #fef9c3; color: #854d0e; padding: 4px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;">
-                                        {{ $d->status }}
-                                    </span>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="4" style="padding: 40px; text-align: center; color: #9ca3af; font-style: italic;">
-                                    Belum ada data distribusi. Klik tombol biru di atas untuk menambah.
-                                </td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout>
+@section('content')
+<div class="mb-4 flex justify-end">
+    <a href="{{ route('vendor.distribusi.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg inline-flex items-center gap-2">
+        + Input Pengiriman Baru
+    </a>
+</div>
+
+<div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+    <table class="w-full divide-y divide-gray-100">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sekolah</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Porsi</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+            @forelse($distribusis as $d)
+            <tr>
+                <td class="px-6 py-4 text-sm text-gray-700">{{ \Carbon\Carbon::parse($d->tanggal_pengiriman)->format('d M Y') }}</td>
+                <td class="px-6 py-4 text-sm text-gray-700">{{ $d->sekolah_tujuan }}</td>
+                <td class="px-6 py-4 text-sm text-gray-700">{{ $d->jumlah_porsi }}</td>
+                <td class="px-6 py-4">
+                    @if($d->status === 'Pending')
+                    <span class="bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full">Pending</span>
+                    @elseif(in_array($d->status, ['Di Perjalanan','Terkirim']))
+                    <span class="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-full">{{ $d->status }}</span>
+                    @elseif($d->status === 'Diterima')
+                    <span class="bg-emerald-50 text-emerald-700 text-xs font-medium px-2.5 py-1 rounded-full">Diterima</span>
+                    @elseif($d->status === 'Diterima Sebagian')
+                    <span class="bg-orange-50 text-orange-700 text-xs font-medium px-2.5 py-1 rounded-full">Diterima Sebagian</span>
+                    @else
+                    <span class="bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full">Kendala</span>
+                    @endif
+                </td>
+            </tr>
+            @empty
+            <tr><td colspan="4" class="px-6 py-8 text-center text-sm text-gray-500">Belum ada data</td></tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+{{ $distribusis->links() }}
+@endsection

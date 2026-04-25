@@ -1,37 +1,29 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Tambah Data Distribusi Makanan
-        </h2>
-    </x-slot>
+@extends('layouts.sidebar')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <form action="{{ route('vendor.distribusi.store') }}" method="POST">
-                    @csrf
-                    
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Sekolah Tujuan</label>
-                        <input type="text" name="sekolah_tujuan" class="w-full border-gray-300 rounded-lg" required>
-                    </div>
+@section('title', 'Tambah Distribusi')
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Jumlah Porsi</label>
-                        <input type="number" name="jumlah_porsi" class="w-full border-gray-300 rounded-lg" required>
-                    </div>
+@section('content')
+<h2 class="text-xl font-semibold text-gray-800 mb-6">Tambah Distribusi</h2>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Tanggal Pengiriman</label>
-                        <input type="date" name="tanggal_pengiriman" class="w-full border-gray-300 rounded-lg" required>
-                    </div>
-
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-                        Simpan Data
-                    </button>
-                    <a href="{{ route('vendor.distribusi.index') }}" class="ml-2 text-gray-600">Batal</a>
-                </form>
-            </div>
+<div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 max-w-xl">
+    <form method="POST" action="{{ route('vendor.distribusi.store') }}">
+        @csrf
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Sekolah Tujuan</label>
+            <input type="text" name="sekolah_tujuan" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent" required>
         </div>
-    </div>
-</x-app-layout>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah Porsi</label>
+            <input type="number" name="jumlah_porsi" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent" required>
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pengiriman</label>
+            <input type="date" name="tanggal_pengiriman" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent" required>
+        </div>
+        <div class="flex gap-3">
+            <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition">Simpan</button>
+            <a href="{{ route('vendor.distribusi.index') }}" class="text-gray-600 hover:text-gray-800 text-sm px-4 py-2">Batal</a>
+        </div>
+    </form>
+</div>
+@endsection

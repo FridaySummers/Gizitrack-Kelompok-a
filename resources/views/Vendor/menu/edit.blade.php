@@ -1,49 +1,36 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit Menu: {{ $menu->name }}
-        </h2>
-    </x-slot>
+@extends('layouts.sidebar')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <form action="{{ route('vendor.menu.update', $menu->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Nama Menu</label>
-                        <input type="text" name="name" value="{{ $menu->name }}" class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none" required>
-                    </div>
+@section('title', 'Edit Menu')
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Deskripsi</label>
-                        <textarea name="description" rows="3" class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none" required>{{ $menu->description }}</textarea>
-                    </div>
+@section('content')
+<h2 class="text-xl font-semibold text-gray-800 mb-6">Edit Menu</h2>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Total Kalori (kcal)</label>
-                        <input type="number" name="calories" value="{{ $menu->calories }}" class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none" required>
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Harga (Rp)</label>
-                        <input type="number" name="price" value="{{ $menu->price }}" class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none" required>
-                    </div>
-
-                    <div class="flex items-center">
-                        <button type="submit" 
-                                style="background-color: #eab308 !important; color: white !important; font-weight: bold; padding: 10px 25px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-right: 15px;">
-                            Simpan Perubahan
-                        </button>
-
-                        <a href="{{ route('vendor.menu.index') }}" style="color: #6b7280; text-decoration: none; font-weight: 600; font-size: 14px;">
-                            Batal
-                        </a>
-                    </div>
-                </form>
+<div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 max-w-xl">
+    <form method="POST" action="{{ route('vendor.menu.update', $menu->id) }}">
+        @csrf
+        @method('PATCH')
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Menu</label>
+            <input type="text" name="name" value="{{ $menu->name }}" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent" required>
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label>
+            <textarea name="description" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent">{{ $menu->description }}</textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Kalori</label>
+                <input type="number" name="calories" value="{{ $menu->calories }}" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Harga</label>
+                <input type="number" name="price" value="{{ $menu->price }}" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent" required>
             </div>
         </div>
-    </div>
-</x-app-layout>
+        <div class="flex gap-3">
+            <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition">Update</button>
+            <a href="{{ route('vendor.menu.index') }}" class="text-gray-600 hover:text-gray-800 text-sm px-4 py-2">Batal</a>
+        </div>
+    </form>
+</div>
+@endsection

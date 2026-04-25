@@ -6,13 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feedback extends Model
 {
-    protected $fillable = [
-        'distribution_id',
-        'user_id',
-        'catatan',
-    ];
+    protected $table = 'feedbacks';
+    
+    protected $fillable = ['distribution_id', 'user_id', 'catatan'];
 
-    // Relationships
     public function distribution()
     {
         return $this->belongsTo(Distribusi::class);

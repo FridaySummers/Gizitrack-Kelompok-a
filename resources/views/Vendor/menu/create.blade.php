@@ -1,44 +1,35 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Tambah Menu Baru
-        </h2>
-    </x-slot>
+@extends('layouts.sidebar')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <form action="{{ route('vendor.menu.store') }}" method="POST">
-                    @csrf
-                    
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Nama Menu</label>
-                        <input type="text" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
+@section('title', 'Tambah Menu')
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Deskripsi</label>
-                        <textarea name="description" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
-                    </div>
+@section('content')
+<h2 class="text-xl font-semibold text-gray-800 mb-6">Tambah Menu</h2>
 
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Total Kalori (kcal)</label>
-                        <input type="number" name="calories" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Harga (Rp)</label>
-                        <input type="number" name="price" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            Simpan Menu
-                        </button>
-                        <a href="{{ route('vendor.menu.index') }}" class="text-gray-500 hover:text-gray-700 text-sm font-bold">Batal</a>
-                    </div>
-                </form>
+<div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 max-w-xl">
+    <form method="POST" action="{{ route('vendor.menu.store') }}">
+        @csrf
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Menu</label>
+            <input type="text" name="name" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent" required>
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label>
+            <textarea name="description" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Kalori</label>
+                <input type="number" name="calories" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Harga</label>
+                <input type="number" name="price" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent" required>
             </div>
         </div>
-    </div>
-</x-app-layout>
+        <div class="flex gap-3">
+            <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition">Simpan</button>
+            <a href="{{ route('vendor.menu.index') }}" class="text-gray-600 hover:text-gray-800 text-sm px-4 py-2">Batal</a>
+        </div>
+    </form>
+</div>
+@endsection
