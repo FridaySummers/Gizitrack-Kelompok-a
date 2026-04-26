@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\DistributionController as AdminDistributionController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Vendor\DashboardController as VendorDashboard;
 use App\Http\Controllers\Vendor\MenuController;
 use App\Http\Controllers\Sekolah\DashboardController as SekolahDashboard;
@@ -38,6 +39,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     
     // Fitur Lihat Status Distribusi (PBI-20)
     Route::get('/distributions', [AdminDistributionController::class, 'index'])->name('distributions.index');
+
+    // Fitur Kelola Akun Vendor & Sekolah (PBI-7 sampai PBI-10)
+    Route::resource('users', AdminUserController::class)->except(['show']);
 });
 
 // ── 5. GRUP VENDOR ───────────────────────────────────────────────
