@@ -28,19 +28,28 @@
                 <td class="px-6 py-4 text-sm text-gray-600">{{ $m->description ?? '-' }}</td>
                 <td class="px-6 py-4 text-sm text-gray-600">{{ $m->calories }} kcal</td>
                 <td class="px-6 py-4 text-sm text-gray-600">Rp {{ number_format($m->price, 0, ',', '.') }}</td>
-                <td class="px-6 py-4">
-                    <div class="flex gap-2">
-                        <a href="{{ route('vendor.menu.edit', $m->id) }}" class="text-amber-600 hover:text-amber-800 text-sm">Edit</a>
-                        <form method="POST" action="{{ route('vendor.menu.destroy', $m->id) }}">
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('vendor.menu.edit', $m->id) }}" 
+                           class="bg-amber-500 hover:bg-amber-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition">
+                            Edit
+                        </a>
+
+                        <form method="POST" action="{{ route('vendor.menu.destroy', $m->id) }}" onsubmit="return confirm('Yakin mau hapus menu ini?');" class="inline-block">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-800 text-sm" onclick="return confirm('Hapus?')">Hapus</button>
+                            <button type="submit" 
+                                    class="bg-red-500 hover:bg-red-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition cursor-pointer">
+                                Hapus
+                            </button>
                         </form>
                     </div>
                 </td>
             </tr>
             @empty
-            <tr><td colspan="5" class="px-6 py-8 text-center text-sm text-gray-500">Belum ada menu</td></tr>
+            <tr>
+                <td colspan="5" class="px-6 py-8 text-center text-sm text-gray-500">Belum ada menu</td>
+            </tr>
             @endforelse
         </tbody>
     </table>
