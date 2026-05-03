@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Distribusi extends Model
 {
     protected $fillable = [
-        'sekolah_tujuan', 
-        'jumlah_porsi', 
-        'tanggal_pengiriman', 
-        'status', 
-        'catatan_kendala'
+        "sekolah_tujuan",
+        "jumlah_porsi",
+        "tanggal_pengiriman",
+        "status",
+        "catatan_kendala",
     ];
 
     // Relationships
     public function feedbacks()
     {
-        return $this->hasMany(Feedback::class);
+        return $this->hasMany(Feedback::class, "distribution_id");
     }
 }

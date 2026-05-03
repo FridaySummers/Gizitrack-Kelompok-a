@@ -28,7 +28,7 @@
                 <td class="px-6 py-4 text-sm text-gray-700">{{ \Carbon\Carbon::parse($f->created_at)->format('d M Y') }}</td>
                 <td class="px-6 py-4">
                     @if($f->user_id === auth()->id())
-                    <form method="POST" action="{{ route('sekolah.feedbacks.destroy', $f->id) }}">
+                    <form method="POST" action="{{ route('sekolah.feedbacks.destroy', $f) }}">
                         @csrf @method('DELETE')
                         <button type="submit" class="text-red-600 hover:text-red-800 text-sm" onclick="return confirm('Hapus feedback?')">Hapus</button>
                     </form>
