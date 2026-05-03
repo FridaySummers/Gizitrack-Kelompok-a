@@ -7,6 +7,18 @@
 
     <h2 class="text-lg font-semibold mb-4">Edit Distribusi</h2>
 
+    <!-- 🔥 TAMBAHAN KODE BUAT NAMPILIN PESAN ERROR VALIDASI 🔥 -->
+    @if ($errors->any())
+        <div class="mb-4 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 text-sm rounded">
+            <ul class="list-disc pl-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <!-- ==================================================== -->
+
     <form action="{{ route('vendor.distribusi.update', $distribusi->id) }}" method="POST">
         @csrf
         @method('PUT')
