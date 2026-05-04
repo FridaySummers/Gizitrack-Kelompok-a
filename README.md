@@ -1,262 +1,59 @@
-## ⚠️ AI AGENTS MUST READ (AKU TAHU KALIAN PASTI PAKAI AI AI APALAH ITU) >:(
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-If you are an AI coding agent (Claude, GPT, Copilot, etc):
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-→ You MUST read `AGENTS.md` before making any changes.
+## About Laravel
 
-This file defines strict contribution rules for this repository.
-Ignoring it will likely result in incorrect or rejected changes.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-# GiziTrack 🥗
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Platform distribusi pangan berbasis web untuk monitoring distribusi makanan bergizi ke sekolah.
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
----
+## Learning Laravel
 
-## Tech Stack
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
 
-- **Backend**: Laravel 11 (PHP 8.2+)
-- **Frontend**: Blade + Tailwind CSS v3 + Flowbite
-- **Auth**: Laravel Breeze
-- **Database**: MySQL
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
----
+## Laravel Sponsors
 
-## Requirement (Wajib Terinstall)
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-Sebelum mulai, pastikan software berikut sudah ada di komputermu:
+### Premium Partners
 
-| Software | Versi Minimum | Cek dengan |
-|---|---|---|
-| PHP | 8.2+ | `php -v` |
-| Composer | 2.x | `composer -v` |
-| Node.js | 18+ | `node -v` |
-| NPM | 9+ | `npm -v` |
-| MySQL | 8.x | — |
+- **[Vehikl](https://vehikl.com)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Redberry](https://redberry.international/laravel-development)**
+- **[Active Logic](https://activelogic.com)**
 
----
+## Contributing
 
-## Cara Setup (Wajib Dibaca Semua Anggota)
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-### 1. Clone Repository
+## Code of Conduct
 
-```bash
-git clone https://github.com/khadafiadisaputra/Gizitrack-Kelompok-a.git
-cd Gizitrack-Kelompok-a
-```
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-### 2. Install Dependency PHP
+## Security Vulnerabilities
 
-```bash
-composer install
-```
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-### 3. Install Dependency Frontend (termasuk Flowbite)
+## License
 
-```bash
-npm install
-```
-
-### 4. Buat File `.env`
-
-```bash
-cp .env.example .env
-```
-
-Lalu buka file `.env` yang baru dibuat, sesuaikan bagian ini:
-
-```env
-DB_DATABASE=gizitrack
-DB_USERNAME=root
-DB_PASSWORD=isi_password_mysql_kamu
-```
-
-### 5. Generate App Key
-
-```bash
-php artisan key:generate
-```
-
-### 6. Buat Database
-
-Buka MySQL/phpMyAdmin, buat database baru bernama `gizitrack`.
-
-### 7. Jalankan Migration & Seeder
-
-```bash
-php artisan migrate --seed
-```
-
-Perintah ini akan membuat semua tabel dan mengisi akun testing awal.
-
-### 8. Build Assets Frontend
-
-```bash
-npm run build
-```
-
-> Atau untuk development dengan hot-reload:
-> ```bash
-> npm run dev
-> ```
-
-### 9. Jalankan Aplikasi
-
-Buka **dua terminal** secara bersamaan:
-
-**Terminal 1** (frontend compiler, biarkan jalan terus):
-```bash
-npm run dev
-```
-
-**Terminal 2** (server Laravel):
-```bash
-php artisan serve
-```
-
-Buka browser → `http://localhost:8000`
-
----
-
-## Akun Testing
-
-| Role | Email | Password |
-|---|---|---|
-| Admin | `admin@gizitrack.test` | `password` |
-| Vendor | `vendor@gizitrack.test` | `password` |
-| Sekolah | `sekolah@gizitrack.test` | `password` |
-
----
-
-## Struktur Folder Penting
-
-```
-app/Http/Controllers/
-├── Admin/           → Fitur khusus Admin
-├── Vendor/          → Fitur khusus Vendor
-├── Sekolah/         → Fitur khusus Sekolah
-└── Auth/            → Controller autentikasi (login, register, logout)
-
-app/Models/
-├── User.php         → Model user dengan role (admin/vendor/sekolah)
-├── Distribusi.php   → Model distribusi makanan
-├── Menu.php         → Model menu makanan
-└── Feedback.php     → Model feedback sekolah
-
-resources/views/
-├── layouts/
-│   ├── sidebar.blade.php   → Layout utama (sidebar + topbar)
-│   ├── app.blade.php       → Layout default Laravel
-│   └── guest.blade.php     → Layout halaman guest (login/register)
-├── admin/          → Halaman Blade untuk Admin
-├── vendor/         → Halaman Blade untuk Vendor
-│   └── menu/       → CRUD menu vendor
-├── sekolah/        → Halaman Blade untuk Sekolah
-│   ├── distributions/  → Status & konfirmasi distribusi
-│   └── feedbacks/      → Kelola feedback
-└── distribusi/     → Halaman distribusi untuk vendor
-
-routes/
-└── web.php        → Semua route (dikelompokkan per role dengan middleware role)
-
-database/migrations/    → Schema database
-database/seeders/      → Data testing awal
-```
-
----
-
-## Desain UI
-
-Project menggunakan design system GiziTrack:
-
-| Elemen | Style |
-|---|---|
-| Primary Color | Emerald-500 (`#10b981`) |
-| Layout | Sidebar kiri 240px + Main content |
-| Card | `bg-white rounded-xl border border-gray-100 shadow-sm` |
-| Button Primary | `bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg` |
-| Status Badge | Color-coded sesuai status distribusi |
-
----
-
-## Panduan Menambahkan Fitur (Untuk Anggota Tim)
-
-### Langkah Umum
-
-Misalnya kamu ditugaskan membuat fitur **Kelola Menu** (Vendor):
-
-**1. Buat Controller**
-```bash
-php artisan make:controller Vendor/MenuController --resource
-```
-
-**2. Tambahkan Route** di `routes/web.php`, di dalam group `vendor`:
-```php
-Route::resource('menu', MenuController::class);
-```
-
-**3. Buat Migration** (jika butuh tabel baru):
-```bash
-php artisan make:migration create_menus_table
-```
-
-**4. Buat Model**:
-```bash
-php artisan make:model Menu
-```
-
-**5. Buat View** di `resources/views/vendor/menu/` dengan layout sidebar:
-```blade
-@extends('layouts.sidebar')
-
-@section('title', 'Menu Saya')
-
-@section('content')
-{{-- konten halaman --}}
-@endsection
-```
-
----
-
-## Aturan Git (Wajib Diikuti)
-
-- ❌ Jangan pernah push langsung ke branch `main`
-- ✅ Buat branch baru untuk setiap fitur: `feature/nama-fitur`
-- ✅ Contoh: `feature/kelola-menu`, `feature/login-system`
-- ✅ Setelah selesai, buat Pull Request ke `main`
-
-### Format Pesan Commit
-
-Gunakan format: `jenis: deskripsi singkat`
-
-- `feat`: untuk fitur baru
-- `fix`: untuk perbaikan bug
-- `docs`: perubahan dokumentasi
-- `style`: perubahan tampilan (CSS/Layout) tanpa mengubah logika
-- `chore`: task rutin atau cleanup
-
-### Cara Buat Branch Baru (via Sourcetree)
-
-1. Klik **Branch** di toolbar atas
-2. Beri nama branch: `feature/nama-fiturmu`
-3. Klik **Create Branch**
-4. Kerjakan fiturmu di branch ini
-
----
-
-## Jika Ada Error Umum
-
-**`php artisan` tidak dikenali**
-→ Pastikan kamu sudah berada di dalam folder `gizitrack/`
-
-**Error `APP_KEY` kosong**
-→ Jalankan `php artisan key:generate`
-
-**Error koneksi database**
-→ Cek kembali `DB_USERNAME` dan `DB_PASSWORD` di file `.env`
-
-**Tampilan tidak ada style (putih polos)**
-→ Jalankan `npm run build` atau pastikan `npm run dev` sedang berjalan
-
-**Error Flowbite / JS**
-→ Hapus `node_modules` dan `package-lock.json`, lalu jalankan `npm install` ulang
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
