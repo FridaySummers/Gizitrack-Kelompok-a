@@ -34,13 +34,13 @@ class DistributionController extends Controller
             "catatan" => "required_if:action,terima_catatan|string|min:3",
         ]);
 
-        // Only allow updating if status is "Terkirim"
-        if ($distribution->status !== "Terkirim") {
+        // Only allow updating if status is "Terkirim" or "Di Perjalanan"
+        if (!in_array($distribution->status, ["Terkirim", "Di Perjalanan"])) {
             return redirect()
                 ->back()
                 ->with(
                     "error",
-                    'Distribusi ini tidak dapat dikonfirmasi. Status harus "Terkirim".',
+                    'Distribusi ini tidak dapat dikonfirmasi. Status harus "Terkirim" atau "Di Perjalanan".',
                 );
         }
 
