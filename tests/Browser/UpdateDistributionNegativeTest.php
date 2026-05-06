@@ -11,6 +11,8 @@ class UpdateDistributionNegativeTest extends DuskTestCase
 {
     public function testUpdateDistributionNegativeValue()
     {
+        Distribusi::query()->delete();
+
         $user = User::create([
             'name' => 'Vendor Test',
             'email' => 'vendor' . uniqid() . '@test.com',
@@ -35,7 +37,7 @@ class UpdateDistributionNegativeTest extends DuskTestCase
                 ->type('jumlah_porsi', '-10')
                 ->press('Update')
                 
-                // GANTI INI: Suruh robot sabar nunggu halamannya ke-refresh dan teksnya muncul
+                // Suruh robot sabar nunggu halamannya ke-refresh dan teksnya muncul
                 ->waitForText('The jumlah porsi field must be at least 1.');
         });
     }

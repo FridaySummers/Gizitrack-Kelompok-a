@@ -11,6 +11,8 @@ class DeleteDistributionNegativeTest extends DuskTestCase
 {
     public function testDeleteDistributionCancel()
     {
+        Distribusi::query()->delete();
+
         $user = User::create([
             'name' => 'Vendor Test',
             'email' => 'vendor' . uniqid() . '@test.com',

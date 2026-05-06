@@ -11,6 +11,9 @@ class ReadDistributionTest extends DuskTestCase
 {
     public function testReadDistribution()
     {
+        // KUNCI JAWABAN: Hapus semua data dummy dari seeder biar tabelnya bersih!
+        Distribusi::query()->delete();
+
         $user = User::create([
             'name' => 'Vendor Test',
             'email' => 'vendor' . uniqid() . '@test.com',
@@ -19,6 +22,7 @@ class ReadDistributionTest extends DuskTestCase
         ]);
 
         $distribusi = Distribusi::create([
+            // 'user_id' => $user->id, // (Opsional: Kalau Kirana bikin sistemnya filter per-vendor, hapus tanda // di depan)
             'sekolah_tujuan' => 'SD Read Positif',
             'jumlah_porsi' => 50,
             'tanggal_pengiriman' => '2026-05-10',

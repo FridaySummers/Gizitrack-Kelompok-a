@@ -11,6 +11,8 @@ class UpdateDistributionTest extends DuskTestCase
 {
     public function testUpdateDistributionSuccess()
     {
+        Distribusi::query()->delete();
+
         $user = User::create([
             'name' => 'Vendor Test',
             'email' => 'vendor' . uniqid() . '@test.com',
@@ -36,7 +38,7 @@ class UpdateDistributionTest extends DuskTestCase
                 ->select('status', 'Di Perjalanan')
                 ->press('Update')
                 
-                // TAMBAHIN INI: Suruh robot nunggu redirect selesai (1 detik)
+                // Suruh robot nunggu redirect selesai (1 detik)
                 ->pause(1000) 
                 
                 // Cek hasil
