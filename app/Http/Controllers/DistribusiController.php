@@ -73,4 +73,9 @@ class DistribusiController extends Controller
         return redirect()->route('vendor.distribusi.index')
             ->with('success', 'Data berhasil dihapus');
     }
+    public function apiIndex()
+    {
+        $distribusis = Distribusi::select('id', 'sekolah_tujuan', 'jumlah_porsi', 'tanggal_pengiriman', 'status', 'latitude', 'longitude', 'last_updated')->get();
+        return response()->json($distribusis);
+    }
 }
