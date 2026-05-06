@@ -34,7 +34,7 @@
                     @endif
                 </td>
                 <td class="px-6 py-4">
-                    @if($d->status === 'Terkirim')
+                    @if(in_array($d->status, ['Di Perjalanan', 'Terkirim']))
                     <button type="button" onclick="document.getElementById('confirm-form-{{ $d->id }}').style.display = 'block'; this.style.display = 'none';" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-medium px-3 py-1.5 rounded-lg mr-1">
                         Konfirmasi
                     </button>

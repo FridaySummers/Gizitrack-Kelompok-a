@@ -11,45 +11,55 @@ class FeedbackController extends Controller
 {
     public function index()
     {
-        $feedbacks = Feedback::where('user_id', auth()->id())
-            ->with('distribution')
+        $feedbacks = Feedback::where("user_id", auth()->id())
+            ->with("distribution")
             ->latest()
             ->paginate(10);
-        
-        return view('sekolah.feedbacks.index', compact('feedbacks'));
+
+        return view("sekolah.feedbacks.index", compact("feedbacks"));
     }
 
     public function create()
     {
-        $distributions = Distribusi::all();
-        return view('sekolah.feedbacks.create', compact('distributions'));
+        $distributions = Distribusi::where(
+            "sekolah_tujuan",
+            auth()->user()->name,
+        )->get();
+        return view("sekolah.feedbacks.create", compact("distributions"));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'distribution_id' => 'required|exists:distribusis,id',
-            'catatan' => 'required|string|min:3',
+            "distribution_id" => "required|exists:distribusis,id",
+            "catatan" => "required|string|min:3",
         ]);
 
         Feedback::create([
-            'distribution_id' => $request->distribution_id,
-            'user_id' => auth()->id(),
-            'catatan' => $request->catatan,
+            "distribution_id" => $request->distribution_id,
+            "user_id" => auth()->id(),
+            "catatan" => $request->catatan,
         ]);
 
-        return redirect()->back()->with('success', 'Feedback berhasil dikirimkan!');
+        return redirect()
+            ->route("sekolah.feedbacks.index")
+            ->with("success", "Feedback berhasil dikirimkan!");
     }
 
     public function destroy(Feedback $feedback)
     {
         // Authorize: only the feedback owner can delete their own feedback
         if ($feedback->user_id !== auth()->id()) {
-            abort(403, 'Anda tidak memiliki izin untuk menghapus feedback ini.');
+            abort(
+                403,
+                "Anda tidak memiliki izin untuk menghapus feedback ini.",
+            );
         }
 
         $feedback->delete();
 
-        return redirect()->back()->with('success', 'Feedback berhasil dihapus!');
+        return redirect()
+            ->back()
+            ->with("success", "Feedback berhasil dihapus!");
     }
 }

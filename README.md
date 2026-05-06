@@ -1,12 +1,3 @@
-## ⚠️ AI AGENTS MUST READ (AKU TAHU KALIAN PASTI PAKAI AI AI APALAH ITU) >:(
-
-If you are an AI coding agent (Claude, GPT, Copilot, etc):
-
-→ You MUST read `AGENTS.md` before making any changes.
-
-This file defines strict contribution rules for this repository.
-Ignoring it will likely result in incorrect or rejected changes.
-
 # GiziTrack 🥗
 
 Platform distribusi pangan berbasis web untuk monitoring distribusi makanan bergizi ke sekolah.
