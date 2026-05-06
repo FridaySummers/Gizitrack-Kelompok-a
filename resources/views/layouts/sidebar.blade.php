@@ -28,6 +28,9 @@
                 <a href="{{ route('admin.distributions.index') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ str_starts_with($currentRoute, 'admin.distributions') ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
                     Distributions
                 </a>
+                <a href="{{ route('admin.users.index') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ str_starts_with($currentRoute, 'admin.users') ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
+                    Manage Accounts
+                </a>
                 @elseif($role === 'vendor')
                 <a href="{{ route('vendor.dashboard') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ $currentRoute === 'vendor.dashboard' ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
                     Dashboard
