@@ -33,7 +33,7 @@ class FeedbackTest extends DuskTestCase
                 ->visit(route("sekolah.feedbacks.create"))
                 ->pause(1500)
                 ->assertSee("Tulis Feedback")
-                ->assertPresent("select[name=distribution_id]")
+                ->assertPresent("select[name=distribusi_id]")
                 ->assertPresent("textarea[name=catatan]");
         });
     }
@@ -56,7 +56,7 @@ class FeedbackTest extends DuskTestCase
                 ->loginAs($sekolah)
                 ->visit(route("sekolah.feedbacks.create"))
                 ->pause(1500)
-                ->select("distribution_id", (string) $dist->id)
+                ->select("distribusi_id", (string) $dist->id)
                 ->pause(500)
                 ->type("catatan", "Porsi kurang 10, kualitas baik.")
                 ->pause(500)
@@ -66,7 +66,7 @@ class FeedbackTest extends DuskTestCase
         });
 
         $this->assertDatabaseHas("feedbacks", [
-            "distribution_id" => $dist->id,
+            "distribusi_id" => $dist->id,
             "user_id" => $sekolah->id,
             "catatan" => "Porsi kurang 10, kualitas baik.",
         ]);
@@ -90,7 +90,7 @@ class FeedbackTest extends DuskTestCase
                 ->loginAs($sekolah)
                 ->visit(route("sekolah.feedbacks.create"))
                 ->pause(1500)
-                ->select("distribution_id", (string) $dist->id)
+                ->select("distribusi_id", (string) $dist->id)
                 ->pause(500)
                 // Skip typing catatan
                 ->press("Simpan")
@@ -279,7 +279,7 @@ class FeedbackTest extends DuskTestCase
         ]);
 
         $feedback = Feedback::create([
-            "distribution_id" => $dist->id,
+            "distribusi_id" => $dist->id,
             "user_id" => $sekolah->id,
             "catatan" => "Hapus ini.",
         ]);
@@ -314,7 +314,7 @@ class FeedbackTest extends DuskTestCase
         ]);
 
         $feedback = Feedback::create([
-            "distribution_id" => $dist->id,
+            "distribusi_id" => $dist->id,
             "user_id" => $sekolah2->id,
             "catatan" => "milik sekolah2",
         ]);

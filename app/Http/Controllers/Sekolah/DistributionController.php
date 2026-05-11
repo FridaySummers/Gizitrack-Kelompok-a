@@ -11,8 +11,9 @@ class DistributionController extends Controller
 {
     public function index()
     {
-        $distributions = Distribusi::with("feedbacks")
-            ->where("sekolah_tujuan", auth()->user()->name)
+        $distributions = Distribusi::with(["feedbacks", "vendor", "menu"])
+            ->where("sekolah_id", auth()->id())
+            ->where("status", "Dikirim")
             ->paginate(10);
 
         return view("sekolah.distributions.index", compact("distributions"));
@@ -21,7 +22,7 @@ class DistributionController extends Controller
     public function update(Request $request, Distribusi $distribution)
     {
         // Authorize: only the targeted school can confirm receipt
-        if ($distribution->sekolah_tujuan !== auth()->user()->name) {
+        if ($distribution->sekolah_id !== auth()->id()) {
             abort(
                 403,
                 "Anda tidak memiliki izin untuk mengonfirmasi distribusi ini.",
@@ -34,13 +35,19 @@ class DistributionController extends Controller
             "catatan" => "required_if:action,terima_catatan|string|min:3",
         ]);
 
-        // Only allow updating if status is "Terkirim" or "Di Perjalanan"
-        if (!in_array($distribution->status, ["Terkirim", "Di Perjalanan"])) {
+        // Only allow updating if status is "Terkirim", "Di Perjalanan", or "Dikirim"
+        if (
+            !in_array($distribution->status, [
+                "Terkirim",
+                "Di Perjalanan",
+                "Dikirim",
+            ])
+        ) {
             return redirect()
                 ->back()
                 ->with(
                     "error",
-                    'Distribusi ini tidak dapat dikonfirmasi. Status harus "Terkirim" atau "Di Perjalanan".',
+                    'Distribusi ini tidak dapat dikonfirmasi. Status harus "Terkirim", "Di Perjalanan", atau "Dikirim".',
                 );
         }
 
@@ -56,7 +63,7 @@ class DistributionController extends Controller
 
             // Create feedback record
             Feedback::create([
-                "distribution_id" => $distribution->id,
+                "distribusi_id" => $distribution->id,
                 "user_id" => auth()->id(),
                 "catatan" => $validated["catatan"],
             ]);

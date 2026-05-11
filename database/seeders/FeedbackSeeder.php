@@ -21,7 +21,7 @@ class FeedbackSeeder extends Seeder
         if ($dist4 && $sekolah4) {
             Feedback::firstOrCreate(
                 [
-                    "distribution_id" => $dist4->id,
+                    "distribusi_id" => $dist4->id,
                     "user_id" => $sekolah4->id,
                 ],
                 [
@@ -41,7 +41,7 @@ class FeedbackSeeder extends Seeder
         if ($dist1 && $sekolah) {
             Feedback::firstOrCreate(
                 [
-                    "distribution_id" => $dist1->id,
+                    "distribusi_id" => $dist1->id,
                     "user_id" => $sekolah->id,
                 ],
                 [
@@ -61,7 +61,7 @@ class FeedbackSeeder extends Seeder
         if ($dist3 && $sekolah3) {
             Feedback::firstOrCreate(
                 [
-                    "distribution_id" => $dist3->id,
+                    "distribusi_id" => $dist3->id,
                     "user_id" => $sekolah3->id,
                 ],
                 [

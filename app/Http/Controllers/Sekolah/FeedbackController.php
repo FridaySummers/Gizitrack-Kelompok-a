@@ -31,12 +31,12 @@ class FeedbackController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "distribution_id" => "required|exists:distribusis,id",
-            "catatan" => "required|string|min:3",
+            "distribusi_id" => "required|exists:distribusis,id",
+            "catatan" => "required|string|min:10",
         ]);
 
         Feedback::create([
-            "distribution_id" => $request->distribution_id,
+            "distribusi_id" => $request->distribusi_id,
             "user_id" => auth()->id(),
             "catatan" => $request->catatan,
         ]);

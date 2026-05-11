@@ -11,11 +11,11 @@ class Feedback extends Model
 
     protected $table = "feedbacks";
 
-    protected $fillable = ["distribution_id", "user_id", "catatan"];
+    protected $fillable = ["distribusi_id", "user_id", "catatan"];
 
     public function distribution()
     {
-        return $this->belongsTo(Distribusi::class, "distribution_id");
+        return $this->belongsTo(Distribusi::class, "distribusi_id");
     }
 
     public function user()

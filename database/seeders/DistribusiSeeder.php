@@ -10,8 +10,34 @@ class DistribusiSeeder extends Seeder
 {
     public function run(): void
     {
+        $sekolah1 = \App\Models\User::where(
+            "email",
+            "sekolah@gizitrack.test",
+        )->first();
+        $sekolah2 = \App\Models\User::where(
+            "email",
+            "sekolah2@gizitrack.test",
+        )->first();
+        $sekolah3 = \App\Models\User::where(
+            "email",
+            "sekolah3@gizitrack.test",
+        )->first();
+        $sekolah4 = \App\Models\User::where(
+            "email",
+            "sekolah4@gizitrack.test",
+        )->first();
+        $vendor = \App\Models\User::where("role", "vendor")->first();
+        $menu = \App\Models\Menu::first();
+
+        if (!$sekolah1 || !$vendor || !$menu) {
+            return;
+        }
+
         $distribusis = [
             [
+                "sekolah_id" => $sekolah1->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
                 "sekolah_tujuan" => "SDN 01 Pagi",
                 "jumlah_porsi" => 450,
                 "tanggal_pengiriman" => now()->subDays(3),
@@ -19,6 +45,9 @@ class DistribusiSeeder extends Seeder
                 "catatan_kendala" => null,
             ],
             [
+                "sekolah_id" => $sekolah2->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
                 "sekolah_tujuan" => "SMPN 15 Jakarta",
                 "jumlah_porsi" => 620,
                 "tanggal_pengiriman" => now()->subDays(3),
@@ -26,6 +55,9 @@ class DistribusiSeeder extends Seeder
                 "catatan_kendala" => null,
             ],
             [
+                "sekolah_id" => $sekolah3->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
                 "sekolah_tujuan" => "SMA Cendekia",
                 "jumlah_porsi" => 480,
                 "tanggal_pengiriman" => now()->subDays(2),
@@ -33,6 +65,9 @@ class DistribusiSeeder extends Seeder
                 "catatan_kendala" => null,
             ],
             [
+                "sekolah_id" => $sekolah4->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
                 "sekolah_tujuan" => "SD Muhammadiyah 2",
                 "jumlah_porsi" => 380,
                 "tanggal_pengiriman" => now()->subDays(2),
@@ -40,6 +75,9 @@ class DistribusiSeeder extends Seeder
                 "catatan_kendala" => null,
             ],
             [
+                "sekolah_id" => $sekolah1->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
                 "sekolah_tujuan" => "SDN 01 Pagi",
                 "jumlah_porsi" => 450,
                 "tanggal_pengiriman" => now()->subDays(1),
@@ -47,27 +85,39 @@ class DistribusiSeeder extends Seeder
                 "catatan_kendala" => null,
             ],
             [
+                "sekolah_id" => $sekolah2->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
                 "sekolah_tujuan" => "SMPN 15 Jakarta",
                 "jumlah_porsi" => 620,
                 "tanggal_pengiriman" => now()->subDays(1),
-                "status" => "Di Perjalanan",
+                "status" => "Dikirim",
                 "catatan_kendala" => null,
             ],
             [
+                "sekolah_id" => $sekolah3->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
                 "sekolah_tujuan" => "SMA Cendekia",
                 "jumlah_porsi" => 480,
                 "tanggal_pengiriman" => now(),
-                "status" => "Di Perjalanan",
+                "status" => "Dikirim",
                 "catatan_kendala" => null,
             ],
             [
+                "sekolah_id" => $sekolah1->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
                 "sekolah_tujuan" => "SDN 01 Pagi",
                 "jumlah_porsi" => 450,
                 "tanggal_pengiriman" => now(),
-                "status" => "Di Perjalanan",
+                "status" => "Dikirim",
                 "catatan_kendala" => null,
             ],
             [
+                "sekolah_id" => $sekolah4->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
                 "sekolah_tujuan" => "SD Muhammadiyah 2",
                 "jumlah_porsi" => 380,
                 "tanggal_pengiriman" => now(),
@@ -75,6 +125,9 @@ class DistribusiSeeder extends Seeder
                 "catatan_kendala" => null,
             ],
             [
+                "sekolah_id" => $sekolah2->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
                 "sekolah_tujuan" => "SMPN 15 Jakarta",
                 "jumlah_porsi" => 620,
                 "tanggal_pengiriman" => now(),
