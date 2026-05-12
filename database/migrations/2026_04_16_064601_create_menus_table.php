@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
+            
+            // PBI-30: Menghubungkan menu dengan vendor yang membuatnya
+            $table->foreignId('vendor_id')->constrained('users')->cascadeOnDelete();
+            
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->text('description');
             $table->integer('calories');
             $table->integer('price');
             $table->timestamps();

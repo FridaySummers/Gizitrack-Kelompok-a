@@ -14,6 +14,7 @@ class Menu extends Model
         'name',
         'description',
         'calories',
-        'price'
+        'price',
+        'vendor_id', 
     ];
 }
