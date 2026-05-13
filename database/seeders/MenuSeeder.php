@@ -11,6 +11,7 @@ class MenuSeeder extends Seeder
     {
         $menus = [
             [
+                "vendor_id" => 1,
                 "name" => "Nasi Ayam Bakar + Sayur Sup",
                 "description" =>
                     "Ayam bakar dengan bumbu kecap manis, disajikan dengan sup sayuran segar",
@@ -18,6 +19,7 @@ class MenuSeeder extends Seeder
                 "price" => 25000,
             ],
             [
+                "vendor_id" => 1,
                 "name" => "Nasi Telur Dadar + Capcay",
                 "description" =>
                     "Telur dadar tebal dengan sayuran capcay tumis",
@@ -25,6 +27,7 @@ class MenuSeeder extends Seeder
                 "price" => 20000,
             ],
             [
+                "vendor_id" => 1,
                 "name" => "Nasi Ikan Lele + Tumis Kangkung",
                 "description" =>
                     "Ikan lele goreng crispy dengan tumis kangkung saos tiram",
@@ -32,6 +35,7 @@ class MenuSeeder extends Seeder
                 "price" => 22000,
             ],
             [
+                "vendor_id" => 1,
                 "name" => "Nasi Tempe Goreng + Sayur Asem",
                 "description" =>
                     "Tempe goreng tepung dengan sayur asem jakarta",
@@ -39,6 +43,7 @@ class MenuSeeder extends Seeder
                 "price" => 18000,
             ],
             [
+                "vendor_id" => 1,
                 "name" => "Nasi Ayam Suwir + Buncis Tumis",
                 "description" =>
                     "Ayam suwir bumbu merah dengan buncis tumis bawang",
@@ -46,6 +51,7 @@ class MenuSeeder extends Seeder
                 "price" => 23000,
             ],
             [
+                "vendor_id" => 1,
                 "name" => "Nasi Ikan Patin + Daun Singkong",
                 "description" =>
                     "Ikan patin panggang dengan rebusan daun singkong",
@@ -53,6 +59,7 @@ class MenuSeeder extends Seeder
                 "price" => 24000,
             ],
             [
+                "vendor_id" => 1,
                 "name" => "Nasi Daging Semur + Wortel Bening",
                 "description" =>
                     "Daging semur kecap spesial dengan wortel bening",
@@ -60,12 +67,14 @@ class MenuSeeder extends Seeder
                 "price" => 28000,
             ],
             [
+                "vendor_id" => 1,
                 "name" => "Nasi Tahu Goreng + Sup Jagung",
                 "description" => "Tahu goreng filled dengan sup jagung manis",
                 "calories" => 430,
                 "price" => 19000,
             ],
             [
+                "vendor_id" => 1,
                 "name" => "Nasi Pecel Ayam + Urap Sayuran",
                 "description" =>
                     "Ayam goreng dengan pecel bumbu kacang dan urap sayuran",
@@ -73,6 +82,7 @@ class MenuSeeder extends Seeder
                 "price" => 23000,
             ],
             [
+                "vendor_id" => 1,
                 "name" => "Nasi Soto Ayam + Perkedel",
                 "description" =>
                     "Soto ayam jawa dengan kuah kaldu rempah dan perkedel kentang",
@@ -82,7 +92,10 @@ class MenuSeeder extends Seeder
         ];
 
         foreach ($menus as $menu) {
-            Menu::firstOrCreate(["name" => $menu["name"]], $menu);
+            Menu::firstOrCreate(
+                ["name" => $menu["name"]],
+                $menu
+            );
         }
     }
 }
