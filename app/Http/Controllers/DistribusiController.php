@@ -30,7 +30,7 @@ class DistribusiController extends Controller
             'sekolah_tujuan' => $request->sekolah_tujuan,
             'jumlah_porsi' => $request->jumlah_porsi,
             'tanggal_pengiriman' => $request->tanggal_pengiriman,
-            'status' => 'Pending',
+            'status' => 'Dikirim',
         ]);
 
         return redirect()->route('vendor.distribusi.index')
@@ -58,7 +58,7 @@ class DistribusiController extends Controller
             'tanggal_pengiriman' => $request->tanggal_pengiriman,
             'sekolah_tujuan' => $request->sekolah_tujuan,
             'jumlah_porsi' => $request->jumlah_porsi,
-            'status' => $request->status,
+            'status' => "Dikirim",
         ]);
 
         return redirect()->route('vendor.distribusi.index')

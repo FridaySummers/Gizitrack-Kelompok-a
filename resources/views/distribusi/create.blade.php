@@ -52,6 +52,13 @@
                 >
             </div>
 
+            {{-- Status Otomatis --}}
+            <input 
+                type="hidden" 
+                name="status" 
+                value="Dikirim"
+            >
+
             {{-- BUTTON --}}
             <div class="flex items-center gap-3 mt-6">
                 <button 
