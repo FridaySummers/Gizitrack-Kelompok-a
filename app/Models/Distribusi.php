@@ -27,6 +27,6 @@ class Distribusi extends Model
 
     public function requestChanges()
     {
-        return $this->hasMany(RequestChange::class);
+        return $this->hasMany(RequestChange::class, "distribusi_id");
     }
 }

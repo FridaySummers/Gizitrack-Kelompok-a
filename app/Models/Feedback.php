@@ -15,11 +15,11 @@ class Feedback extends Model
 
     public function distribution()
     {
-        return $this->belongsTo(Distribusi::class);
+        return $this->belongsTo(Distribusi::class, "distribution_id");
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "user_id");
     }
 }
