@@ -21,6 +21,7 @@ class DistributionController extends Controller
 
     public function update(Request $request, Distribusi $distribution)
     {
+        // PBI-37: Quick receipt confirmation logic
         // Authorize: only the targeted school can confirm receipt
         if ($distribution->sekolah_id !== auth()->id()) {
             abort(
