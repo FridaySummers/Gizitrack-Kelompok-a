@@ -98,6 +98,9 @@ Route::middleware(["auth", "role:vendor"])
         );
 
         // Fitur Kelola Distribusi (PBI-15 sampai PBI-18)
+        // PBI-34: Riwayat Pengiriman Harian
+        Route::get('distribusi/riwayat', [DistribusiController::class, 'riwayat'])
+            ->name('distribusi.riwayat');
         Route::resource("distribusi", DistribusiController::class);
 
         // PBI-11 sampai PBI-14: Kelola Menu (Create, Read, Update, Delete)
