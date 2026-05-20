@@ -18,6 +18,7 @@
                     <th scope="col" class="px-6 py-3">Porsi</th>
                     <th scope="col" class="px-6 py-3">Tanggal</th>
                     <th scope="col" class="px-6 py-3">Status</th>
+                    <th scope="col" class="px-6 py-3 text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,6 +45,20 @@
                         <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full border border-gray-300">
                             {{ $d->status }}
                         </span>
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        @if($d->status === 'Dikirim')
+                        <form action="{{ route('sekolah.distributions.update', $d) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="action" value="terima">
+                            <button type="submit" class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all">
+                                Terima Sesuai
+                            </button>
+                        </form>
+                        @else
+                        <span class="text-gray-400">-</span>
                         @endif
                     </td>
                 </tr>
