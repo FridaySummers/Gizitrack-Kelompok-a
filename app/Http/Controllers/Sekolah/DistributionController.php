@@ -59,15 +59,21 @@ class DistributionController extends Controller
                 ->back()
                 ->with("success", "Distribusi berhasil dikonfirmasi diterima.");
         } else {
-            // Receipt with notes - partial receipt
-            $distribution->update(["status" => "Diterima Sebagian"]);
+            // PBI-38: Database Transaction for atomic status update and feedback creation
+            \Illuminate\Support\Facades\DB::transaction(function () use (
+                $distribution,
+                $validated,
+            ) {
+                // Receipt with notes - partial receipt
+                $distribution->update(["status" => "Diterima Sebagian"]);
 
-            // Create feedback record
-            Feedback::create([
-                "distribusi_id" => $distribution->id,
-                "user_id" => auth()->id(),
-                "catatan" => $validated["catatan"],
-            ]);
+                // Create feedback record
+                Feedback::create([
+                    "distribusi_id" => $distribution->id,
+                    "user_id" => auth()->id(),
+                    "catatan" => $validated["catatan"],
+                ]);
+            });
 
             return redirect()
                 ->back()
