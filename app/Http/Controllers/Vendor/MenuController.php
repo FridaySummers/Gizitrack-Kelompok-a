@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Menu;
-use Illuminate\Validation\Rule; // Wajib ditambahkan untuk memanggil aturan Unique
+use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Tambahkan ini
 
 class MenuController extends Controller
 {
+    use AuthorizesRequests; // Tambahkan ini agar fungsi authorize() bisa jalan
+
     public function index()
     {
         // PBI-31: Memastikan vendor HANYA melihat menu buatannya sendiri
@@ -29,7 +32,6 @@ class MenuController extends Controller
                 'required',
                 'string',
                 'max:255',
-                // Cek agar nama menu unik, tapi batasannya hanya untuk toko (vendor) ini saja
                 Rule::unique('menus', 'name')->where(function ($query) {
                     return $query->where('vendor_id', auth()->id());
                 }),
@@ -38,11 +40,9 @@ class MenuController extends Controller
             'calories' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
         ], [
-            // Pesan error kustom jika gagal validasi
             'name.unique' => 'Nama menu ini sudah pernah Anda buat. Silakan gunakan nama lain.'
         ]);
 
-        // Otomatisasi pengisian vendor_id dari sesi login
         $validData['vendor_id'] = auth()->id();
 
         Menu::create($validData);
@@ -50,24 +50,26 @@ class MenuController extends Controller
         return redirect()->route('vendor.menu.index')->with('success', 'Menu baru berhasil ditambahkan!');
     }
 
-    public function edit(string $id)
+    // Ubah parameter dari string $id menjadi Menu $menu agar Policy bisa bekerja otomatis
+    public function edit(Menu $menu)
     {
-        // PBI-32: Otorisasi ketat (findOrFail dipadukan dengan pencarian vendor_id)
-        $menu = Menu::where('vendor_id', auth()->id())->findOrFail($id);
+        // PBI-32: Gembok Otorisasi Policy untuk Edit
+        $this->authorize('update', $menu);
+        
         return view('vendor.menu.edit', compact('menu'));
     }
 
-    public function update(Request $request, string $id)
+    // Ubah parameter dari string $id menjadi Menu $menu
+    public function update(Request $request, Menu $menu)
     {
-        // PBI-32: Otorisasi ketat sebelum update
-        $menu = Menu::where('vendor_id', auth()->id())->findOrFail($id);
+        // PBI-32: Gembok Otorisasi Policy sebelum Update
+        $this->authorize('update', $menu);
         
         $validData = $request->validate([
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                // Validasi unique saat update (harus mengabaikan ID menu yang sedang diedit ini)
                 Rule::unique('menus', 'name')->where(function ($query) {
                     return $query->where('vendor_id', auth()->id());
                 })->ignore($menu->id),
@@ -86,7 +88,7 @@ class MenuController extends Controller
 
     public function destroy(string $id)
     {
-        // PBI-32: Otorisasi ketat sebelum delete
+        // Biarkan dulu seperti ini untuk target Pekan 13 (Minggu Depan)
         $menu = Menu::where('vendor_id', auth()->id())->findOrFail($id);
         $menu->delete();
 
