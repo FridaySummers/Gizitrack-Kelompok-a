@@ -38,8 +38,11 @@
                 <a href="{{ route('vendor.menu.index') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ str_starts_with($currentRoute, 'vendor.menu') ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
                     Menu Saya
                 </a>
-                <a href="{{ route('vendor.distribusi.index') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ str_starts_with($currentRoute, 'vendor.distribusi') ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
+                <a href="{{ route('vendor.distribusi.index') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ str_starts_with($currentRoute, 'vendor.distribusi') && $currentRoute !== 'vendor.distribusi.riwayat' ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
                     Distribusi
+                </a>
+                <a href="{{ route('vendor.distribusi.riwayat') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ $currentRoute === 'vendor.distribusi.riwayat' ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
+                    Riwayat Pengiriman
                 </a>
                 @elseif($role === 'sekolah')
                 <a href="{{ route('sekolah.dashboard') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ $currentRoute === 'sekolah.dashboard' ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">

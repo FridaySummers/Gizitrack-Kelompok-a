@@ -24,4 +24,9 @@ class Distribusi extends Model
     {
         return $this->hasMany(Feedback::class, "distribution_id");
     }
+
+    public function requestChanges()
+    {
+        return $this->hasMany(RequestChange::class);
+    }
 }
