@@ -86,10 +86,11 @@ class MenuController extends Controller
         return redirect()->route('vendor.menu.index')->with('success', 'Data menu berhasil diperbarui!');
     }
 
-    public function destroy(string $id)
+    public function destroy(Menu $menu)
     {
-        // Biarkan dulu seperti ini untuk target Pekan 13 (Minggu Depan)
-        $menu = Menu::where('vendor_id', auth()->id())->findOrFail($id);
+        // PBI-32: Gembok Otorisasi Policy sebelum Delete
+        $this->authorize('delete', $menu);
+        
         $menu->delete();
 
         return redirect()->route('vendor.menu.index')->with('success', 'Menu berhasil dihapus!');
