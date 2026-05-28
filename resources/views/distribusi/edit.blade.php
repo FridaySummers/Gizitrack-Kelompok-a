@@ -19,7 +19,8 @@
     @endif
     <!-- ==================================================== -->
 
-    <form action="{{ route('vendor.distribusi.update', $distribusi->id) }}" method="POST">
+    <form action="{{ route('vendor.distribusi.update', $distribusi->id) }}" method="POST"
+          x-data="{ porsiAwal: {{ $distribusi->jumlah_porsi }}, porsiBaru: {{ $distribusi->jumlah_porsi }} }">
         @csrf
         @method('PUT')
 
@@ -44,7 +45,30 @@
             <label class="block text-sm mb-1">Jumlah Porsi</label>
             <input type="number" name="jumlah_porsi"
                 value="{{ $distribusi->jumlah_porsi }}"
+                x-model="porsiBaru"
                 class="w-full border rounded px-3 py-2">
+
+            <!-- Indikator perubahan porsi -->
+            <div x-show="porsiAwal != porsiBaru" x-cloak
+                 class="mt-2 flex items-center gap-2 text-sm">
+                <span class="text-gray-500">Porsi awal:</span>
+                <span class="font-medium text-gray-700" x-text="porsiAwal"></span>
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+                <span class="font-medium text-emerald-600" x-text="porsiBaru"></span>
+            </div>
+        </div>
+
+        <!-- Alasan Perubahan (muncul saat porsi berubah) -->
+        <div x-show="porsiAwal != porsiBaru" x-cloak class="mb-4">
+            <label class="block text-sm mb-1 text-amber-700 font-medium">
+                ⚠️ Alasan Perubahan Porsi
+            </label>
+            <textarea name="alasan_perubahan" rows="3"
+                placeholder="Contoh: Selisih persiapan, bahan baku kurang 20 porsi"
+                class="w-full border border-amber-300 rounded px-3 py-2 text-sm focus:ring-amber-500 focus:border-amber-500 bg-amber-50">{{ old('alasan_perubahan') }}</textarea>
+            <p class="text-xs text-gray-500 mt-1">Perubahan porsi akan tercatat sebagai histori</p>
         </div>
 
         <!-- Status -->
