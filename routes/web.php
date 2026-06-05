@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Enums\UserRole;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\DistributionController as AdminDistributionController;
@@ -15,18 +16,14 @@ use App\Http\Controllers\DistribusiController;
 // ── 1. PUBLIC ROUTES ──────────────────────────────────────────────
 Route::get("/", fn() => redirect()->route("login"));
 
-// ── 2. POLISI LALU LINTAS (FIX ERROR DASHBOARD) ───────────────────
+// ── 2. POLISI LALU LINTAS – PBI#28: redirect via UserRole enum ────
 Route::get("/dashboard", function () {
-    $role = auth()->user()->role;
+    /** @var \App\Models\User $user */
+    $user = auth()->user();
 
-    if ($role == "admin") {
-        return redirect()->route("admin.dashboard");
-    }
-    if ($role == "vendor") {
-        return redirect()->route("vendor.dashboard");
-    }
-    if ($role == "sekolah") {
-        return redirect()->route("sekolah.dashboard");
+    // Gunakan enum helper dashboardRoute() – type-safe, tanpa magic string
+    if ($user->role instanceof UserRole) {
+        return redirect()->route($user->role->dashboardRoute());
     }
 
     return redirect("/");
