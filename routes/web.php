@@ -99,8 +99,10 @@ Route::middleware(["auth", "role:vendor"])
 
         // Fitur Kelola Distribusi (PBI-15 sampai PBI-18)
         // PBI-34: Riwayat Pengiriman Harian
-        Route::get('distribusi/riwayat', [DistribusiController::class, 'riwayat'])
-            ->name('distribusi.riwayat');
+        Route::get("distribusi/riwayat", [
+            DistribusiController::class,
+            "riwayat",
+        ])->name("distribusi.riwayat");
         Route::resource("distribusi", DistribusiController::class);
 
         // PBI-11 sampai PBI-14: Kelola Menu (Create, Read, Update, Delete)
@@ -116,23 +118,7 @@ Route::middleware(["auth", "role:sekolah"])
             "dashboard",
         );
 
-        // Fitur Feedback (PBI-19, PBI-22)
-        Route::get("/feedbacks", [FeedbackController::class, "index"])->name(
-            "feedbacks.index",
-        );
-        Route::get("/feedbacks/create", [
-            FeedbackController::class,
-            "create",
-        ])->name("feedbacks.create");
-        Route::post("/feedbacks", [FeedbackController::class, "store"])->name(
-            "feedbacks.store",
-        );
-        Route::delete("/feedbacks/{feedback}", [
-            FeedbackController::class,
-            "destroy",
-        ])->name("feedbacks.destroy");
-
-        // Fitur Lihat Status & Konfirmasi Distribusi (PBI-20, PBI-21)
+        // Fitur Lihat Status & Konfirmasi Distribusi (PBI-20, PBI-21, PBI-36, PBI-37, PBI-38)
         Route::get("/distributions", [
             SekolahDistributionController::class,
             "index",

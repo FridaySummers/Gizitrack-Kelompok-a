@@ -17,10 +17,10 @@
                 <span class="text-2xl font-bold text-emerald-500">🌿</span>
                 <span class="ml-2 text-xl font-bold text-emerald-500">GiziTrack</span>
             </div>
-            
+
             <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
                 @php $role = auth()->user()->role; $currentRoute = request()->route()->getName(); @endphp
-                
+
                 @if($role === 'admin')
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ $currentRoute === 'admin.dashboard' ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
                     Overview
@@ -51,12 +51,9 @@
                 <a href="{{ route('sekolah.distributions.index') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ str_starts_with($currentRoute, 'sekolah.distributions') ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
                     Status Pengiriman
                 </a>
-                <a href="{{ route('sekolah.feedbacks.index') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ str_starts_with($currentRoute, 'sekolah.feedbacks') ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
-                    Feedback Saya
-                </a>
                 @endif
             </nav>
-            
+
             <div class="p-4 border-t border-gray-100">
                 <div class="flex items-center mb-3">
                     <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
@@ -73,12 +70,12 @@
                 </form>
             </div>
         </aside>
-        
+
         <main class="flex-1 flex flex-col overflow-hidden">
             <header class="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-6 flex-shrink-0">
                 <h1 class="text-lg font-semibold text-gray-800">@yield('title')</h1>
             </header>
-            
+
             @if(session('success'))
             <div class="mx-6 mt-4">
                 <div class="flex items-center p-4 text-sm text-green-700 bg-green-50 rounded-lg border border-green-200" role="alert">
@@ -87,7 +84,7 @@
                 </div>
             </div>
             @endif
-            
+
             @if(session('error'))
             <div class="mx-6 mt-4">
                 <div class="flex items-center p-4 text-sm text-red-700 bg-red-50 rounded-lg border border-red-200" role="alert">
@@ -96,13 +93,13 @@
                 </div>
             </div>
             @endif
-            
+
             <div class="flex-1 overflow-y-auto p-6">
                 @yield('content')
             </div>
         </main>
     </div>
-    
+
     <script>
         setTimeout(() => {
             document.querySelectorAll('[role="alert"]').forEach(alert => {

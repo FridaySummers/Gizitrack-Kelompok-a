@@ -12,6 +12,9 @@ class Distribusi extends Model
     protected $table = "distribusis";
 
     protected $fillable = [
+        "sekolah_id",
+        "vendor_id",
+        "menu_id",
         "sekolah_tujuan",
         "jumlah_porsi",
         "tanggal_pengiriman",
@@ -22,11 +25,26 @@ class Distribusi extends Model
     // Relationships
     public function feedbacks()
     {
-        return $this->hasMany(Feedback::class, "distribution_id");
+        return $this->hasMany(Feedback::class, "distribusi_id");
     }
 
     public function requestChanges()
     {
-        return $this->hasMany(RequestChange::class);
+        return $this->hasMany(RequestChange::class, "distribusi_id");
+    }
+
+    public function sekolah()
+    {
+        return $this->belongsTo(User::class, "sekolah_id");
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo(User::class, "vendor_id");
+    }
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class, "menu_id");
     }
 }

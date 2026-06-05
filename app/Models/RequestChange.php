@@ -10,14 +10,14 @@ class RequestChange extends Model
     use HasFactory;
 
     protected $fillable = [
-        'distribusi_id',
-        'jumlah_porsi_awal',
-        'jumlah_porsi_baru',
-        'alasan',
+        "distribusi_id",
+        "jumlah_porsi_awal",
+        "jumlah_porsi_baru",
+        "alasan",
     ];
 
     public function distribusi()
     {
-        return $this->belongsTo(Distribusi::class);
+        return $this->belongsTo(Distribusi::class, "distribusi_id");
     }
 }
