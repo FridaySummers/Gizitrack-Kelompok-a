@@ -5,7 +5,6 @@
 @section('content')
 <h2 class="text-xl font-semibold text-gray-800 mb-6">Selamat Datang, Sekolah!</h2>
 
-<!-- Quick Actions -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <a href="{{ route('sekolah.distributions.index') }}" class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 hover:border-emerald-200 transition">
         <div class="flex items-center">
@@ -19,7 +18,7 @@
         </div>
     </a>
     
-    <a href="{{ route('sekolah.feedbacks.index') }}" class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 hover:border-emerald-200 transition">
+    <a href="#" class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 hover:border-emerald-200 transition">
         <div class="flex items-center">
             <div class="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center mr-4">
                 <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
