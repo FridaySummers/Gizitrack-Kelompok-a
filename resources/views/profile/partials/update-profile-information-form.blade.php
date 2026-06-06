@@ -17,15 +17,34 @@
         @csrf
         @method('patch')
 
+        <!-- NAME -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-text-input 
+                id="name" 
+                name="name" 
+                type="text" 
+                class="mt-1 block w-full" 
+                :value="old('name', $user->name)" 
+                required 
+                autofocus 
+                autocomplete="name" 
+            />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
+        <!-- EMAIL -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input 
+                id="email" 
+                name="email" 
+                type="email" 
+                class="mt-1 block w-full" 
+                :value="old('email', $user->email)" 
+                required 
+                autocomplete="username" 
+            />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -47,6 +66,22 @@
             @endif
         </div>
 
+        <!-- NO TELEPON (BARU) -->
+        <div>
+            <x-input-label for="no_hp" :value="__('No Telepon')" />
+            <x-text-input 
+                id="no_hp" 
+                name="no_hp" 
+                type="text" 
+                class="mt-1 block w-full" 
+                :value="old('no_hp', $user->no_hp)" 
+                autocomplete="tel"
+                placeholder="Masukkan nomor telepon"
+            />
+            <x-input-error class="mt-2" :messages="$errors->get('no_hp')" />
+        </div>
+
+        <!-- BUTTON -->
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
@@ -56,8 +91,10 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
+                    class="text-sm text-green-600"
+                >
+                    {{ __('Profile berhasil diperbarui!') }}
+                </p>
             @endif
         </div>
     </form>

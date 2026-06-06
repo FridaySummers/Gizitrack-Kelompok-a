@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --gizi-green: #10b981;
+  --gizi-green-dark: #059669;
+  --gizi-green-light: #d1fae5;
+}
+
+body {
+  font-family: 'Figtree', sans-serif;
+}

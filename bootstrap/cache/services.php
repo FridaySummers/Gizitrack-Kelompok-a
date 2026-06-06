@@ -24,6 +24,7 @@
     20 => 'Illuminate\\Translation\\TranslationServiceProvider',
     21 => 'Illuminate\\Validation\\ValidationServiceProvider',
     22 => 'Illuminate\\View\\ViewServiceProvider',
+<<<<<<< HEAD
     23 => 'Barryvdh\\DomPDF\\ServiceProvider',
     24 => 'Laravel\\Breeze\\BreezeServiceProvider',
     25 => 'Laravel\\Dusk\\DuskServiceProvider',
@@ -34,6 +35,17 @@
     30 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     31 => 'Termwind\\Laravel\\TermwindServiceProvider',
     32 => 'App\\Providers\\AppServiceProvider',
+=======
+    23 => 'Laravel\\Breeze\\BreezeServiceProvider',
+    24 => 'Laravel\\Dusk\\DuskServiceProvider',
+    25 => 'Laravel\\Pail\\PailServiceProvider',
+    26 => 'Laravel\\Sail\\SailServiceProvider',
+    27 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    28 => 'Carbon\\Laravel\\ServiceProvider',
+    29 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    30 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    31 => 'App\\Providers\\AppServiceProvider',
+>>>>>>> 53f90b7ef7e2319fd437e8008fe77906570129ee
   ),
   'eager' => 
   array (
@@ -47,6 +59,7 @@
     7 => 'Illuminate\\Pagination\\PaginationServiceProvider',
     8 => 'Illuminate\\Session\\SessionServiceProvider',
     9 => 'Illuminate\\View\\ViewServiceProvider',
+<<<<<<< HEAD
     10 => 'Barryvdh\\DomPDF\\ServiceProvider',
     11 => 'Laravel\\Dusk\\DuskServiceProvider',
     12 => 'Laravel\\Pail\\PailServiceProvider',
@@ -54,6 +67,14 @@
     14 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     15 => 'Termwind\\Laravel\\TermwindServiceProvider',
     16 => 'App\\Providers\\AppServiceProvider',
+=======
+    10 => 'Laravel\\Dusk\\DuskServiceProvider',
+    11 => 'Laravel\\Pail\\PailServiceProvider',
+    12 => 'Carbon\\Laravel\\ServiceProvider',
+    13 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    14 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    15 => 'App\\Providers\\AppServiceProvider',
+>>>>>>> 53f90b7ef7e2319fd437e8008fe77906570129ee
   ),
   'deferred' => 
   array (

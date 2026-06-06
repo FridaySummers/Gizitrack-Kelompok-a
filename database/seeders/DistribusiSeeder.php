@@ -8,39 +8,142 @@ use Illuminate\Database\Seeder;
 
 class DistribusiSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        Distribusi::create([
-            'sekolah_tujuan' => 'SD Negeri 1 Jakarta',
-            'jumlah_porsi' => 100,
-            'tanggal_pengiriman' => '2026-04-20',
-            'status' => 'Di Perjalanan',
-            'latitude' => -6.2088,
-            'longitude' => 106.8456,
-            'last_updated' => now(),
-        ]);
+        $sekolah1 = \App\Models\User::where(
+            "email",
+            "sekolah@gizitrack.test",
+        )->first();
+        $sekolah2 = \App\Models\User::where(
+            "email",
+            "sekolah2@gizitrack.test",
+        )->first();
+        $sekolah3 = \App\Models\User::where(
+            "email",
+            "sekolah3@gizitrack.test",
+        )->first();
+        $sekolah4 = \App\Models\User::where(
+            "email",
+            "sekolah4@gizitrack.test",
+        )->first();
+        $vendor = \App\Models\User::where("role", "vendor")->first();
+        $menu = \App\Models\Menu::first();
 
-        Distribusi::create([
-            'sekolah_tujuan' => 'SD Negeri 2 Bandung',
-            'jumlah_porsi' => 150,
-            'tanggal_pengiriman' => '2026-04-21',
-            'status' => 'Terkirim',
-            'latitude' => -6.9175,
-            'longitude' => 107.6191,
-            'last_updated' => now()->subMinutes(5),
-        ]);
+        if (!$sekolah1 || !$vendor || !$menu) {
+            return;
+        }
 
-        Distribusi::create([
-            'sekolah_tujuan' => 'SD Negeri 3 Surabaya',
-            'jumlah_porsi' => 200,
-            'tanggal_pengiriman' => '2026-04-22',
-            'status' => 'Pending',
-            'latitude' => null,
-            'longitude' => null,
-            'last_updated' => null,
-        ]);
+        $distribusis = [
+            [
+                "sekolah_id" => $sekolah1->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
+                "sekolah_tujuan" => "SDN 01 Pagi",
+                "jumlah_porsi" => 450,
+                "tanggal_pengiriman" => now()->subDays(3),
+                "status" => "Diterima",
+                "catatan_kendala" => null,
+            ],
+            [
+                "sekolah_id" => $sekolah2->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
+                "sekolah_tujuan" => "SMPN 15 Jakarta",
+                "jumlah_porsi" => 620,
+                "tanggal_pengiriman" => now()->subDays(3),
+                "status" => "Diterima",
+                "catatan_kendala" => null,
+            ],
+            [
+                "sekolah_id" => $sekolah3->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
+                "sekolah_tujuan" => "SMA Cendekia",
+                "jumlah_porsi" => 480,
+                "tanggal_pengiriman" => now()->subDays(2),
+                "status" => "Diterima",
+                "catatan_kendala" => null,
+            ],
+            [
+                "sekolah_id" => $sekolah4->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
+                "sekolah_tujuan" => "SD Muhammadiyah 2",
+                "jumlah_porsi" => 380,
+                "tanggal_pengiriman" => now()->subDays(2),
+                "status" => "Diterima Sebagian",
+                "catatan_kendala" => null,
+            ],
+            [
+                "sekolah_id" => $sekolah1->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
+                "sekolah_tujuan" => "SDN 01 Pagi",
+                "jumlah_porsi" => 450,
+                "tanggal_pengiriman" => now()->subDays(1),
+                "status" => "Diterima",
+                "catatan_kendala" => null,
+            ],
+            [
+                "sekolah_id" => $sekolah2->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
+                "sekolah_tujuan" => "SMPN 15 Jakarta",
+                "jumlah_porsi" => 620,
+                "tanggal_pengiriman" => now()->subDays(1),
+                "status" => "Dikirim",
+                "catatan_kendala" => null,
+            ],
+            [
+                "sekolah_id" => $sekolah3->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
+                "sekolah_tujuan" => "SMA Cendekia",
+                "jumlah_porsi" => 480,
+                "tanggal_pengiriman" => now(),
+                "status" => "Dikirim",
+                "catatan_kendala" => null,
+            ],
+            [
+                "sekolah_id" => $sekolah1->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
+                "sekolah_tujuan" => "SDN 01 Pagi",
+                "jumlah_porsi" => 450,
+                "tanggal_pengiriman" => now(),
+                "status" => "Dikirim",
+                "catatan_kendala" => null,
+            ],
+            [
+                "sekolah_id" => $sekolah4->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
+                "sekolah_tujuan" => "SD Muhammadiyah 2",
+                "jumlah_porsi" => 380,
+                "tanggal_pengiriman" => now(),
+                "status" => "Di Perjalanan",
+                "catatan_kendala" => null,
+            ],
+            [
+                "sekolah_id" => $sekolah2->id,
+                "vendor_id" => $vendor->id,
+                "menu_id" => $menu->id,
+                "sekolah_tujuan" => "SMPN 15 Jakarta",
+                "jumlah_porsi" => 620,
+                "tanggal_pengiriman" => now(),
+                "status" => "Di Perjalanan",
+                "catatan_kendala" => null,
+            ],
+        ];
+
+        foreach ($distribusis as $distribusi) {
+            Distribusi::firstOrCreate(
+                [
+                    "sekolah_tujuan" => $distribusi["sekolah_tujuan"],
+                    "tanggal_pengiriman" => $distribusi["tanggal_pengiriman"],
+                ],
+                $distribusi,
+            );
+        }
     }
 }
