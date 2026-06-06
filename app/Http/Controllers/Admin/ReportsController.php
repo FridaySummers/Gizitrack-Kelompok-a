@@ -11,23 +11,33 @@ class ReportsController extends Controller
 {
     public function export(Request $request)
     {
-        $startDate = $request->get('start_date', now()->startOfMonth()->format('Y-m-d'));
-        $endDate = $request->get('end_date', now()->format('Y-m-d'));
+        $query = Distribusi::query();
 
-        $distribusis = Distribusi::where('tanggal_pengiriman', '>=', $startDate)
-            ->where('tanggal_pengiriman', '<=', $endDate)
-            ->orderBy('tanggal_pengiriman')
-            ->get();
+        if ($request->has('start_date') && $request->has('end_date') && !empty($request->start_date) && !empty($request->end_date)) {
+            $startDate = $request->get('start_date');
+            $endDate = $request->get('end_date');
+            
+            $query->whereDate('tanggal_pengiriman', '>=', $startDate)
+                  ->whereDate('tanggal_pengiriman', '<=', $endDate);
+                  
+            $periode = $startDate . ' sampai ' . $endDate;
+            $filename = 'laporan-distribusi-' . $startDate . '-to-' . $endDate . '.pdf';
+        } else {
+            $periode = 'Semua Waktu';
+            $filename = 'laporan-distribusi-semua-waktu.pdf';
+        }
+
+        $distribusis = $query->orderBy('tanggal_pengiriman')->get();
 
         $summary = [
             'total_distribusi' => $distribusis->count(),
             'total_porsi' => $distribusis->sum('jumlah_porsi'),
             'status_summary' => $distribusis->groupBy('status')->map->count(),
-            'periode' => $startDate . ' sampai ' . $endDate,
+            'periode' => $periode,
         ];
 
         $pdf = Pdf::loadView('admin.reports.distribusi', compact('distribusis', 'summary'));
 
-        return $pdf->download('laporan-distribusi-' . $startDate . '-to-' . $endDate . '.pdf');
+        return $pdf->download($filename);
     }
 }

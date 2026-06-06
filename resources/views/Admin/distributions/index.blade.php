@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Status Semua Distribusi
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Status Semua Distribusi
+            </h2>
+            <a href="{{ route('admin.reports.export') }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded text-sm">
+                Export
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -14,7 +19,7 @@
                             <thead>
                                 <tr style="background-color: #f9fafb; border-bottom: 2px solid #e5e7eb;">
                                     <th style="text-align: left; padding: 12px; font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">Sekolah Tujuan</th>
-                                    <th style="text-align: left; padding: 12px; font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">Tanggal Pengiriman</th>
+                                    <th style="text-align: left; padding: 12px; font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">TANGGAL</th>
                                     <th style="text-align: left; padding: 12px; font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">Jumlah Porsi</th>
                                     <th style="text-align: left; padding: 12px; font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">Status</th>
                                     <th style="text-align: left; padding: 12px; font-size: 0.75rem; color: #6b7280; text-transform: uppercase;">Feedback</th>
