@@ -21,10 +21,6 @@ class AuthenticatedSessionController extends Controller
 
     /**
      * Handle an incoming authentication request.
-     *
-     * PBI#28 – Setelah login, pengguna langsung diarahkan ke dashboard
-     * sesuai Role (Admin/Vendor/Sekolah) menggunakan UserRole enum,
-     * agar akses fitur tertutup rapat.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
@@ -32,13 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-
-        // Redirect langsung ke dashboard sesuai role via enum helper
-        $dashboardRoute = $user->role->dashboardRoute();
-
-        return redirect()->intended(route($dashboardRoute, absolute: false));
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**

@@ -1,11 +1,11 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Informasi Profil') }}
+            {{ __('Profile Information') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __('Perbarui nama, email, dan nomor telepon akun Anda. Data disimpan langsung pada tabel akun utama.') }}
+            {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
 
