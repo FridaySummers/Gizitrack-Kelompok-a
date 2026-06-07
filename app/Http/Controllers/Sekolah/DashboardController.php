@@ -15,7 +15,7 @@ class DashboardController extends Controller
             "sekolah_id",
             $sekolahId,
         )
-            ->whereIn("status", ["Dikirim", "Di Perjalanan"])
+            ->where("status", "Dikirim")
             ->count();
 
         $totalDiterima = \App\Models\Distribusi::where("sekolah_id", $sekolahId)

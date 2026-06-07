@@ -22,7 +22,7 @@ class DistributionController extends Controller
             $query->latest();
         } else {
             // Default: only active shipments
-            $query->whereIn("status", ["Dikirim", "Di Perjalanan"]);
+            $query->where("status", "Dikirim");
         }
 
         $distributions = $query->paginate(10);
@@ -46,34 +46,43 @@ class DistributionController extends Controller
 
         // Validate action and catatan if needed
         $validated = $request->validate([
-            "action" => "required|in:terima,terima_catatan",
+            "action" => "required|in:terima,terima_catatan,resolve_komplain",
             "catatan" => "required_if:action,terima_catatan|string|min:3",
         ]);
 
-        // Only allow updating if status is "Di Perjalanan" or "Dikirim"
-        if (!in_array($distribution->status, ["Di Perjalanan", "Dikirim"])) {
+        // Only allow updating if status is "Dikirim" (for confirmation) or "Komplain" (for resolution)
+        if (!in_array($distribution->status, ["Dikirim", "Komplain"])) {
             return redirect()
                 ->back()
                 ->with(
                     "error",
-                    'Distribusi ini tidak dapat dikonfirmasi. Status harus "Di Perjalanan" atau "Dikirim".',
+                    "Distribusi ini tidak dapat diproses. Status tidak sesuai.",
                 );
         }
 
         if ($validated["action"] === "terima") {
             // Simple receipt confirmation
             $distribution->update(["status" => "Diterima"]);
+
             return redirect()
                 ->back()
                 ->with("success", "Distribusi berhasil dikonfirmasi diterima.");
-        } else {
-            // PBI-38: Database Transaction for atomic status update and feedback creation
-            \Illuminate\Support\Facades\DB::transaction(function () use (
-                $distribution,
-                $validated,
-            ) {
-                // Receipt with notes - partial receipt
-                $distribution->update(["status" => "Diterima Sebagian"]);
+        }
+
+        if ($validated["action"] === "resolve_komplain") {
+            // PBI-38: Resolve existing complaint
+            $distribution->update(["status" => "Diterima"]);
+
+            return redirect()
+                ->back()
+                ->with("success", "Komplain berhasil ditandai selesai.");
+        }
+
+        if ($validated["action"] === "terima_catatan") {
+            // PBI-38: Confirmation with notes (Complaint)
+            \DB::transaction(function () use ($distribution, $validated) {
+                // Update status to Komplain
+                $distribution->update(["status" => "Komplain"]);
 
                 // Create feedback record
                 Feedback::create([
@@ -87,7 +96,7 @@ class DistributionController extends Controller
                 ->back()
                 ->with(
                     "success",
-                    "Distribusi berhasil dikonfirmasi dengan catatan.",
+                    "Komplain berhasil dikirim dan sedang dalam penanganan.",
                 );
         }
     }

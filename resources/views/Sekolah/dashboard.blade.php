@@ -82,13 +82,11 @@
                     </td>
                     <td class="px-6 py-4">
                         @if($d->status === 'Dikirim')
-                            <span class="bg-sky-50 text-sky-700 text-xs font-medium px-2.5 py-1 rounded-full border border-sky-100">Dikirim</span>
-                        @elseif($d->status === 'Di Perjalanan')
-                            <span class="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-full border border-blue-100">Di Perjalanan</span>
+                            <span class="bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full border border-amber-100">Dikirim</span>
                         @elseif($d->status === 'Diterima')
-                            <span class="bg-emerald-50 text-emerald-700 text-xs font-medium px-2.5 py-1 rounded-full border border-emerald-100">Diterima</span>
+                            <span class="bg-green-50 text-green-700 text-xs font-medium px-2.5 py-1 rounded-full border border-green-100">Diterima</span>
                         @elseif($d->status === 'Diterima Sebagian')
-                            <span class="bg-orange-50 text-orange-700 text-xs font-medium px-2.5 py-1 rounded-full border border-orange-100">Diterima Sebagian</span>
+                            <span class="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-full border border-blue-100">Diterima Sebagian</span>
                         @else
                             <span class="bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full border border-red-100">Kendala</span>
                         @endif

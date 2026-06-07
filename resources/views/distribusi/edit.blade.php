@@ -76,7 +76,7 @@
             <label class="block text-sm mb-1">Status</label>
             <select name="status" class="w-full border rounded px-3 py-2">
                 <option {{ $distribusi->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                <option {{ $distribusi->status == 'Di Perjalanan' ? 'selected' : '' }}>Di Perjalanan</option>
+                <option {{ $distribusi->status == 'Dikirim' ? 'selected' : '' }}>Dikirim</option>
 
                 <option {{ $distribusi->status == 'Diterima' ? 'selected' : '' }}>Diterima</option>
                 <option {{ $distribusi->status == 'Diterima Sebagian' ? 'selected' : '' }}>Diterima Sebagian</option>

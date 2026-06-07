@@ -62,20 +62,20 @@
             <tbody class="bg-white divide-y divide-gray-100">
                 @forelse(\App\Models\Distribusi::latest()->take(5)->get() as $d)
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ \Carbon\Carbon::parse($d->tanggal_pengiriman)->format('d M Y') }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-medium">{{ \Carbon\Carbon::parse($d->tanggal_pengiriman)->format('d M Y') }}</td>
                     <td class="px-6 py-4 text-sm text-gray-700">{{ $d->sekolah_tujuan }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-700">{{ $d->jumlah_porsi }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-700 font-semibold">{{ $d->jumlah_porsi }}</td>
                     <td class="px-6 py-4">
                         @if($d->status === 'Pending')
                         <span class="bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full">Pending</span>
-                        @elseif($d->status === 'Di Perjalanan')
-                        <span class="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-full">Di Perjalanan</span>
+                        @elseif($d->status === 'Dikirim')
+                        <span class="bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full border border-amber-100">Dikirim</span>
                         @elseif($d->status === 'Diterima')
-                        <span class="bg-emerald-50 text-emerald-700 text-xs font-medium px-2.5 py-1 rounded-full">Diterima</span>
+                        <span class="bg-green-50 text-green-700 text-xs font-medium px-2.5 py-1 rounded-full border border-green-100">Diterima</span>
                         @elseif($d->status === 'Diterima Sebagian')
-                        <span class="bg-orange-50 text-orange-700 text-xs font-medium px-2.5 py-1 rounded-full">Diterima Sebagian</span>
+                        <span class="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-full border border-blue-100">Diterima Sebagian</span>
                         @else
-                        <span class="bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full">Kendala</span>
+                        <span class="bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full border border-red-100">Kendala</span>
                         @endif
                     </td>
                 </tr>

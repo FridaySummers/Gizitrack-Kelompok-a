@@ -34,9 +34,8 @@ return new class extends Migration {
                 ->enum("status", [
                     "Pending",
                     "Dikirim",
-                    "Di Perjalanan",
                     "Diterima",
-                    "Diterima Sebagian",
+                    "Komplain",
                     "Kendala",
                 ])
                 ->default("Pending");

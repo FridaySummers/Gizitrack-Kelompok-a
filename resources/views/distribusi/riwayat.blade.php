@@ -7,7 +7,7 @@
 {{-- Date Picker --}}
 <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
     <div>
-        <h2 class="text-xl font-semibold text-gray-800">Pelacakan Pengiriman</h2>
+        <h2 class="text-xl font-bold text-gray-800">Pelacakan Pengiriman</h2>
         <p class="text-sm text-gray-500 mt-1">Pantau progres pengiriman makanan harian ke sekolah tujuan</p>
     </div>
 
@@ -56,7 +56,7 @@
 {{-- Summary Cards --}}
 <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
     {{-- Total Pengiriman --}}
-    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,7 +71,7 @@
     </div>
 
     {{-- Total Porsi --}}
-    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +86,7 @@
     </div>
 
     {{-- Diterima --}}
-    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,8 +100,8 @@
         </div>
     </div>
 
-    {{-- Di Perjalanan --}}
-    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+    {{-- Dikirim --}}
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-sky-50 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,14 +109,14 @@
                 </svg>
             </div>
             <div>
-                <p class="text-xs text-gray-500">Di Perjalanan</p>
-                <p class="text-xl font-bold text-sky-600">{{ $summary['di_perjalanan'] }}</p>
+                <p class="text-xs text-gray-500">Dikirim</p>
+                <p class="text-xl font-bold text-sky-600">{{ $summary['dikirim'] }}</p>
             </div>
         </div>
     </div>
 
     {{-- Kendala --}}
-    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,15 +132,15 @@
 </div>
 
 {{-- Tabel Pelacakan --}}
-<div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-    <table class="w-full divide-y divide-gray-100">
-        <thead class="bg-gray-50">
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-100">
             <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">#</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sekolah Tujuan</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jumlah Porsi</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Waktu Update</th>
+                <th class="px-6 py-4 font-semibold">#</th>
+                <th class="px-6 py-4 font-semibold">Sekolah Tujuan</th>
+                <th class="px-6 py-4 font-semibold">Jumlah Porsi</th>
+                <th class="px-6 py-4 font-semibold">Status Akhir</th>
+                <th class="px-6 py-4 font-semibold">Waktu Update</th>
             </tr>
         </thead>
 
@@ -150,17 +150,17 @@
                 <td class="px-6 py-4 text-sm text-gray-500">{{ $index + 1 }}</td>
 
                 <td class="px-6 py-4">
-                    <span class="text-sm font-medium text-gray-800">{{ $d->sekolah_tujuan }}</span>
+                    <span class="text-sm font-bold text-gray-900">{{ $d->sekolah_tujuan }}</span>
                 </td>
 
                 <td class="px-6 py-4">
-                    <span class="text-sm text-gray-700 font-medium">{{ number_format($d->jumlah_porsi) }}</span>
-                    <span class="text-xs text-gray-400 ml-1">porsi</span>
+                    <span class="text-sm text-gray-700 font-bold">{{ number_format($d->jumlah_porsi) }}</span>
+                    <span class="text-xs text-gray-400 ml-1 font-medium text-gray-500 uppercase tracking-wider">porsi</span>
 
                     @if($d->requestChanges->count() > 0)
                         @php $lastChange = $d->requestChanges->last(); @endphp
                         <div class="mt-1 flex items-center gap-1">
-                            <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-700 text-xs px-2 py-0.5 rounded-full" title="Alasan: {{ $lastChange->alasan }}">
+                            <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-700 text-xs px-2 py-0.5 rounded-full border border-amber-100" title="Alasan: {{ $lastChange->alasan }}">
                                 📝 <s>{{ $lastChange->jumlah_porsi_awal }}</s> → {{ $lastChange->jumlah_porsi_baru }}
                             </span>
                         </div>
@@ -169,38 +169,29 @@
 
                 <td class="px-6 py-4">
                     @if($d->status === 'Pending')
-                        <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                        <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full border border-amber-100">
                             Pending
                         </span>
-
-                    @elseif(in_array($d->status, ['Dikirim', 'Di Perjalanan']))
-                        <span class="inline-flex items-center gap-1 bg-sky-50 text-sky-700 text-xs font-medium px-2.5 py-1 rounded-full">
-                            <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span>
-                            {{ $d->status }}
+                    @elseif($d->status === 'Dikirim')
+                        <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full border border-amber-100">
+                            Dikirim
                         </span>
-
                     @elseif($d->status === 'Diterima')
-                        <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-xs font-medium px-2.5 py-1 rounded-full">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span class="inline-flex items-center gap-1 bg-green-50 text-green-700 text-xs font-medium px-2.5 py-1 rounded-full border border-green-100">
                             Diterima
                         </span>
-
                     @elseif($d->status === 'Diterima Sebagian')
-                        <span class="inline-flex items-center gap-1 bg-orange-50 text-orange-700 text-xs font-medium px-2.5 py-1 rounded-full">
-                            <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                        <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-full border border-blue-100">
                             Diterima Sebagian
                         </span>
-
                     @elseif($d->status === 'Kendala')
-                        <span class="inline-flex items-center gap-1 bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full">
-                            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                        <span class="inline-flex items-center gap-1 bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full border border-red-100">
                             Kendala
                         </span>
                     @endif
                 </td>
 
-                <td class="px-6 py-4 text-sm text-gray-500">
+                <td class="px-6 py-4 text-sm text-gray-500 font-medium">
                     @if($d->last_updated)
                         {{ \Carbon\Carbon::parse($d->last_updated)->format('H:i') }}
                     @else
@@ -211,13 +202,13 @@
             </tr>
             @empty
             <tr>
-                <td colspan="5" class="px-6 py-16 text-center">
-                    <div class="flex flex-col items-center">
-                        <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                        </svg>
-                        <p class="text-sm text-gray-500 font-medium">Tidak ada pengiriman pada tanggal ini</p>
-                        <p class="text-xs text-gray-400 mt-1">Pilih tanggal lain atau cek kembali nanti</p>
+                <td colspan="5" class="px-6 py-12 text-center">
+                    <div class="flex flex-col items-center justify-center text-gray-400">
+                        <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                        <p class="text-lg font-medium text-gray-500">Tidak ada pengiriman pada tanggal ini.</p>
+                        <p class="text-xs text-gray-400 mt-1 italic">Pilih tanggal lain atau cek kembali nanti</p>
                     </div>
                 </td>
             </tr>
@@ -228,19 +219,22 @@
 
 {{-- Progress Bar --}}
 @if($summary['total_pengiriman'] > 0)
-<div class="mt-6 bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-    <h3 class="text-sm font-medium text-gray-700 mb-3">Progres Pengiriman Hari Ini</h3>
-    <div class="flex rounded-full overflow-hidden h-3 bg-gray-100">
+<div class="mt-6 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+    <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <span class="w-1.5 h-4 bg-emerald-500 rounded-full"></span>
+        Progres Pengiriman Hari Ini
+    </h3>
+    <div class="flex rounded-full overflow-hidden h-4 bg-gray-100 mb-4">
         @if($summary['diterima'] > 0)
         <div class="bg-emerald-500 transition-all duration-500" style="width: {{ ($summary['diterima'] / $summary['total_pengiriman']) * 100 }}%"
              title="Diterima: {{ $summary['diterima'] }}"></div>
         @endif
-        @if($summary['di_perjalanan'] > 0)
-        <div class="bg-sky-500 transition-all duration-500" style="width: {{ ($summary['di_perjalanan'] / $summary['total_pengiriman']) * 100 }}%"
-             title="Di Perjalanan: {{ $summary['di_perjalanan'] }}"></div>
+        @if($summary['dikirim'] > 0)
+        <div class="bg-amber-400 transition-all duration-500" style="width: {{ ($summary['dikirim'] / $summary['total_pengiriman']) * 100 }}%"
+             title="Dikirim: {{ $summary['dikirim'] }}"></div>
         @endif
         @if($summary['pending'] > 0)
-        <div class="bg-amber-400 transition-all duration-500" style="width: {{ ($summary['pending'] / $summary['total_pengiriman']) * 100 }}%"
+        <div class="bg-amber-200 transition-all duration-500" style="width: {{ ($summary['pending'] / $summary['total_pengiriman']) * 100 }}%"
              title="Pending: {{ $summary['pending'] }}"></div>
         @endif
         @if($summary['kendala'] > 0)
@@ -248,11 +242,11 @@
              title="Kendala: {{ $summary['kendala'] }}"></div>
         @endif
     </div>
-    <div class="flex gap-4 mt-2 text-xs text-gray-500">
-        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Diterima</span>
-        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-sky-500"></span> Di Perjalanan</span>
-        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Pending</span>
-        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span> Kendala</span>
+    <div class="flex flex-wrap gap-4 text-xs font-bold text-gray-500 uppercase tracking-wider">
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Diterima</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Dikirim</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> Kendala</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-200"></span> Pending</span>
     </div>
 </div>
 @endif

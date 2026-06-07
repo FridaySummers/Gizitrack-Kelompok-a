@@ -31,7 +31,7 @@ class DistribusiController extends Controller
             "sekolah_tujuan" => $request->sekolah_tujuan,
             "jumlah_porsi" => $request->jumlah_porsi,
             "tanggal_pengiriman" => $request->tanggal_pengiriman,
-            "status" => "Di Perjalanan",
+            "status" => "Dikirim",
         ]);
 
         return redirect()
@@ -103,9 +103,7 @@ class DistribusiController extends Controller
             "diterima" => $distribusis
                 ->whereIn("status", ["Diterima", "Diterima Sebagian"])
                 ->count(),
-            "di_perjalanan" => $distribusis
-                ->whereIn("status", ["Di Perjalanan", "Dikirim"])
-                ->count(),
+            "dikirim" => $distribusis->where("status", "Dikirim")->count(),
             "kendala" => $distribusis->where("status", "Kendala")->count(),
             "pending" => $distribusis->where("status", "Pending")->count(),
         ];

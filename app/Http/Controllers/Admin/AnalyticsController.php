@@ -16,22 +16,14 @@ class AnalyticsController extends Controller
             today(),
         )->count();
         $distribusiPending = Distribusi::where("status", "Pending")->count();
-        $distribusiDalamPerjalanan = Distribusi::where(
-            "status",
-            "Di Perjalanan",
-        )->count();
-        $distribusiTerkirim = Distribusi::where(
-            "status",
-            "Di Perjalanan",
-        )->count();
+        $distribusiDikirim = Distribusi::where("status", "Dikirim")->count();
         $totalPorsi = Distribusi::sum("jumlah_porsi");
 
         return response()->json([
             "total_distribusi" => $totalDistribusi,
             "distribusi_hari_ini" => $distribusiHariIni,
             "distribusi_pending" => $distribusiPending,
-            "distribusi_dalam_perjalanan" => $distribusiDalamPerjalanan,
-            "distribusi_terkirim" => $distribusiTerkirim,
+            "distribusi_dikirim" => $distribusiDikirim,
             "total_porsi" => $totalPorsi,
         ]);
     }

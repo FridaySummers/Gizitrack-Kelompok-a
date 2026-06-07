@@ -44,6 +44,7 @@
                 <th scope="col" class="px-6 py-4 font-semibold">Menu</th>
                 <th scope="col" class="px-6 py-4 font-semibold">Porsi</th>
                 <th scope="col" class="px-6 py-4 font-semibold">Status</th>
+                <th scope="col" class="px-6 py-4 font-semibold">Komplain/Catatan</th>
                 <th scope="col" class="px-6 py-4 font-semibold text-center">Aksi</th>
             </tr>
         </thead>
@@ -64,19 +65,15 @@
                 </td>
                 <td class="px-6 py-4">
                     @if($d->status === 'Dikirim')
-                        <span class="bg-sky-50 text-sky-700 text-xs font-medium px-2.5 py-1 rounded-full border border-sky-100">
-                            {{ $d->status }}
-                        </span>
-                    @elseif($d->status === 'Di Perjalanan')
-                        <span class="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-full border border-blue-100">
+                        <span class="bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full border border-amber-100">
                             {{ $d->status }}
                         </span>
                     @elseif($d->status === 'Diterima')
-                        <span class="bg-emerald-50 text-emerald-700 text-xs font-medium px-2.5 py-1 rounded-full border border-emerald-100">
+                        <span class="bg-green-50 text-green-700 text-xs font-medium px-2.5 py-1 rounded-full border border-green-100">
                             {{ $d->status }}
                         </span>
-                    @elseif($d->status === 'Diterima Sebagian')
-                        <span class="bg-orange-50 text-orange-700 text-xs font-medium px-2.5 py-1 rounded-full border border-orange-100">
+                    @elseif($d->status === 'Komplain')
+                        <span class="bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full border border-red-100">
                             {{ $d->status }}
                         </span>
                     @else
@@ -86,8 +83,19 @@
                     @endif
                 </td>
                 <td class="px-6 py-4">
+                    @if($d->status === 'Komplain')
+                        @forelse($d->feedbacks as $f)
+                            <p class="text-xs text-gray-600 bg-gray-50 p-2 rounded-lg border border-gray-100 mb-1 last:mb-0">{{ $f->catatan }}</p>
+                        @empty
+                            <span class="text-gray-400 text-xs italic">Menunggu feedback...</span>
+                        @endforelse
+                    @else
+                        <span class="text-gray-400 text-xs">-</span>
+                    @endif
+                </td>
+                <td class="px-6 py-4">
                     <div class="flex flex-col items-center gap-2">
-                        @if(in_array($d->status, ['Dikirim', 'Di Perjalanan']))
+                        @if($d->status === 'Dikirim')
                             <form action="{{ route('sekolah.distributions.update', $d) }}" method="POST" class="w-full">
                                 @csrf
                                 @method('PATCH')
@@ -97,10 +105,10 @@
                                 </button>
                             </form>
 
-                            <!-- PBI-38: Modal Trigger Button -->
+                            <!-- PBI-38: Complaint Button -->
                             <button data-modal-target="complaint-modal-{{ $d->id }}" data-modal-toggle="complaint-modal-{{ $d->id }}"
-                                    class="w-full text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all" type="button">
-                                Terima dengan Catatan
+                                    class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all" type="button">
+                                Komplain
                             </button>
 
                             <!-- PBI-38: Flowbite Modal -->
@@ -109,7 +117,7 @@
                                     <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden">
                                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                                             <h3 class="text-lg font-bold text-gray-900">
-                                                Kirim Catatan / Komplain
+                                                Ajukan Komplain
                                             </h3>
                                             <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-toggle="complaint-modal-{{ $d->id }}">
                                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -123,18 +131,28 @@
                                             @method('PATCH')
                                             <input type="hidden" name="action" value="terima_catatan">
                                             <div class="mb-4">
-                                                <label for="catatan-{{ $d->id }}" class="block mb-2 text-sm font-semibold text-gray-900 text-left">Deskripsi Catatan</label>
+                                                <label for="catatan-{{ $d->id }}" class="block mb-2 text-sm font-semibold text-gray-900 text-left">Deskripsi Masalah/Komplain</label>
                                                 <textarea id="catatan-{{ $d->id }}" name="catatan" rows="4"
-                                                          class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-200 focus:ring-emerald-500 focus:border-emerald-500"
-                                                          placeholder="Tulis alasan terima sebagian atau komplain di sini..." required></textarea>
+                                                          class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-200 focus:ring-red-500 focus:border-red-500"
+                                                          placeholder="Jelaskan kendala atau porsi yang tidak sesuai..." required></textarea>
                                             </div>
-                                            <button type="submit" class="w-full text-white inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-bold rounded-xl text-sm px-5 py-3 text-center transition-all">
-                                                Simpan & Konfirmasi
+                                            <button type="submit" class="w-full text-white inline-flex items-center justify-center bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-xl text-sm px-5 py-3 text-center transition-all">
+                                                Kirim Komplain
                                             </button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
+                        @elseif($d->status === 'Komplain')
+                            <!-- PBI-38: Resolution Action -->
+                            <form action="{{ route('sekolah.distributions.update', $d) }}" method="POST" class="w-full">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="action" value="resolve_komplain">
+                                <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all">
+                                    Tandai Selesai
+                                </button>
+                            </form>
                         @else
                             <span class="text-gray-400 text-xs italic">Sudah dikonfirmasi</span>
                         @endif
@@ -152,7 +170,7 @@
                             @if($tab === 'history')
                                 Belum ada riwayat pengiriman.
                             @else
-                                Belum ada distribusi aktif (Dikirim/Di Perjalanan).
+                                Belum ada distribusi aktif (Dikirim).
                             @endif
                         </p>
                     </div>
