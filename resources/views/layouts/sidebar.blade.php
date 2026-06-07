@@ -19,9 +19,21 @@
             </div>
 
             <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-                @php $role = auth()->user()->role; $currentRoute = request()->route()->getName(); @endphp
+                @php $role = auth()->user()->role->value; $currentRoute = request()->route()->getName(); @endphp
 
-                @if($role === 'admin')
+                @if($role === 'super_admin')
+                {{-- Super Admin: Overview & Distributions IDENTIK dengan Admin --}}
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ $currentRoute === 'admin.dashboard' ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
+                    Overview
+                </a>
+                <a href="{{ route('admin.distributions.index') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ str_starts_with($currentRoute, 'admin.distributions') ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
+                    Distributions
+                </a>
+                {{-- Hanya Manage Accounts yang berbeda --}}
+                <a href="{{ route('super_admin.users.index') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ str_starts_with($currentRoute, 'super_admin.users') ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
+                    Manage Accounts
+                </a>
+                @elseif($role === 'admin')
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium {{ $currentRoute === 'admin.dashboard' ? 'bg-emerald-50 text-emerald-700 border-l-2 border-emerald-500' : 'text-gray-600 hover:bg-gray-50' }}">
                     Overview
                 </a>
@@ -61,7 +73,7 @@
                     </div>
                     <div class="ml-2">
                         <p class="text-sm font-medium text-gray-700">{{ auth()->user()->name }}</p>
-                        <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">{{ ucfirst(auth()->user()->role) }}</span>
+                        <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">{{ auth()->user()->role->label() }}</span>
                     </div>
                 </div>
                 <form method="POST" action="{{ route('logout') }}">

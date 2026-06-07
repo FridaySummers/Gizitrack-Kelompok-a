@@ -3,10 +3,10 @@
 @section('title', 'Tambah Akun')
 
 @section('content')
-<h2 class="text-xl font-semibold text-gray-800 mb-6">Tambah Akun Vendor / Sekolah</h2>
+<h2 class="text-xl font-semibold text-gray-800 mb-6">Tambah Akun Baru</h2>
 
 <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6 max-w-xl">
-    <form method="POST" action="{{ route('admin.users.store') }}">
+    <form method="POST" action="{{ route('super_admin.users.store') }}">
         @csrf
 
         <div class="mb-4">
@@ -35,8 +35,11 @@
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent
                     @error('role') border-red-500 @else border-gray-200 @enderror">
                 <option value="">-- Pilih Role --</option>
-                <option value="vendor"  {{ old('role') === 'vendor'  ? 'selected' : '' }}>Vendor</option>
-                <option value="sekolah" {{ old('role') === 'sekolah' ? 'selected' : '' }}>Sekolah</option>
+                @foreach($roles as $role)
+                    <option value="{{ $role->value }}" {{ old('role') === $role->value ? 'selected' : '' }}>
+                        {{ $role->label() }}
+                    </option>
+                @endforeach
             </select>
             @error('role')
                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
@@ -64,7 +67,7 @@
                     class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition">
                 Simpan
             </button>
-            <a href="{{ route('admin.users.index') }}"
+            <a href="{{ route('super_admin.users.index') }}"
                class="text-gray-600 hover:text-gray-800 text-sm px-4 py-2 mt-1">Batal</a>
         </div>
     </form>

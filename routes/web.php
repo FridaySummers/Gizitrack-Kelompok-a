@@ -11,21 +11,22 @@ use App\Http\Controllers\Sekolah\DashboardController as SekolahDashboard;
 use App\Http\Controllers\Sekolah\FeedbackController;
 use App\Http\Controllers\Sekolah\DistributionController as SekolahDistributionController;
 use App\Http\Controllers\DistribusiController;
+use App\Http\Controllers\SuperAdmin\UserController as SuperAdminUserController;
 
 // ── 1. PUBLIC ROUTES ──────────────────────────────────────────────
 Route::get("/", fn() => redirect()->route("login"));
 
 // ── 2. POLISI LALU LINTAS (FIX ERROR DASHBOARD) ───────────────────
 Route::get("/dashboard", function () {
-    $role = auth()->user()->role;
+    $role = auth()->user()->role->value;
 
-    if ($role == "admin") {
+    if ($role === "super_admin" || $role === "admin") {
         return redirect()->route("admin.dashboard");
     }
-    if ($role == "vendor") {
+    if ($role === "vendor") {
         return redirect()->route("vendor.dashboard");
     }
-    if ($role == "sekolah") {
+    if ($role === "sekolah") {
         return redirect()->route("sekolah.dashboard");
     }
 
@@ -47,23 +48,28 @@ Route::middleware("auth")->group(function () {
     );
 });
 
-// ── 4. GRUP ADMIN ────────────────────────────────────────────────
-Route::middleware(["auth", "role:admin"])
+// ── 4. GRUP SUPER ADMIN — hanya kelola akun ──────────────────────
+Route::middleware(["auth", "role:super_admin"])
+    ->prefix("super-admin")
+    ->name("super_admin.")
+    ->group(function () {
+        // Fitur Kelola Semua Akun (PBI)
+        Route::resource("users", SuperAdminUserController::class)->except(["show"]);
+    });
+
+// ── 5. GRUP ADMIN SHARED (admin + super_admin) ───────────────────
+// Dashboard, Distributions, Analytics, Reports — IDENTIK untuk keduanya.
+Route::middleware(["auth", "role:admin,super_admin"])
     ->prefix("admin")
     ->name("admin.")
     ->group(function () {
-        Route::get("/dashboard", [AdminDashboard::class, "index"])->name(
-            "dashboard",
-        );
+        Route::get("/dashboard", [AdminDashboard::class, "index"])->name("dashboard");
 
         // Fitur Lihat Status Distribusi (PBI-20)
         Route::get("/distributions", [
             AdminDistributionController::class,
             "index",
         ])->name("distributions.index");
-
-        // Fitur Kelola Akun Vendor & Sekolah (PBI-7 sampai PBI-10)
-        Route::resource("users", AdminUserController::class)->except(["show"]);
 
         // API untuk Live Tracking (PBI-25)
         Route::get("/api/distribusi", [
@@ -88,7 +94,16 @@ Route::middleware(["auth", "role:admin"])
         ])->name("reports.export");
     });
 
-// ── 5. GRUP VENDOR ───────────────────────────────────────────────
+// ── 6. GRUP ADMIN ONLY — User Management ─────────────────────────
+// Kelola Akun Vendor & Sekolah — hanya bisa diakses admin biasa.
+Route::middleware(["auth", "role:admin"])
+    ->prefix("admin")
+    ->name("admin.")
+    ->group(function () {
+        Route::resource("users", AdminUserController::class)->except(["show"]);
+    });
+
+// ── 7. GRUP VENDOR ───────────────────────────────────────────────
 Route::middleware(["auth", "role:vendor"])
     ->prefix("vendor")
     ->name("vendor.")
@@ -109,7 +124,7 @@ Route::middleware(["auth", "role:vendor"])
         Route::resource("menu", MenuController::class);
     });
 
-// ── 6. GRUP SEKOLAH ──────────────────────────────────────────────
+// ── 8. GRUP SEKOLAH ──────────────────────────────────────────────
 Route::middleware(["auth", "role:sekolah"])
     ->prefix("sekolah")
     ->name("sekolah.")
@@ -129,5 +144,5 @@ Route::middleware(["auth", "role:sekolah"])
         ])->name("distributions.update");
     });
 
-// ── 7. AUTH ROUTES ───────────────────────────────────────────────
+// ── 9. AUTH ROUTES ───────────────────────────────────────────────
 require __DIR__ . "/auth.php";
