@@ -23,7 +23,7 @@ class DashboardController extends Controller
             ->count();
 
         $totalKomplain = \App\Models\Distribusi::where("sekolah_id", $sekolahId)
-            ->where("status", "Diterima Sebagian")
+            ->where("status", "Komplain")
             ->count();
 
         $distribusiTerbaru = \App\Models\Distribusi::with(["vendor", "menu"])

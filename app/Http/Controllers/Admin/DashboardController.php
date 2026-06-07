@@ -9,6 +9,20 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $totalDistribusi = \App\Models\Distribusi::count();
+        $totalVendor = \App\Models\User::where("role", "vendor")->count();
+        $totalSekolah = \App\Models\User::where("role", "sekolah")->count();
+
+        $distribusiTerbaru = \App\Models\Distribusi::latest()->take(5)->get();
+
+        return view(
+            "admin.dashboard",
+            compact(
+                "totalDistribusi",
+                "totalVendor",
+                "totalSekolah",
+                "distribusiTerbaru",
+            ),
+        );
     }
 }
