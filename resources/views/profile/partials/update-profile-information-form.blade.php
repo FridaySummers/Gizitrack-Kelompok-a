@@ -33,37 +33,18 @@
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
-        <!-- EMAIL -->
+        <!-- EMAIL (READONLY) -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input 
                 id="email" 
                 name="email" 
                 type="email" 
-                class="mt-1 block w-full" 
+                class="mt-1 block w-full bg-gray-100 cursor-not-allowed" 
                 :value="old('email', $user->email)" 
-                required 
-                autocomplete="username" 
+                readonly
             />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
-
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800">
-                        {{ __('Your email address is unverified.') }}
-
-                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
-            @endif
+            <p class="text-xs text-gray-500 mt-1">Email tidak dapat diubah. Hubungi Administrator jika perlu penyesuaian.</p>
         </div>
 
         <!-- NO TELEPON (BARU) -->
@@ -72,13 +53,26 @@
             <x-text-input 
                 id="no_hp" 
                 name="no_hp" 
-                type="text" 
+                type="number" 
                 class="mt-1 block w-full" 
                 :value="old('no_hp', $user->no_hp)" 
                 autocomplete="tel"
                 placeholder="Masukkan nomor telepon"
             />
             <x-input-error class="mt-2" :messages="$errors->get('no_hp')" />
+        </div>
+
+        <!-- ALAMAT (BARU) -->
+        <div>
+            <x-input-label for="alamat" :value="__('Alamat')" />
+            <textarea 
+                id="alamat" 
+                name="alamat" 
+                class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" 
+                rows="3"
+                placeholder="Masukkan alamat lengkap"
+            >{{ old('alamat', $user->alamat) }}</textarea>
+            <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
         </div>
 
         <!-- BUTTON -->
