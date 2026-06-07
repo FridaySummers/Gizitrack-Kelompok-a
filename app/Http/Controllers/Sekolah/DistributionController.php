@@ -9,14 +9,28 @@ use Illuminate\Http\Request;
 
 class DistributionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $distributions = Distribusi::with(["feedbacks", "vendor", "menu"])
-            ->where("sekolah_id", auth()->id())
-            ->where("status", "Dikirim")
-            ->paginate(10);
+        $tab = $request->query("tab");
+        $query = Distribusi::with(["feedbacks", "vendor", "menu"])->where(
+            "sekolah_id",
+            auth()->id(),
+        );
 
-        return view("sekolah.distributions.index", compact("distributions"));
+        if ($tab === "history") {
+            // Fetch all history (all statuses)
+            $query->latest();
+        } else {
+            // Default: only active shipments
+            $query->whereIn("status", ["Dikirim", "Di Perjalanan"]);
+        }
+
+        $distributions = $query->paginate(10);
+
+        return view(
+            "sekolah.distributions.index",
+            compact("distributions", "tab"),
+        );
     }
 
     public function update(Request $request, Distribusi $distribution)
@@ -36,19 +50,13 @@ class DistributionController extends Controller
             "catatan" => "required_if:action,terima_catatan|string|min:3",
         ]);
 
-        // Only allow updating if status is "Terkirim", "Di Perjalanan", or "Dikirim"
-        if (
-            !in_array($distribution->status, [
-                "Terkirim",
-                "Di Perjalanan",
-                "Dikirim",
-            ])
-        ) {
+        // Only allow updating if status is "Di Perjalanan" or "Dikirim"
+        if (!in_array($distribution->status, ["Di Perjalanan", "Dikirim"])) {
             return redirect()
                 ->back()
                 ->with(
                     "error",
-                    'Distribusi ini tidak dapat dikonfirmasi. Status harus "Terkirim", "Di Perjalanan", atau "Dikirim".',
+                    'Distribusi ini tidak dapat dikonfirmasi. Status harus "Di Perjalanan" atau "Dikirim".',
                 );
         }
 

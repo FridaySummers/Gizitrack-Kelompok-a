@@ -26,19 +26,30 @@ class DistribusiSeeder extends Seeder
             "email",
             "sekolah4@gizitrack.test",
         )->first();
-        $vendor = \App\Models\User::where("role", "vendor")->first();
-        $menu = \App\Models\Menu::first();
 
-        if (!$sekolah1 || !$vendor || !$menu) {
+        $vendor1 = \App\Models\User::where(
+            "email",
+            "vendor@gizitrack.test",
+        )->first();
+        $vendor2 = \App\Models\User::where(
+            "email",
+            "vendor2@gizitrack.test",
+        )->first();
+
+        $menu1 = \App\Models\Menu::first();
+        $menu2 = \App\Models\Menu::skip(1)->first() ?? $menu1;
+
+        if (!$sekolah1 || !$vendor1 || !$menu1) {
             return;
         }
 
         $distribusis = [
+            // History (Diterima)
             [
                 "sekolah_id" => $sekolah1->id,
-                "vendor_id" => $vendor->id,
-                "menu_id" => $menu->id,
-                "sekolah_tujuan" => "SDN 01 Pagi",
+                "vendor_id" => $vendor1->id,
+                "menu_id" => $menu1->id,
+                "sekolah_tujuan" => $sekolah1->name,
                 "jumlah_porsi" => 450,
                 "tanggal_pengiriman" => now()->subDays(3),
                 "status" => "Diterima",
@@ -46,101 +57,141 @@ class DistribusiSeeder extends Seeder
             ],
             [
                 "sekolah_id" => $sekolah2->id,
-                "vendor_id" => $vendor->id,
-                "menu_id" => $menu->id,
-                "sekolah_tujuan" => "SMPN 15 Jakarta",
+                "vendor_id" => $vendor1->id,
+                "menu_id" => $menu1->id,
+                "sekolah_tujuan" => $sekolah2->name,
                 "jumlah_porsi" => 620,
                 "tanggal_pengiriman" => now()->subDays(3),
                 "status" => "Diterima",
                 "catatan_kendala" => null,
             ],
             [
-                "sekolah_id" => $sekolah3->id,
-                "vendor_id" => $vendor->id,
-                "menu_id" => $menu->id,
-                "sekolah_tujuan" => "SMA Cendekia",
-                "jumlah_porsi" => 480,
-                "tanggal_pengiriman" => now()->subDays(2),
-                "status" => "Diterima",
-                "catatan_kendala" => null,
-            ],
-            [
                 "sekolah_id" => $sekolah4->id,
-                "vendor_id" => $vendor->id,
-                "menu_id" => $menu->id,
-                "sekolah_tujuan" => "SD Muhammadiyah 2",
+                "vendor_id" => $vendor1->id,
+                "menu_id" => $menu1->id,
+                "sekolah_tujuan" => $sekolah4->name,
                 "jumlah_porsi" => 380,
                 "tanggal_pengiriman" => now()->subDays(2),
                 "status" => "Diterima Sebagian",
-                "catatan_kendala" => null,
+                "catatan_kendala" => "10 porsi rusak",
             ],
+
+            // Yesterday (Diterima/Kendala)
             [
                 "sekolah_id" => $sekolah1->id,
-                "vendor_id" => $vendor->id,
-                "menu_id" => $menu->id,
-                "sekolah_tujuan" => "SDN 01 Pagi",
+                "vendor_id" => $vendor1->id,
+                "menu_id" => $menu1->id,
+                "sekolah_tujuan" => $sekolah1->name,
                 "jumlah_porsi" => 450,
                 "tanggal_pengiriman" => now()->subDays(1),
                 "status" => "Diterima",
                 "catatan_kendala" => null,
             ],
             [
-                "sekolah_id" => $sekolah2->id,
-                "vendor_id" => $vendor->id,
-                "menu_id" => $menu->id,
-                "sekolah_tujuan" => "SMPN 15 Jakarta",
-                "jumlah_porsi" => 620,
-                "tanggal_pengiriman" => now()->subDays(1),
-                "status" => "Dikirim",
-                "catatan_kendala" => null,
-            ],
-            [
                 "sekolah_id" => $sekolah3->id,
-                "vendor_id" => $vendor->id,
-                "menu_id" => $menu->id,
-                "sekolah_tujuan" => "SMA Cendekia",
+                "vendor_id" => $vendor2->id,
+                "menu_id" => $menu2->id,
+                "sekolah_tujuan" => $sekolah3->name,
                 "jumlah_porsi" => 480,
-                "tanggal_pengiriman" => now(),
+                "tanggal_pengiriman" => now()->subDays(1),
+                "status" => "Kendala",
+                "catatan_kendala" => "Ban mobil pecah",
+            ],
+
+            // Today (Ongoing / Monitoring for sekolah1)
+            [
+                "sekolah_id" => $sekolah1->id,
+                "vendor_id" => $vendor1->id,
+                "menu_id" => $menu1->id,
+                "sekolah_tujuan" => $sekolah1->name,
+                "jumlah_porsi" => 450,
+                "tanggal_pengiriman" => now()->toDateString(),
                 "status" => "Dikirim",
-                "catatan_kendala" => null,
+                "latitude" => -6.175392,
+                "longitude" => 106.827153,
+                "last_updated" => now(),
             ],
             [
                 "sekolah_id" => $sekolah1->id,
-                "vendor_id" => $vendor->id,
-                "menu_id" => $menu->id,
-                "sekolah_tujuan" => "SDN 01 Pagi",
-                "jumlah_porsi" => 450,
-                "tanggal_pengiriman" => now(),
-                "status" => "Dikirim",
-                "catatan_kendala" => null,
+                "vendor_id" => $vendor1->id,
+                "menu_id" => $menu1->id,
+                "sekolah_tujuan" => $sekolah1->name,
+                "jumlah_porsi" => 200,
+                "tanggal_pengiriman" => now()->toDateString(),
+                "status" => "Di Perjalanan",
+                "latitude" => -6.1944,
+                "longitude" => 106.8229,
+                "last_updated" => now(),
+            ],
+            [
+                "sekolah_id" => $sekolah1->id,
+                "vendor_id" => $vendor1->id,
+                "menu_id" => $menu1->id,
+                "sekolah_tujuan" => $sekolah1->name,
+                "jumlah_porsi" => 150,
+                "tanggal_pengiriman" => now()->toDateString(),
+                "status" => "Di Perjalanan",
+                "latitude" => -6.2297,
+                "longitude" => 106.8164,
+                "last_updated" => now(),
+            ],
+
+            // Other schools
+            [
+                "sekolah_id" => $sekolah2->id,
+                "vendor_id" => $vendor1->id,
+                "menu_id" => $menu1->id,
+                "sekolah_tujuan" => $sekolah2->name,
+                "jumlah_porsi" => 620,
+                "tanggal_pengiriman" => now()->toDateString(),
+                "status" => "Di Perjalanan",
+                "latitude" => -6.1944,
+                "longitude" => 106.8229,
+                "last_updated" => now(),
+            ],
+            [
+                "sekolah_id" => $sekolah3->id,
+                "vendor_id" => $vendor2->id,
+                "menu_id" => $menu2->id,
+                "sekolah_tujuan" => $sekolah3->name,
+                "jumlah_porsi" => 480,
+                "tanggal_pengiriman" => now()->toDateString(),
+                "status" => "Di Perjalanan",
+                "latitude" => -6.2297,
+                "longitude" => 106.8164, // SCBD
+                "last_updated" => now(),
             ],
             [
                 "sekolah_id" => $sekolah4->id,
-                "vendor_id" => $vendor->id,
-                "menu_id" => $menu->id,
-                "sekolah_tujuan" => "SD Muhammadiyah 2",
+                "vendor_id" => $vendor2->id,
+                "menu_id" => $menu2->id,
+                "sekolah_tujuan" => $sekolah4->name,
                 "jumlah_porsi" => 380,
-                "tanggal_pengiriman" => now(),
-                "status" => "Di Perjalanan",
-                "catatan_kendala" => null,
+                "tanggal_pengiriman" => now()->toDateString(),
+                "status" => "Dikirim",
+                "latitude" => -6.2088,
+                "longitude" => 106.8456, // Menteng
+                "last_updated" => now(),
             ],
             [
-                "sekolah_id" => $sekolah2->id,
-                "vendor_id" => $vendor->id,
-                "menu_id" => $menu->id,
-                "sekolah_tujuan" => "SMPN 15 Jakarta",
-                "jumlah_porsi" => 620,
-                "tanggal_pengiriman" => now(),
-                "status" => "Di Perjalanan",
+                "sekolah_id" => $sekolah1->id,
+                "vendor_id" => $vendor2->id,
+                "menu_id" => $menu2->id,
+                "sekolah_tujuan" => $sekolah1->name,
+                "jumlah_porsi" => 450,
+                "tanggal_pengiriman" => now()->addDay()->toDateString(),
+                "status" => "Pending",
                 "catatan_kendala" => null,
             ],
         ];
 
         foreach ($distribusis as $distribusi) {
-            Distribusi::firstOrCreate(
+            Distribusi::updateOrCreate(
                 [
-                    "sekolah_tujuan" => $distribusi["sekolah_tujuan"],
+                    "sekolah_id" => $distribusi["sekolah_id"],
                     "tanggal_pengiriman" => $distribusi["tanggal_pengiriman"],
+                    "status" => $distribusi["status"],
+                    "jumlah_porsi" => $distribusi["jumlah_porsi"],
                 ],
                 $distribusi,
             );

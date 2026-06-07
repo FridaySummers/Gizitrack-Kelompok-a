@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="mb-4 flex justify-end">
-    <a href="{{ route('vendor.distribusi.create') }}" 
+    <a href="{{ route('vendor.distribusi.create') }}"
        class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg inline-flex items-center gap-2">
         + Input Pengiriman Baru
     </a>
@@ -55,7 +55,7 @@
                             Dikirim
                         </span>
 
-                    @elseif(in_array($d->status, ['Di Perjalanan', 'Terkirim']))
+                    @elseif($d->status === 'Di Perjalanan')
                         <span class="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-full">
                             {{ $d->status }}
                         </span>
@@ -81,9 +81,9 @@
 
                 <!-- 🔥 AKSI -->
                 <td class="px-6 py-4 text-sm flex gap-2">
-                    
+
                     <!-- EDIT -->
-                    <a href="{{ route('vendor.distribusi.edit', $d->id) }}" 
+                    <a href="{{ route('vendor.distribusi.edit', $d->id) }}"
                        class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs">
                         Edit
                     </a>
@@ -92,7 +92,7 @@
                     <form action="{{ route('vendor.distribusi.destroy', $d->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button onclick="return confirm('Yakin mau hapus?')" 
+                        <button onclick="return confirm('Yakin mau hapus?')"
                             class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs">
                             Delete
                         </button>

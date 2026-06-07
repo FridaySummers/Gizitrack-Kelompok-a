@@ -23,7 +23,7 @@
                 <td class="px-6 py-4">
                     @if($d->status === 'Pending')
                     <span class="bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full">Pending</span>
-                    @elseif(in_array($d->status, ['Di Perjalanan','Terkirim']))
+                    @elseif($d->status === 'Di Perjalanan')
                     <span class="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-full">{{ $d->status }}</span>
                     @elseif($d->status === 'Diterima')
                     <span class="bg-emerald-50 text-emerald-700 text-xs font-medium px-2.5 py-1 rounded-full">Diterima</span>

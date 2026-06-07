@@ -70,8 +70,6 @@
                         <span class="bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full">Pending</span>
                         @elseif($d->status === 'Di Perjalanan')
                         <span class="bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1 rounded-full">Di Perjalanan</span>
-                        @elseif($d->status === 'Terkirim')
-                        <span class="bg-indigo-50 text-indigo-700 text-xs font-medium px-2.5 py-1 rounded-full">Terkirim</span>
                         @elseif($d->status === 'Diterima')
                         <span class="bg-emerald-50 text-emerald-700 text-xs font-medium px-2.5 py-1 rounded-full">Diterima</span>
                         @elseif($d->status === 'Diterima Sebagian')

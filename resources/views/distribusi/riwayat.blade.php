@@ -174,7 +174,7 @@
                             Pending
                         </span>
 
-                    @elseif(in_array($d->status, ['Dikirim', 'Di Perjalanan', 'Terkirim']))
+                    @elseif(in_array($d->status, ['Dikirim', 'Di Perjalanan']))
                         <span class="inline-flex items-center gap-1 bg-sky-50 text-sky-700 text-xs font-medium px-2.5 py-1 rounded-full">
                             <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span>
                             {{ $d->status }}

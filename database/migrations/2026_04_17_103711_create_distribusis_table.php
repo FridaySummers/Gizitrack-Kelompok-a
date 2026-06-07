@@ -35,7 +35,6 @@ return new class extends Migration {
                     "Pending",
                     "Dikirim",
                     "Di Perjalanan",
-                    "Terkirim",
                     "Diterima",
                     "Diterima Sebagian",
                     "Kendala",
