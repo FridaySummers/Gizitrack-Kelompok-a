@@ -11,17 +11,26 @@ use Illuminate\Validation\Rules\Password;
 class UserController extends Controller
 {
     /**
-     * [PBI-8] Display a listing of vendor & sekolah accounts.
+     * [PBI-8] Display a listing of vendor & sekolah accounts,
+     * plus the admin's own account (read-only) pinned at the top.
      */
     public function index()
     {
-        $users = User::latest()->paginate(10);
+        $authId = auth()->id();
+
+        $users = User::where(function ($query) use ($authId) {
+            $query->whereIn('role', ['vendor', 'sekolah'])
+                  ->orWhere('id', $authId);
+        })
+        ->orderByRaw("CASE WHEN id = ? THEN 0 ELSE 1 END", [$authId])
+        ->latest()
+        ->paginate(10);
 
         return view('admin.users.index', compact('users'));
     }
 
     /**
-     * [PBI-7] Show the form for creating a new user account.
+     * [PBI-7] Show the form for creating a new vendor/sekolah account.
      */
     public function create()
     {
@@ -29,14 +38,14 @@ class UserController extends Controller
     }
 
     /**
-     * [PBI-7] Store a newly created user account.
+     * [PBI-7] Store a newly created vendor/sekolah account.
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email',
-            'role'     => 'required|in:admin,vendor,sekolah',
+            'role'     => 'required|in:vendor,sekolah',
             'password' => ['required', 'confirmed', Password::min(8)],
         ]);
 
@@ -52,26 +61,37 @@ class UserController extends Controller
     }
 
     /**
-     * [PBI-9] Show the form for editing the specified user account.
+     * [PBI-9] Show the form for editing a vendor/sekolah account.
+     * Admin tidak bisa edit akun admin/super_admin.
      */
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
 
+        if (!in_array($user->role->value, ['vendor', 'sekolah'])) {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'Akses ditolak. Anda hanya dapat mengelola akun Vendor dan Sekolah.');
+        }
+
         return view('admin.users.edit', compact('user'));
     }
 
     /**
-     * [PBI-9] Update the specified user account.
+     * [PBI-9] Update a vendor/sekolah account.
      */
     public function update(Request $request, string $id)
     {
         $user = User::findOrFail($id);
 
+        if (!in_array($user->role->value, ['vendor', 'sekolah'])) {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'Akses ditolak. Anda hanya dapat mengelola akun Vendor dan Sekolah.');
+        }
+
         $validated = $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email,' . $user->id,
-            'role'     => 'required|in:admin,vendor,sekolah',
+            'role'     => 'required|in:vendor,sekolah',
             'password' => ['nullable', 'confirmed', Password::min(8)],
         ]);
 
@@ -90,11 +110,17 @@ class UserController extends Controller
     }
 
     /**
-     * [PBI-10] Remove the specified user account.
+     * [PBI-10] Remove a vendor/sekolah account only.
      */
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
+
+        if (!in_array($user->role->value, ['vendor', 'sekolah'])) {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'Akses ditolak. Anda hanya dapat mengelola akun Vendor dan Sekolah.');
+        }
+
         $user->delete();
 
         return redirect()->route('admin.users.index')

@@ -14,6 +14,7 @@ class AnalyticsController extends Controller
      */
     public function summary()
     {
+<<<<<<< HEAD
         return response()->json([
             'total_distribusi'  => Distribusi::count(),
             'distribusi_hari_ini' => Distribusi::whereDate('tanggal_pengiriman', now()->toDateString())->count(),
@@ -27,6 +28,23 @@ class AnalyticsController extends Controller
                 ? round((Distribusi::whereIn('status', ['Terkirim', 'Diterima', 'Diterima Sebagian'])->count() / Distribusi::count()) * 100, 1) 
                 : 0,
             'total_kendala' => Distribusi::where('status', 'Kendala')->count(),
+=======
+        $totalDistribusi = Distribusi::count();
+        $distribusiHariIni = Distribusi::whereDate(
+            "tanggal_pengiriman",
+            today(),
+        )->count();
+        $distribusiPending = Distribusi::where("status", "Pending")->count();
+        $distribusiDikirim = Distribusi::where("status", "Dikirim")->count();
+        $totalPorsi = Distribusi::sum("jumlah_porsi");
+
+        return response()->json([
+            "total_distribusi" => $totalDistribusi,
+            "distribusi_hari_ini" => $distribusiHariIni,
+            "distribusi_pending" => $distribusiPending,
+            "distribusi_dikirim" => $distribusiDikirim,
+            "total_porsi" => $totalPorsi,
+>>>>>>> 348de09e59b7393570f59668cda802669af2497a
         ]);
     }
 
@@ -35,6 +53,7 @@ class AnalyticsController extends Controller
      */
     public function chartData()
     {
+<<<<<<< HEAD
         // 1. Status Chart Data
         $statusChart = Distribusi::select('status', DB::raw('count(*) as count'))
             ->groupBy('status')
@@ -69,6 +88,30 @@ class AnalyticsController extends Controller
             'daily_chart' => $dailyChart,
             'top_schools_chart' => $topSchools,
             'top_issues_chart' => $topIssues,
+=======
+        // Data untuk chart status distribusi
+        $statusData = Distribusi::selectRaw("status, COUNT(*) as count")
+            ->groupBy("status")
+            ->get()
+            ->pluck("count", "status");
+
+        // Data distribusi per hari (7 hari terakhir) - kompatibilitas SQLite
+        $dailyData = Distribusi::selectRaw(
+            "strftime('%Y-%m-%d', tanggal_pengiriman) as date, COUNT(*) as count",
+        )
+            ->where(
+                "tanggal_pengiriman",
+                ">=",
+                now()->subDays(7)->format("Y-m-d"),
+            )
+            ->groupByRaw("strftime('%Y-%m-%d', tanggal_pengiriman)")
+            ->orderByRaw("strftime('%Y-%m-%d', tanggal_pengiriman)")
+            ->get();
+
+        return response()->json([
+            "status_chart" => $statusData,
+            "daily_chart" => $dailyData,
+>>>>>>> 348de09e59b7393570f59668cda802669af2497a
         ]);
     }
 }

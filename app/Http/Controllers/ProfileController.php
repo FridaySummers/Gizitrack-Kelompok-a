@@ -29,38 +29,16 @@ class ProfileController extends Controller
         $user = $request->user();
 
         $user->fill([
-            'name'  => $request->name,
-            'email' => $request->email,
-            'no_hp' => $request->no_hp, // 👈 tambahan
+            'name'   => $request->name,
+            'no_hp'  => $request->no_hp,
+            'alamat' => $request->alamat,
         ]);
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
+        // Email dihapus dari update karena sifatnya readonly
 
         $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
-    }
 }

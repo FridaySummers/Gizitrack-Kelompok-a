@@ -9,6 +9,37 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('sekolah.dashboard');
+        $sekolahId = auth()->id();
+
+        $pengirimanAktif = \App\Models\Distribusi::where(
+            "sekolah_id",
+            $sekolahId,
+        )
+            ->where("status", "Dikirim")
+            ->count();
+
+        $totalDiterima = \App\Models\Distribusi::where("sekolah_id", $sekolahId)
+            ->where("status", "Diterima")
+            ->count();
+
+        $totalKomplain = \App\Models\Distribusi::where("sekolah_id", $sekolahId)
+            ->where("status", "Komplain")
+            ->count();
+
+        $distribusiTerbaru = \App\Models\Distribusi::with(["vendor", "menu"])
+            ->where("sekolah_id", $sekolahId)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view(
+            "sekolah.dashboard",
+            compact(
+                "pengirimanAktif",
+                "totalDiterima",
+                "totalKomplain",
+                "distribusiTerbaru",
+            ),
+        );
     }
 }

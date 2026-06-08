@@ -10,6 +10,16 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
+        // Super Admin
+        User::firstOrCreate(
+            ["email" => "superadmin@gizitrack.test"],
+            [
+                "name"     => "Super Admin GiziTrack",
+                "password" => Hash::make("password"),
+                "role"     => "super_admin",
+            ],
+        );
+
         // Admin
         User::firstOrCreate(
             ["email" => "admin@gizitrack.test"],

@@ -76,8 +76,8 @@
             <label class="block text-sm mb-1">Status</label>
             <select name="status" class="w-full border rounded px-3 py-2">
                 <option {{ $distribusi->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                <option {{ $distribusi->status == 'Di Perjalanan' ? 'selected' : '' }}>Di Perjalanan</option>
-                <option {{ $distribusi->status == 'Terkirim' ? 'selected' : '' }}>Terkirim</option>
+                <option {{ $distribusi->status == 'Dikirim' ? 'selected' : '' }}>Dikirim</option>
+
                 <option {{ $distribusi->status == 'Diterima' ? 'selected' : '' }}>Diterima</option>
                 <option {{ $distribusi->status == 'Diterima Sebagian' ? 'selected' : '' }}>Diterima Sebagian</option>
                 <option {{ $distribusi->status == 'Kendala' ? 'selected' : '' }}>Kendala</option>
@@ -90,7 +90,7 @@
                 Update
             </button>
 
-            <a href="{{ route('vendor.distribusi.index') }}" 
+            <a href="{{ route('vendor.distribusi.index') }}"
                class="bg-gray-400 text-white px-4 py-2 rounded">
                 Batal
             </a>

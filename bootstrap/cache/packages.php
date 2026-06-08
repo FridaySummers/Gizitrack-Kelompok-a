@@ -1,4 +1,5 @@
 <?php return array (
+<<<<<<< HEAD
   'barryvdh/laravel-dompdf' => 
   array (
     'aliases' => 
@@ -9,6 +10,17 @@
     'providers' => 
     array (
       0 => 'Barryvdh\\DomPDF\\ServiceProvider',
+=======
+  'fruitcake/laravel-debugbar' => 
+  array (
+    'aliases' => 
+    array (
+      'Debugbar' => 'Fruitcake\\LaravelDebugbar\\Facades\\Debugbar',
+    ),
+    'providers' => 
+    array (
+      0 => 'Fruitcake\\LaravelDebugbar\\ServiceProvider',
+>>>>>>> 348de09e59b7393570f59668cda802669af2497a
     ),
   ),
   'laravel/breeze' => 

@@ -37,7 +37,6 @@
             <select name="role"
                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-400 focus:border-transparent
                     @error('role') border-red-500 @else border-gray-200 @enderror">
-                <option value="admin"   {{ old('role', $user->role) === 'admin'   ? 'selected' : '' }}>Admin</option>
                 <option value="vendor"  {{ old('role', $user->role) === 'vendor'  ? 'selected' : '' }}>Vendor</option>
                 <option value="sekolah" {{ old('role', $user->role) === 'sekolah' ? 'selected' : '' }}>Sekolah</option>
             </select>
