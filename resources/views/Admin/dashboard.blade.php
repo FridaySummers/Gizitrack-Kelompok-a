@@ -6,7 +6,7 @@
 <div class="mb-8 p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-gray-800">Halo, Admin! 🛡️</h2>
+            <h2 class="text-2xl font-bold text-gray-800">Halo {{ auth()->user()->role->label() }}! 🛡️</h2>
             <p class="text-gray-500 mt-1">Pantau seluruh ekosistem distribusi gizi sekolah secara real-time.</p>
         </div>
         <div class="flex items-center gap-2 text-sm font-medium text-emerald-600 bg-emerald-50 px-4 py-2 rounded-full">

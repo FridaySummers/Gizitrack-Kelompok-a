@@ -21,6 +21,8 @@ class AuthenticatedSessionController extends Controller
 
     /**
      * Handle an incoming authentication request.
+     * Redirect langsung ke dashboard sesuai role — hindari intended() yang bisa
+     * mengarahkan ke URL lama yang tidak sesuai role (penyebab 403).
      */
     public function store(LoginRequest $request): RedirectResponse
     {
@@ -28,7 +30,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $role = $request->user()->role->value;
+
+        return match($role) {
+            'super_admin' => redirect()->route('admin.dashboard'),
+            'admin'       => redirect()->route('admin.dashboard'),
+            'vendor'      => redirect()->route('vendor.dashboard'),
+            'sekolah'     => redirect()->route('sekolah.dashboard'),
+            default       => redirect('/'),
+        };
     }
 
     /**

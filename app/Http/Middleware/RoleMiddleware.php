@@ -10,7 +10,16 @@ class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        if (!$request->user() || !in_array($request->user()->role, $roles)) {
+        $user = $request->user();
+
+        if (!$user) {
+            abort(403, 'Akses ditolak.');
+        }
+
+        // Role di-cast ke Enum, bandingkan ->value (string)
+        $userRole = $user->role->value;
+
+        if (!in_array($userRole, $roles)) {
             abort(403, 'Akses ditolak.');
         }
 
