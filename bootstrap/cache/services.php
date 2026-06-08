@@ -24,12 +24,7 @@
     20 => 'Illuminate\\Translation\\TranslationServiceProvider',
     21 => 'Illuminate\\Validation\\ValidationServiceProvider',
     22 => 'Illuminate\\View\\ViewServiceProvider',
-<<<<<<< HEAD
-<<<<<<< HEAD
     23 => 'Barryvdh\\DomPDF\\ServiceProvider',
-=======
-    23 => 'Fruitcake\\LaravelDebugbar\\ServiceProvider',
->>>>>>> 348de09e59b7393570f59668cda802669af2497a
     24 => 'Laravel\\Breeze\\BreezeServiceProvider',
     25 => 'Laravel\\Dusk\\DuskServiceProvider',
     26 => 'Laravel\\Pail\\PailServiceProvider',
@@ -39,20 +34,6 @@
     30 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     31 => 'Termwind\\Laravel\\TermwindServiceProvider',
     32 => 'App\\Providers\\AppServiceProvider',
-<<<<<<< HEAD
-=======
-    23 => 'Laravel\\Breeze\\BreezeServiceProvider',
-    24 => 'Laravel\\Dusk\\DuskServiceProvider',
-    25 => 'Laravel\\Pail\\PailServiceProvider',
-    26 => 'Laravel\\Sail\\SailServiceProvider',
-    27 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    28 => 'Carbon\\Laravel\\ServiceProvider',
-    29 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    30 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    31 => 'App\\Providers\\AppServiceProvider',
->>>>>>> 53f90b7ef7e2319fd437e8008fe77906570129ee
-=======
->>>>>>> 348de09e59b7393570f59668cda802669af2497a
   ),
   'eager' => 
   array (
@@ -66,29 +47,13 @@
     7 => 'Illuminate\\Pagination\\PaginationServiceProvider',
     8 => 'Illuminate\\Session\\SessionServiceProvider',
     9 => 'Illuminate\\View\\ViewServiceProvider',
-<<<<<<< HEAD
-<<<<<<< HEAD
     10 => 'Barryvdh\\DomPDF\\ServiceProvider',
-=======
-    10 => 'Fruitcake\\LaravelDebugbar\\ServiceProvider',
->>>>>>> 348de09e59b7393570f59668cda802669af2497a
     11 => 'Laravel\\Dusk\\DuskServiceProvider',
     12 => 'Laravel\\Pail\\PailServiceProvider',
     13 => 'Carbon\\Laravel\\ServiceProvider',
     14 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     15 => 'Termwind\\Laravel\\TermwindServiceProvider',
     16 => 'App\\Providers\\AppServiceProvider',
-<<<<<<< HEAD
-=======
-    10 => 'Laravel\\Dusk\\DuskServiceProvider',
-    11 => 'Laravel\\Pail\\PailServiceProvider',
-    12 => 'Carbon\\Laravel\\ServiceProvider',
-    13 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    14 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    15 => 'App\\Providers\\AppServiceProvider',
->>>>>>> 53f90b7ef7e2319fd437e8008fe77906570129ee
-=======
->>>>>>> 348de09e59b7393570f59668cda802669af2497a
   ),
   'deferred' => 
   array (
