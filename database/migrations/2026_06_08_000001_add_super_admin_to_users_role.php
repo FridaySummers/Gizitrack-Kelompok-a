@@ -1,17 +1,27 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
-        DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('super_admin','admin','vendor','sekolah') NOT NULL DEFAULT 'sekolah'");
+        Schema::table("users", function (Blueprint $table) {
+            $table
+                ->enum("role", ["super_admin", "admin", "vendor", "sekolah"])
+                ->default("sekolah")
+                ->change();
+        });
     }
 
     public function down(): void
     {
-        DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin','vendor','sekolah') NOT NULL DEFAULT 'sekolah'");
+        Schema::table("users", function (Blueprint $table) {
+            $table
+                ->enum("role", ["admin", "vendor", "sekolah"])
+                ->default("sekolah")
+                ->change();
+        });
     }
 };
