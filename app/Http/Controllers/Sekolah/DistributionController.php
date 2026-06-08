@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Sekolah;
 use App\Http\Controllers\Controller;
 use App\Models\Distribusi;
 use App\Models\Feedback;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class DistributionController extends Controller
 {
@@ -70,29 +67,6 @@ class DistributionController extends Controller
             return redirect()
                 ->back()
                 ->with("success", "Distribusi berhasil dikonfirmasi diterima.");
-<<<<<<< HEAD
-        } else {
-<<<<<<< HEAD
-            // Receipt with notes - partial receipt
-            $distribution->update(['status' => 'Diterima Sebagian']);
-            
-            // Create feedback record
-            Feedback::create([
-                'distribution_id' => $distribution->id,
-                'user_id' => $this->fallbackUserId(),
-                'catatan' => $validated['catatan'],
-            ]);
-            
-            return redirect()->back()->with('success', 'Distribusi berhasil dikonfirmasi dengan catatan.');
-=======
-            // PBI-38: Database Transaction for atomic status update and feedback creation
-            \Illuminate\Support\Facades\DB::transaction(function () use (
-                $distribution,
-                $validated,
-            ) {
-                // Receipt with notes - partial receipt
-                $distribution->update(["status" => "Diterima Sebagian"]);
-=======
         }
 
         if ($validated["action"] === "resolve_komplain") {
@@ -109,7 +83,6 @@ class DistributionController extends Controller
             \DB::transaction(function () use ($distribution, $validated) {
                 // Update status to Komplain
                 $distribution->update(["status" => "Komplain"]);
->>>>>>> 348de09e59b7393570f59668cda802669af2497a
 
                 // Create feedback record
                 Feedback::create([
@@ -125,17 +98,6 @@ class DistributionController extends Controller
                     "success",
                     "Komplain berhasil dikirim dan sedang dalam penanganan.",
                 );
->>>>>>> 53f90b7ef7e2319fd437e8008fe77906570129ee
         }
-    }
-
-    protected function fallbackUserId(): int
-    {
-        return User::value('id') ?? User::create([
-            'name' => 'System User',
-            'email' => 'system@example.com',
-            'password' => Hash::make(Str::random(32)),
-            'role' => 'sekolah',
-        ])->id;
     }
 }

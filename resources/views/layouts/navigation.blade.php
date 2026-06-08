@@ -9,28 +9,12 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-<<<<<<< HEAD
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Home') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
-                        {{ __('Admin') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('vendor.dashboard')" :active="request()->routeIs('vendor.*')">
-                        {{ __('Vendor') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('sekolah.dashboard')" :active="request()->routeIs('sekolah.*')">
-                        {{ __('Sekolah') }}
-=======
                     <x-nav-link :href="route('dashboard')"  :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
->>>>>>> 53f90b7ef7e2319fd437e8008fe77906570129ee
                     </x-nav-link>
                 </div>
             </div>
 
-<<<<<<< HEAD
-=======
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -63,7 +47,6 @@
                 </x-dropdown>
             </div>
 
->>>>>>> 53f90b7ef7e2319fd437e8008fe77906570129ee
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -78,19 +61,6 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-<<<<<<< HEAD
-                {{ __('Home') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
-                {{ __('Admin') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('vendor.dashboard')" :active="request()->routeIs('vendor.*')">
-                {{ __('Vendor') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('sekolah.dashboard')" :active="request()->routeIs('sekolah.*')">
-                {{ __('Sekolah') }}
-            </x-responsive-nav-link>
-=======
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
@@ -116,7 +86,6 @@
                     </x-responsive-nav-link>
                 </form>
             </div>
->>>>>>> 53f90b7ef7e2319fd437e8008fe77906570129ee
         </div>
     </div>
 </nav>

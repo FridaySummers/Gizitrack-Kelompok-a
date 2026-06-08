@@ -18,11 +18,7 @@ abstract class DuskTestCase extends BaseTestCase
     public static function prepare(): void
     {
         if (! static::runningInSail()) {
-<<<<<<< HEAD
-            static::startChromeDriver(['--port=9515']);
-=======
             static::startChromeDriver(['--port=9515', '--no-sandbox']);
->>>>>>> 53f90b7ef7e2319fd437e8008fe77906570129ee
         }
     }
 
@@ -32,11 +28,7 @@ abstract class DuskTestCase extends BaseTestCase
     protected function driver(): RemoteWebDriver
     {
         $options = (new ChromeOptions)->addArguments(collect([
-<<<<<<< HEAD
-            $this->shouldStartMaximized() ? '--start-maximized' : '--window-size=1920,1080',
-=======
             $this->shouldStartMaximized() ? '--start-maximized' : '--window-size=1280,800',
->>>>>>> 53f90b7ef7e2319fd437e8008fe77906570129ee
             '--disable-search-engine-choice-screen',
             '--disable-smooth-scrolling',
         ])->unless($this->hasHeadlessDisabled(), function (Collection $items) {
