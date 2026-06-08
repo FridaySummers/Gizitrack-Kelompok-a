@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="mb-8 p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div class="flex items-center justify-between gap-4 flex-wrap">
         <div>
             <h2 class="text-2xl font-bold text-gray-800">Halo {{ auth()->user()->role->label() ?? 'Admin' }}! 🛡️</h2>
             <p class="text-gray-500 mt-1">Pantau seluruh ekosistem distribusi gizi sekolah secara real-time.</p>
@@ -70,7 +70,7 @@
                 <label for="end_date" class="block text-xs font-semibold text-gray-600 uppercase mb-2">Selesai</label>
                 <input type="date" name="end_date" id="end_date" value="{{ now()->format('Y-m-d') }}" class="rounded-lg border-gray-200 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-sm h-[42px] px-3 bg-gray-50">
             </div>
-            <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold py-2 px-5 rounded-lg text-sm inline-flex items-center justify-center shadow-md transition-all transform hover:scale-105 h-[42px]">
+            <button type="submit" style="background-color: #1e293b;" class="text-white font-semibold py-2 px-5 rounded-lg text-sm inline-flex items-center justify-center shadow-md transition-all transform hover:scale-105 h-[42px]">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
