@@ -10,8 +10,16 @@ class DistribusiController extends Controller
     
     public function index()
     {
+<<<<<<< Updated upstream
         $distribusis = Distribusi::all();
         return view('distribusi.index', compact('distribusis'));
+=======
+        $distributions = Distribusi::with(['vendor', 'sekolah', 'menu', 'feedbacks'])
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.distributions.index', compact('distributions'));
+>>>>>>> Stashed changes
     }
 
     
