@@ -104,7 +104,9 @@ class DistribusiController extends Controller
                 ->whereIn("status", ["Diterima", "Diterima Sebagian"])
                 ->count(),
             "dikirim" => $distribusis->where("status", "Dikirim")->count(),
-            "kendala" => $distribusis->where("status", "Kendala")->count(),
+            "kendala" => $distribusis
+                ->whereIn("status", ["Kendala", "Komplain"])
+                ->count(),
             "pending" => $distribusis->where("status", "Pending")->count(),
         ];
 

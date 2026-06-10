@@ -71,7 +71,7 @@
                 </td>
 
                 <td class="px-6 py-4">
-                    @if($d->status === 'Diterima Sebagian')
+                    @if($d->status === 'Diterima Sebagian' || $d->status === 'Komplain')
                         @forelse($d->feedbacks as $f)
                             <p class="text-xs text-gray-600 bg-gray-50 p-2 rounded-lg border border-gray-100 mb-1 last:mb-0">{{ $f->catatan }}</p>
                         @empty

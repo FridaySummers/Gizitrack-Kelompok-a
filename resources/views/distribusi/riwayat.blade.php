@@ -188,6 +188,10 @@
                         <span class="inline-flex items-center gap-1 bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full border border-red-100">
                             Kendala
                         </span>
+                    @elseif($d->status === 'Komplain')
+                        <span class="inline-flex items-center gap-1 bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full border border-red-100">
+                            Komplain
+                        </span>
                     @endif
                 </td>
 
