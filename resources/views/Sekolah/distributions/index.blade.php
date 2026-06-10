@@ -83,7 +83,7 @@
                     @endif
                 </td>
                 <td class="px-6 py-4">
-                    @if($d->status === 'Komplain')
+                    @if($d->status === 'Komplain' || $d->status === 'Diterima Sebagian')
                         @forelse($d->feedbacks as $f)
                             <p class="text-xs text-gray-600 bg-gray-50 p-2 rounded-lg border border-gray-100 mb-1 last:mb-0">{{ $f->catatan }}</p>
                         @empty
