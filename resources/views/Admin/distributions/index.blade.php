@@ -3,6 +3,19 @@
 @section('title', 'All Distributions')
 
 @section('content')
+<div class="mb-6 flex items-center justify-between gap-4 flex-wrap">
+    <div>
+        <h2 class="text-2xl font-bold text-gray-800">Status Semua Distribusi</h2>
+        <p class="text-gray-500 mt-1">Daftar lengkap riwayat distribusi gizi sekolah.</p>
+    </div>
+    <a href="{{ route('admin.reports.export') }}" style="background-color: #1e293b;" class="text-white font-semibold py-2 px-5 rounded-lg text-sm inline-flex items-center justify-center shadow-md transition-all transform hover:scale-105 h-[42px]">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+        </svg>
+        Export PDF
+    </a>
+</div>
+
 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
     <table class="w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-100">

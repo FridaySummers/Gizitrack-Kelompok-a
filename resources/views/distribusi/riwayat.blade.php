@@ -5,7 +5,7 @@
 @section('content')
 
 {{-- Date Picker --}}
-<div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+<div class="mb-6 flex items-center justify-between gap-4 flex-wrap">
     <div>
         <h2 class="text-xl font-bold text-gray-800">Pelacakan Pengiriman</h2>
         <p class="text-sm text-gray-500 mt-1">Pantau progres pengiriman makanan harian ke sekolah tujuan</p>

@@ -3,7 +3,7 @@
 @section('title', 'Status Pengiriman')
 
 @section('content')
-<div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="mb-6 flex items-center justify-between gap-4 flex-wrap">
     <!-- Tabs -->
     <div class="flex bg-gray-100 p-1 rounded-xl w-fit">
         <a href="{{ route('sekolah.distributions.index') }}"

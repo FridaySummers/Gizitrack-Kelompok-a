@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="mb-8 p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div class="flex items-center justify-between gap-4 flex-wrap">
         <div>
             <h2 class="text-2xl font-bold text-gray-800">Halo, {{ auth()->user()->name }}! 👋</h2>
             <p class="text-gray-500 mt-1">Selamat datang kembali di panel monitoring gizi sekolah.</p>
