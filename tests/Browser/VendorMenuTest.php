@@ -2,21 +2,36 @@
 
 namespace Tests\Browser;
 
+use App\Models\User;
+use App\Models\Menu;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
 class VendorMenuTest extends DuskTestCase
 {
     protected static $menuName;
+    protected static $vendor;
 
     /**
-     * Inisialisasi nama menu unik agar tidak bentrok dengan data sisa testing.
+     * Inisialisasi data testing.
      */
     public function setUp(): void
     {
         parent::setUp();
         if (!static::$menuName) {
-            static::$menuName = 'Nasi Goreng ' . time(); 
+            static::$menuName = "Nasi Goreng " . time();
+        }
+
+        if (!static::$vendor) {
+            static::$vendor = User::firstOrCreate(
+                ["email" => "vendor_test@gizitrack.test"],
+                [
+                    "name" => "Vendor Test",
+                    "password" => Hash::make("password"),
+                    "role" => "vendor",
+                ],
+            );
         }
     }
 
@@ -26,21 +41,18 @@ class VendorMenuTest extends DuskTestCase
     public function test_vendor_bisa_tambah_menu(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/login') 
-                ->type('email', 'khadafiadisaputra.10@gmail.com') 
-                ->type('password', 'dapi1234') 
-                ->press('LOG IN') 
-                ->pause(2000)
-                ->visit('/vendor/menu/create') 
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu/create")
                 ->waitFor('input[name="name"]', 5)
-                ->type('name', static::$menuName) 
-                ->type('description', 'Nasi goreng lezat racikan Dapi') 
-                ->type('calories', '500') 
-                ->type('price', '25000') 
-                ->press('Simpan') 
-                ->waitForLocation('/vendor/menu', 5)
-                ->assertPathIs('/vendor/menu') 
-                ->screenshot('PBI-11-Tambah-Menu-Berhasil');
+                ->type("name", static::$menuName)
+                ->type("description", "Nasi goreng lezat racikan Dapi")
+                ->type("calories", "500")
+                ->type("price", "25000")
+                ->press("@submit-menu")
+                ->waitForLocation("/vendor/menu", 5)
+                ->assertPathIs("/vendor/menu")
+                ->screenshot("PBI-11-Tambah-Menu-Berhasil");
         });
     }
 
@@ -50,12 +62,14 @@ class VendorMenuTest extends DuskTestCase
     public function test_vendor_gagal_tambah_menu_input_kosong(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/vendor/menu/create')
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu/create")
                 ->waitFor('input[name="name"]')
-                ->press('Simpan')
+                ->press("@submit-menu")
                 ->pause(1500)
-                ->assertSee('required') // Mencari kata kunci 'required' agar lebih fleksibel
-                ->screenshot('PBI-11-Negative-Validation');
+                ->assertSee("required")
+                ->screenshot("PBI-11-Negative-Validation");
         });
     }
 
@@ -65,10 +79,12 @@ class VendorMenuTest extends DuskTestCase
     public function test_vendor_bisa_lihat_menu(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/vendor/menu')
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu")
                 ->waitForText(static::$menuName, 5)
-                ->assertSee(static::$menuName) 
-                ->screenshot('PBI-12-Read-Menu-Berhasil');
+                ->assertSee(static::$menuName)
+                ->screenshot("PBI-12-Read-Menu-Berhasil");
         });
     }
 
@@ -78,17 +94,20 @@ class VendorMenuTest extends DuskTestCase
     public function test_vendor_bisa_edit_menu(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/vendor/menu')
+            $menu = Menu::where("name", static::$menuName)->first();
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu")
                 ->waitForText(static::$menuName)
-                ->clickLink('Edit') 
-                ->pause(1500) 
-                ->clear('price')
-                ->type('price', '30000')
-                ->press('Update') 
-                ->waitForLocation('/vendor/menu', 5)
+                ->press("@edit-menu-{$menu->id}")
+                ->waitFor('input[name="price"]')
+                ->clear("price")
+                ->type("price", "30000")
+                ->press("@update-menu")
+                ->waitForLocation("/vendor/menu", 5)
                 ->pause(1000)
-                ->assertSee('30.000') 
-                ->screenshot('PBI-13-Update-Menu-Berhasil');
+                ->assertSee("30.000")
+                ->screenshot("PBI-13-Update-Menu-Berhasil");
         });
     }
 
@@ -98,16 +117,18 @@ class VendorMenuTest extends DuskTestCase
     public function test_vendor_gagal_edit_menu_harga_negatif(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/vendor/menu')
+            $menu = Menu::where("name", static::$menuName)->first();
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu")
                 ->waitForText(static::$menuName)
-                ->clickLink('Edit')
+                ->press("@edit-menu-{$menu->id}")
+                ->waitFor('input[name="price"]')
+                ->type("price", "-5000")
+                ->press("@update-menu")
                 ->pause(1500)
-                ->type('price', '-5000')
-                ->press('Update')
-                ->pause(1500)
-                // Menggunakan kata kunci pesan error yang lebih umum agar pasti kena
-                ->assertSee('at least 0') 
-                ->screenshot('PBI-13-Negative-Price');
+                ->assertSee("AT LEAST 0") // Match uppercase UI
+                ->screenshot("PBI-13-Negative-Price");
         });
     }
 
@@ -117,14 +138,17 @@ class VendorMenuTest extends DuskTestCase
     public function test_vendor_batal_hapus_menu(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/vendor/menu')
+            $menu = Menu::where("name", static::$menuName)->first();
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu")
                 ->waitForText(static::$menuName)
-                ->press('Hapus')
+                ->press("@delete-menu-{$menu->id}")
                 ->pause(1000)
-                ->dismissDialog() 
+                ->dismissDialog()
                 ->pause(1000)
-                ->assertSee(static::$menuName) 
-                ->screenshot('PBI-14-Negative-Cancel-Delete');
+                ->assertSee(static::$menuName)
+                ->screenshot("PBI-14-Negative-Cancel-Delete");
         });
     }
 
@@ -134,14 +158,17 @@ class VendorMenuTest extends DuskTestCase
     public function test_vendor_bisa_hapus_menu(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/vendor/menu')
+            $menu = Menu::where("name", static::$menuName)->first();
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu")
                 ->waitForText(static::$menuName)
-                ->press('Hapus') 
+                ->press("@delete-menu-{$menu->id}")
                 ->pause(1000)
-                ->acceptDialog() 
+                ->acceptDialog()
                 ->pause(2000)
-                ->assertDontSee(static::$menuName) 
-                ->screenshot('PBI-14-Delete-Menu-Berhasil');
+                ->assertDontSee(static::$menuName)
+                ->screenshot("PBI-14-Delete-Menu-Berhasil");
         });
     }
 
@@ -151,14 +178,12 @@ class VendorMenuTest extends DuskTestCase
     public function test_guest_tidak_bisa_akses_daftar_menu(): void
     {
         $this->browse(function (Browser $browser) {
-            // Logout dengan menghapus cookie session
-            $browser->deleteCookie('laravel_session');
-            $browser->script('window.localStorage.clear();');
-            
-            $browser->visit('/vendor/menu')
+            $browser
+                ->logout()
+                ->visit("/vendor/menu")
                 ->pause(2000)
-                ->assertPathIs('/login') 
-                ->screenshot('PBI-12-Negative-Guest-Access');
+                ->assertPathIs("/login")
+                ->screenshot("PBI-12-Negative-Guest-Access");
         });
     }
 }

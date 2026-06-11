@@ -114,7 +114,7 @@
 
                     <!-- Login Button -->
                     <div class="pt-2">
-                        <button type="submit"
+                        <button type="submit" dusk="login-button"
                                 class="w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-base rounded-xl shadow-lg shadow-emerald-200/40 transform transition-all hover:scale-[1.01] active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-emerald-500/20">
                             Masuk ke Dashboard
                         </button>

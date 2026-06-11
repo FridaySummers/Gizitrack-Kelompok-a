@@ -17,7 +17,8 @@
 </div>
 
 <!-- Stats Cards -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    {{-- Total Distribusi --}}
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
         <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300">
@@ -29,6 +30,7 @@
         <p class="text-4xl font-black text-gray-800 mt-2" id="total-distribusi">{{ $totalDistribusi ?? 0 }}</p>
     </div>
 
+    {{-- Total Porsi --}}
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
         <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center group-hover:bg-emerald-100 transition-colors duration-300">
@@ -36,16 +38,29 @@
             </div>
             <span class="text-[10px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">Partner</span>
         </div>
-        <p class="text-xs text-gray-500 font-black uppercase tracking-widest">Total Vendor</p>
-        <p class="text-4xl font-black text-gray-800 mt-2">{{ $totalVendor ?? 0 }}</p>
+        <p class="text-xs text-gray-500 font-black uppercase tracking-widest">Total Porsi</p>
+        <p class="text-4xl font-black text-gray-800 mt-2" id="total-porsi">{{ $totalPorsi ?? 0 }}</p>
     </div>
 
+    {{-- Success Rate --}}
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
         <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center group-hover:bg-purple-100 transition-colors duration-300">
-                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354v4.512c0 .158-.05.31-.145.428l-3.428 4.285c-.285.356-.428.802-.428 1.27v.513c0 .802-.65 1.454-1.454 1.454H6.5c-.802 0-1.454-.65-1.454-1.454V14.86c0-.468.143-.914.428-1.27l3.428-4.285c.095-.118.145-.27.145-.428V4.354a1.5 1.5 0 011.5-1.5h2.854a1.5 1.5 0 011.5 1.5z"></path></svg>
+                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
-            <span class="text-[10px] font-black uppercase tracking-widest text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg">Instansi</span>
+            <span class="text-[10px] font-black uppercase tracking-widest text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg">Kualitas</span>
+        </div>
+        <p class="text-xs text-gray-500 font-black uppercase tracking-widest">Tingkat Keberhasilan</p>
+        <p class="text-4xl font-black text-gray-800 mt-2" id="success-rate">{{ $successRate ?? '0%' }}</p>
+    </div>
+
+    {{-- Total Sekolah --}}
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center group-hover:bg-orange-100 transition-colors duration-300">
+                <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354v4.512c0 .158-.05.31-.145.428l-3.428 4.285c-.285.356-.428.802-.428 1.27v.513c0 .802-.65 1.454-1.454 1.454H6.5c-.802 0-1.454-.65-1.454-1.454V14.86c0-.468.143-.914.428-1.27l3.428-4.285c.095-.118.145-.27.145-.428V4.354a1.5 1.5 0 011.5-1.5h2.854a1.5 1.5 0 011.5 1.5z"></path></svg>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-widest text-orange-600 bg-orange-50 px-2.5 py-1 rounded-lg">Instansi</span>
         </div>
         <p class="text-xs text-gray-500 font-black uppercase tracking-widest">Total Sekolah</p>
         <p class="text-4xl font-black text-gray-800 mt-2" id="total-sekolah">{{ $totalSekolah ?? 0 }}</p>
