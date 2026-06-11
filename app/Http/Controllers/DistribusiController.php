@@ -28,14 +28,24 @@ class DistribusiController extends Controller
             "sekolah_tujuan" => "required|string|max:255",
             "jumlah_porsi" => "required|integer|min:1",
             "tanggal_pengiriman" => "required|date",
+            "latitude" => "nullable|numeric",
+            "longitude" => "nullable|numeric",
         ]);
 
-        Distribusi::create([
+        $data = [
             "sekolah_tujuan" => $request->sekolah_tujuan,
             "jumlah_porsi" => $request->jumlah_porsi,
             "tanggal_pengiriman" => $request->tanggal_pengiriman,
             "status" => "Dikirim",
-        ]);
+            "latitude" => $request->latitude,
+            "longitude" => $request->longitude,
+        ];
+
+        if ($request->latitude || $request->longitude) {
+            $data["last_updated"] = now();
+        }
+
+        Distribusi::create($data);
 
         return redirect()
             ->route("vendor.distribusi.index")

@@ -10,17 +10,30 @@
             <p class="text-gray-500 mt-1 font-medium">Daftar lengkap riwayat distribusi gizi sekolah sebagai audit trail logistik.</p>
         </div>
 
-        <a href="{{ route('admin.reports.export') }}"
-           class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-6 rounded-xl text-xs uppercase tracking-widest inline-flex items-center justify-center shadow-lg shadow-emerald-200/50 transition-all transform hover:scale-[1.02] active:scale-[0.98]">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4">
-                </path>
-            </svg>
-            Export PDF
-        </a>
+        <div class="flex items-center gap-3">
+            <a href="{{ route('admin.reports.export') }}"
+               class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-2.5 px-6 rounded-xl text-xs uppercase tracking-widest inline-flex items-center justify-center shadow-lg shadow-emerald-200/50 transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4">
+                    </path>
+                </svg>
+                Export PDF
+            </a>
+            <a href="{{ route('admin.reports.export_excel') }}"
+               class="bg-green-600 hover:bg-green-700 text-white font-black py-2.5 px-6 rounded-xl text-xs uppercase tracking-widest inline-flex items-center justify-center shadow-lg shadow-green-200/50 transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4">
+                    </path>
+                </svg>
+                Export Excel
+            </a>
+        </div>
     </div>
 </div>
 
