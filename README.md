@@ -4,31 +4,6 @@
 
 ---
 
-## 💎 Fitur Unggulan (Core Features)
-
-- **🛡️ Superadmin Impersonation**: Memungkinkan Super Admin masuk sebagai user lain (Vendor/Sekolah) untuk troubleshooting tanpa perlu password.
-- **📍 Live Tracking (GPS)**: Monitoring posisi armada pengiriman secara real-time dengan koordinat GPS presisi.
-- **📊 Analytics Dashboard**: Visualisasi data distribusi, tren porsi harian, dan top performa instansi menggunakan Chart.js.
-- **📑 Monthly Reporting**: Ekspor laporan distribusi dalam format **PDF (Professional Design)**, **Excel**, dan **CSV** dengan filter periode fleksibel.
-- **⚡ Emergency Intervention**: Fitur revisi dan pembatalan distribusi darurat oleh Admin dengan pencatatan audit trail (Request Changes).
-- **📱 Responsive UI**: Antarmuka modern yang dioptimalkan untuk perangkat mobile dan desktop.
-
----
-
-## 🎨 Design System: GiziTrack 2.0 (Enterprise)
-
-Kami menerapkan aturan **60-30-10 Design System** untuk estetika profesional:
-
-| Elemen | Spesifikasi | Kode Tailwind |
-|---|---|---|
-| **Primary (60%)** | Clean Slate Background | `bg-gray-50` |
-| **Secondary (30%)** | Deep Emerald Sidebar | `bg-emerald-900` |
-| **Accent (10%)** | Vibrant Action Emerald | `bg-emerald-600` |
-| **Cards** | Professional Floating Card | `rounded-2xl border-gray-100 shadow-sm` |
-| **Typography** | Modern Figtree | `font-black text-gray-800` |
-
----
-
 ## 🛠️ Requirement (Wajib Terinstall)
 
 | Software | Versi Minimum | Cek dengan |
