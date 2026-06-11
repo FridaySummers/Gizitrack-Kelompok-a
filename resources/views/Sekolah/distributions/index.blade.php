@@ -100,13 +100,14 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="action" value="terima">
-                                <button type="submit" class="w-full text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all">
+                                <button type="submit" dusk="terima-sesuai-{{ $d->id }}" class="w-full text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all">
                                     Terima Sesuai
                                 </button>
                             </form>
 
                             <!-- PBI-38: Complaint Button -->
                             <button data-modal-target="complaint-modal-{{ $d->id }}" data-modal-toggle="complaint-modal-{{ $d->id }}"
+                                    dusk="btn-komplain-{{ $d->id }}"
                                     class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all" type="button">
                                 Komplain
                             </button>
@@ -133,10 +134,11 @@
                                             <div class="mb-4">
                                                 <label for="catatan-{{ $d->id }}" class="block mb-2 text-sm font-semibold text-gray-900 text-left">Deskripsi Masalah/Komplain</label>
                                                 <textarea id="catatan-{{ $d->id }}" name="catatan" rows="4"
+                                                          dusk="catatan-{{ $d->id }}"
                                                           class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-200 focus:ring-red-500 focus:border-red-500"
                                                           placeholder="Jelaskan kendala atau porsi yang tidak sesuai..." required></textarea>
                                             </div>
-                                            <button type="submit" class="w-full text-white inline-flex items-center justify-center bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-xl text-sm px-5 py-3 text-center transition-all">
+                                            <button type="submit" dusk="submit-komplain-{{ $d->id }}" class="w-full text-white inline-flex items-center justify-center bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-xl text-sm px-5 py-3 text-center transition-all">
                                                 Kirim Komplain
                                             </button>
                                         </form>
@@ -149,7 +151,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="action" value="resolve_komplain">
-                                <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all">
+                                <button type="submit" dusk="resolve-komplain-{{ $d->id }}" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all">
                                     Tandai Selesai
                                 </button>
                             </form>
