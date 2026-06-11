@@ -37,8 +37,9 @@ class SekolahDistributionTest extends DuskTestCase
                 ->loginAs($sekolah)
                 ->visit("/sekolah/distributions")
                 ->assertPathIs("/sekolah/distributions")
-                ->assertSee("Dikirim")
-                ->assertDontSee("Diterima")
+                ->waitForText("DIKIRIM")
+                ->assertSee("DIKIRIM")
+                ->assertDontSee("DITERIMA")
                 ->screenshot("PBI36_SekolahOnlySeeDikirim");
         });
     }
@@ -62,7 +63,9 @@ class SekolahDistributionTest extends DuskTestCase
                 ->loginAs($sekolah)
                 ->visit("/sekolah/distributions")
                 ->waitFor("@terima-sesuai-{$distribution->id}")
+                ->pause(500)
                 ->press("@terima-sesuai-{$distribution->id}")
+                ->waitForText("Distribusi berhasil dikonfirmasi diterima.")
                 ->assertSee("Distribusi berhasil dikonfirmasi diterima.")
                 ->screenshot("PBI37_SekolahAcceptDelivery");
         });
@@ -104,7 +107,9 @@ class SekolahDistributionTest extends DuskTestCase
                             );
                     },
                 )
-                ->pause(1000)
+                ->waitForText(
+                    "Komplain berhasil dikirim dan sedang dalam penanganan.",
+                )
                 ->assertSee(
                     "Komplain berhasil dikirim dan sedang dalam penanganan.",
                 )
@@ -132,9 +137,36 @@ class SekolahDistributionTest extends DuskTestCase
                 ->loginAs($sekolah)
                 ->visit("/sekolah/distributions?tab=history")
                 ->waitFor("@resolve-komplain-{$distribution->id}")
+                ->pause(500)
                 ->press("@resolve-komplain-{$distribution->id}")
+                ->waitForText("Komplain berhasil ditandai selesai.")
                 ->assertSee("Komplain berhasil ditandai selesai.")
                 ->screenshot("PBI38_SekolahResolveComplaint");
+        });
+    }
+
+    /**
+     * PBI 37: Sekolah can track courier location.
+     * [GIZITRACK-37]
+     */
+    public function test_sekolah_can_track_courier_location(): void
+    {
+        $sekolah = User::where("email", "sekolah@gizitrack.test")->first();
+        $distribution = Distribusi::where("sekolah_id", $sekolah->id)
+            ->whereNotNull("latitude")
+            ->whereNotNull("longitude")
+            ->first();
+
+        $this->browse(function (Browser $browser) use (
+            $sekolah,
+            $distribution,
+        ) {
+            $browser
+                ->loginAs($sekolah)
+                ->visit("/sekolah/distributions")
+                ->waitFor("a[title='Lacak Lokasi Kurir']")
+                ->assertVisible("a[title='Lacak Lokasi Kurir']")
+                ->screenshot("PBI37_SekolahTrackCourier");
         });
     }
 }
