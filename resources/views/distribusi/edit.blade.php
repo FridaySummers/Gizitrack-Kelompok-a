@@ -73,6 +73,32 @@
                 </div>
             </div>
 
+            {{-- Tracking Data Section --}}
+            <div class="p-6 bg-blue-50 rounded-2xl border border-blue-100 space-y-4">
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <h3 class="text-xs font-black text-blue-800 uppercase tracking-widest">Data Live Tracking (GPS)</h3>
+                </div>
+
+                <p class="text-[10px] font-bold text-blue-600/70 uppercase tracking-tight">Perbarui koordinat pengiriman untuk memberikan transparansi lokasi kepada pihak sekolah secara real-time.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="block text-[10px] font-black text-blue-600/70 uppercase tracking-widest ml-1">Latitude</label>
+                        <input type="text" name="latitude" value="{{ old('latitude', $distribusi->latitude) }}"
+                               placeholder="Contoh: -6.123456"
+                               class="block w-full px-4 py-3 bg-white border border-blue-200 text-gray-800 text-sm rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all outline-none font-mono font-bold placeholder:text-blue-200">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-[10px] font-black text-blue-600/70 uppercase tracking-widest ml-1">Longitude</label>
+                        <input type="text" name="longitude" value="{{ old('longitude', $distribusi->longitude) }}"
+                               placeholder="Contoh: 106.123456"
+                               class="block w-full px-4 py-3 bg-white border border-blue-200 text-gray-800 text-sm rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all outline-none font-mono font-bold placeholder:text-blue-200">
+                    </div>
+                </div>
+            </div>
+
             {{-- Porsi --}}
             <div class="space-y-2">
                 <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Volume Porsi</label>

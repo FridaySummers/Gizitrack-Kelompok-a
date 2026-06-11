@@ -1,6 +1,6 @@
 <!-- Revise Modal -->
-<div id="reviseModal-{{ $d->id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
+<div id="reviseModal-{{ $d->id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full p-4">
+    <div class="relative w-full max-w-lg max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
             <!-- Modal header -->
@@ -76,8 +76,8 @@
 </div>
 
 <!-- Cancel Modal -->
-<div id="cancelModal-{{ $d->id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
+<div id="cancelModal-{{ $d->id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full p-4">
+    <div class="relative w-full max-w-lg max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
             <!-- Modal header -->

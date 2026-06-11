@@ -56,6 +56,8 @@ class DistribusiController extends Controller
             "jumlah_porsi" => "required|integer|min:1",
             "status" => "required|string",
             "alasan_perubahan" => "nullable|string|max:500",
+            "latitude" => "nullable|numeric",
+            "longitude" => "nullable|numeric",
         ]);
 
         $distribusi = Distribusi::findOrFail($id);
@@ -70,12 +72,24 @@ class DistribusiController extends Controller
             ]);
         }
 
-        $distribusi->update([
+        $data = [
             "tanggal_pengiriman" => $request->tanggal_pengiriman,
             "sekolah_tujuan" => $request->sekolah_tujuan,
             "jumlah_porsi" => $request->jumlah_porsi,
             "status" => $request->status,
-        ]);
+            "latitude" => $request->latitude,
+            "longitude" => $request->longitude,
+        ];
+
+        // Track last_updated if coordinates changed
+        if (
+            $distribusi->latitude != $request->latitude ||
+            $distribusi->longitude != $request->longitude
+        ) {
+            $data["last_updated"] = now();
+        }
+
+        $distribusi->update($data);
 
         return redirect()
             ->route("vendor.distribusi.index")
