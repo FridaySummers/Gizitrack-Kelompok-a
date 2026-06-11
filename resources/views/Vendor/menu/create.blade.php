@@ -57,6 +57,13 @@
                         <input type="number" name="calories" value="{{ old('calories') }}" placeholder="450" required
                                class="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-black @error('calories') border-rose-500 bg-rose-50/30 @enderror">
                     </div>
+                    {{-- Helper Text TKPI --}}
+                    <p class="text-[10px] font-bold text-gray-400 ml-1 mt-1">
+                        *Butuh referensi kalori? 
+                        <a href="https://www.panganku.org/id-ID/semua_nutrisi" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:text-emerald-700 underline transition-colors">
+                            Cek TKPI Kemenkes di sini &rarr;
+                        </a>
+                    </p>
                     @error('calories')
                         <p class="text-[10px] font-black text-rose-500 uppercase tracking-widest ml-1 mt-1">{{ $message }}</p>
                     @enderror
