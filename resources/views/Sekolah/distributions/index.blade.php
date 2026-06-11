@@ -3,188 +3,207 @@
 @section('title', 'Status Pengiriman')
 
 @section('content')
-<div class="mb-6 flex items-center justify-between gap-4 flex-wrap">
-    <!-- Tabs -->
-    <div class="flex bg-gray-100 p-1 rounded-xl w-fit">
-        <a href="{{ route('sekolah.distributions.index') }}"
-           class="px-4 py-2 rounded-lg text-sm font-medium transition {{ $tab !== 'history' ? 'bg-white text-emerald-700 shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
-            Pengiriman Aktif
-        </a>
-        <a href="{{ route('sekolah.distributions.index', ['tab' => 'history']) }}"
-           class="px-4 py-2 rounded-lg text-sm font-medium transition {{ $tab === 'history' ? 'bg-white text-emerald-700 shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
-            Riwayat Pengiriman
-        </a>
-    </div>
+<div class="mb-8 p-8 bg-white rounded-2xl border border-gray-100 shadow-sm transition-all duration-300 hover:shadow-md">
+    <div class="flex items-center justify-between gap-4 flex-wrap">
+        <div>
+            <h2 class="text-2xl font-black text-gray-800 tracking-tight uppercase">Monitoring Distribusi</h2>
+            <p class="text-gray-500 mt-1 font-medium text-sm">Konfirmasi penerimaan atau ajukan komplain terkait pengiriman makanan hari ini.</p>
+        </div>
 
-    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full border border-blue-200">
-        Sekolah Dashboard
-    </span>
+        <div class="flex bg-gray-50 p-1.5 rounded-xl border border-gray-100 shadow-inner">
+            <a href="{{ route('sekolah.distributions.index') }}"
+               class="px-5 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-all {{ $tab !== 'history' ? 'bg-white text-emerald-600 shadow-sm' : 'text-gray-400 hover:text-emerald-600' }}">
+                Pengiriman Aktif
+            </a>
+            <a href="{{ route('sekolah.distributions.index', ['tab' => 'history']) }}"
+               class="px-5 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-all {{ $tab === 'history' ? 'bg-white text-emerald-600 shadow-sm' : 'text-gray-400 hover:text-emerald-600' }}">
+                Riwayat Data
+            </a>
+        </div>
+    </div>
 </div>
 
 @if(session('success'))
-<div class="mb-4 bg-green-100 text-green-700 px-4 py-3 rounded-xl border border-green-200 flex items-center gap-2">
-    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-    <span class="font-medium text-sm">{{ session('success') }}</span>
+<div class="mb-6 p-4 rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700 flex items-center gap-3 animate-fade-in shadow-sm">
+    <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center shrink-0">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+    </div>
+    <span class="font-bold text-sm">{{ session('success') }}</span>
 </div>
 @endif
 
 @if(session('error'))
-<div class="mb-4 bg-red-100 text-red-700 px-4 py-3 rounded-xl border border-red-200 flex items-center gap-2">
-    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
-    <span class="font-medium text-sm">{{ session('error') }}</span>
+<div class="mb-6 p-4 rounded-xl border border-rose-100 bg-rose-50 text-rose-700 flex items-center gap-3 animate-fade-in shadow-sm">
+    <div class="w-8 h-8 bg-rose-500 rounded-lg flex items-center justify-center shrink-0">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+    </div>
+    <span class="font-bold text-sm">{{ session('error') }}</span>
 </div>
 @endif
 
-<div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-    <table class="w-full text-sm text-left text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-100">
-            <tr>
-                <th scope="col" class="px-6 py-4 font-semibold">Tanggal</th>
-                <th scope="col" class="px-6 py-4 font-semibold">Vendor</th>
-                <th scope="col" class="px-6 py-4 font-semibold">Menu</th>
-                <th scope="col" class="px-6 py-4 font-semibold">Porsi</th>
-                <th scope="col" class="px-6 py-4 font-semibold">Status</th>
-                <th scope="col" class="px-6 py-4 font-semibold">Komplain/Catatan</th>
-                <th scope="col" class="px-6 py-4 font-semibold text-center">Aksi</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-            @forelse($distributions as $d)
-            <tr class="hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700 font-medium">
-                    {{ \Carbon\Carbon::parse($d->tanggal_pengiriman)->format('d M Y') }}
-                </td>
-                <td class="px-6 py-4 font-medium text-gray-900">
-                    {{ $d->vendor->name ?? 'Vendor Tidak Diketahui' }}
-                </td>
-                <td class="px-6 py-4 text-gray-600">
-                    {{ $d->menu->name ?? 'Menu Tidak Tersedia' }}
-                </td>
-                <td class="px-6 py-4 font-semibold text-gray-700">
-                    {{ $d->jumlah_porsi }} Porsi
-                </td>
-                <td class="px-6 py-4">
-                    @if($d->status === 'Dikirim')
-                        <span class="bg-amber-50 text-amber-700 text-xs font-medium px-2.5 py-1 rounded-full border border-amber-100">
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-600">
+            <thead class="text-[10px] text-gray-400 uppercase bg-gray-50/80 font-black tracking-widest">
+                <tr>
+                    <th scope="col" class="px-8 py-4">Tanggal</th>
+                    <th scope="col" class="px-8 py-4">Pihak Vendor</th>
+                    <th scope="col" class="px-8 py-4">Menu Makanan</th>
+                    <th scope="col" class="px-8 py-4 text-center">Volume</th>
+                    <th scope="col" class="px-8 py-4">Status</th>
+                    <th scope="col" class="px-8 py-4">Catatan/Komplain</th>
+                    <th scope="col" class="px-8 py-4 text-center">Konfirmasi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                @forelse($distributions as $d)
+                <tr class="hover:bg-gray-50/50 transition-colors group">
+                    <td class="px-8 py-5 whitespace-nowrap text-gray-800 font-bold">
+                        {{ \Carbon\Carbon::parse($d->tanggal_pengiriman)->format('d M Y') }}
+                    </td>
+                    <td class="px-8 py-5">
+                        <p class="text-gray-900 font-black group-hover:text-emerald-600 transition-colors">{{ $d->vendor->name ?? '-' }}</p>
+                    </td>
+                    <td class="px-8 py-5">
+                        <p class="font-medium text-gray-500">{{ $d->menu->name ?? '-' }}</p>
+                    </td>
+                    <td class="px-8 py-5 text-center">
+                        <span class="inline-flex items-center px-3 py-1 bg-gray-50 text-gray-800 font-black rounded-lg border border-gray-200">
+                            {{ $d->jumlah_porsi }}
+                        </span>
+                    </td>
+                    <td class="px-8 py-5 whitespace-nowrap">
+                        @php
+                            $statusColors = [
+                                'Dikirim' => 'amber',
+                                'Diterima' => 'emerald',
+                                'Komplain' => 'red',
+                                'Kendala' => 'rose'
+                            ];
+                            $clr = $statusColors[$d->status] ?? 'gray';
+                        @endphp
+                        <span class="inline-flex items-center bg-{{ $clr }}-50 text-{{ $clr }}-700 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border border-{{ $clr }}-100">
+                            <span class="w-1.5 h-1.5 rounded-full mr-2 bg-current opacity-70"></span>
                             {{ $d->status }}
                         </span>
-                    @elseif($d->status === 'Diterima')
-                        <span class="bg-green-50 text-green-700 text-xs font-medium px-2.5 py-1 rounded-full border border-green-100">
-                            {{ $d->status }}
-                        </span>
-                    @elseif($d->status === 'Komplain')
-                        <span class="bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full border border-red-100">
-                            {{ $d->status }}
-                        </span>
-                    @else
-                        <span class="bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full border border-red-100">
-                            {{ $d->status }}
-                        </span>
-                    @endif
-                </td>
-                <td class="px-6 py-4">
-                    @if($d->status === 'Komplain' || $d->status === 'Diterima Sebagian')
-                        @forelse($d->feedbacks as $f)
-                            <p class="text-xs text-gray-600 bg-gray-50 p-2 rounded-lg border border-gray-100 mb-1 last:mb-0">{{ $f->catatan }}</p>
-                        @empty
-                            <span class="text-gray-400 text-xs italic">Menunggu feedback...</span>
-                        @endforelse
-                    @else
-                        <span class="text-gray-400 text-xs">-</span>
-                    @endif
-                </td>
-                <td class="px-6 py-4">
-                    <div class="flex flex-col items-center gap-2">
-                        @if($d->status === 'Dikirim')
-                            <form action="{{ route('sekolah.distributions.update', $d) }}" method="POST" class="w-full">
-                                @csrf
-                                @method('PATCH')
-                                <input type="hidden" name="action" value="terima">
-                                <button type="submit" dusk="terima-sesuai-{{ $d->id }}" class="w-full text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all">
-                                    Terima Sesuai
+                    </td>
+                    <td class="px-8 py-5 max-w-xs">
+                        @if($d->status === 'Komplain' || $d->status === 'Diterima Sebagian')
+                            @forelse($d->feedbacks as $f)
+                                <div class="text-[11px] font-bold text-rose-600 bg-rose-50 px-2.5 py-2 rounded-lg border border-rose-100 mb-1 last:mb-0 leading-relaxed">
+                                    {{ $f->catatan }}
+                                </div>
+                            @empty
+                                <span class="text-gray-400 text-[11px] italic font-medium">Menunggu feedback vendor...</span>
+                            @endforelse
+                        @else
+                            <span class="text-gray-300 text-xs italic">-</span>
+                        @endif
+                    </td>
+                    <td class="px-8 py-5">
+                        <div class="flex items-center justify-center gap-3">
+                            @if($d->latitude && $d->longitude)
+                                <a href="https://www.google.com/maps?q={{ $d->latitude }},{{ $d->longitude }}" target="_blank"
+                                   class="p-2.5 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-600 hover:text-white transition-all shadow-sm border border-blue-100 group-hover:scale-110"
+                                   title="Lacak Lokasi Kurir">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                </a>
+                            @endif
+
+                            @if($d->status === 'Dikirim')
+                                <form action="{{ route('sekolah.distributions.update', $d) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="action" value="terima">
+                                    <button type="submit" dusk="terima-sesuai-{{ $d->id }}"
+                                            class="p-2.5 text-emerald-600 bg-emerald-50 hover:bg-emerald-600 hover:text-white rounded-xl transition-all shadow-sm border border-emerald-100 group-hover:scale-110"
+                                            title="Konfirmasi Terima Sesuai">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </button>
+                                </form>
+
+                                <button data-modal-target="complaint-modal-{{ $d->id }}" data-modal-toggle="complaint-modal-{{ $d->id }}"
+                                        dusk="btn-komplain-{{ $d->id }}"
+                                        class="p-2.5 text-rose-600 bg-rose-50 hover:bg-rose-600 hover:text-white rounded-xl transition-all shadow-sm border border-rose-100 group-hover:scale-110"
+                                        type="button" title="Ajukan Komplain">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                                 </button>
-                            </form>
 
-                            <!-- PBI-38: Complaint Button -->
-                            <button data-modal-target="complaint-modal-{{ $d->id }}" data-modal-toggle="complaint-modal-{{ $d->id }}"
-                                    dusk="btn-komplain-{{ $d->id }}"
-                                    class="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all" type="button">
-                                Komplain
-                            </button>
-
-                            <!-- PBI-38: Flowbite Modal -->
-                            <div id="complaint-modal-{{ $d->id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                                <div class="relative p-4 w-full max-w-md max-h-full">
-                                    <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden">
-                                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
-                                            <h3 class="text-lg font-bold text-gray-900">
-                                                Ajukan Komplain
-                                            </h3>
-                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-toggle="complaint-modal-{{ $d->id }}">
-                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                                </svg>
-                                                <span class="sr-only">Close modal</span>
-                                            </button>
-                                        </div>
-                                        <form class="p-4 md:p-5" action="{{ route('sekolah.distributions.update', $d) }}" method="POST">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="action" value="terima_catatan">
-                                            <div class="mb-4">
-                                                <label for="catatan-{{ $d->id }}" class="block mb-2 text-sm font-semibold text-gray-900 text-left">Deskripsi Masalah/Komplain</label>
-                                                <textarea id="catatan-{{ $d->id }}" name="catatan" rows="4"
-                                                          dusk="catatan-{{ $d->id }}"
-                                                          class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-xl border border-gray-200 focus:ring-red-500 focus:border-red-500"
-                                                          placeholder="Jelaskan kendala atau porsi yang tidak sesuai..." required></textarea>
+                                <!-- Flowbite Modal -->
+                                <div id="complaint-modal-{{ $d->id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                    <div class="relative p-4 w-full max-w-md max-h-full">
+                                        <div class="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+                                            <div class="flex items-center justify-between p-6 border-b border-gray-50 bg-gray-50/50">
+                                                <h3 class="text-lg font-black text-gray-900 uppercase tracking-tight">
+                                                    Ajukan Komplain
+                                                </h3>
+                                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-toggle="complaint-modal-{{ $d->id }}">
+                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                    </svg>
+                                                    <span class="sr-only">Close</span>
+                                                </button>
                                             </div>
-                                            <button type="submit" dusk="submit-komplain-{{ $d->id }}" class="w-full text-white inline-flex items-center justify-center bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-xl text-sm px-5 py-3 text-center transition-all">
-                                                Kirim Komplain
-                                            </button>
-                                        </form>
+                                            <form class="p-6" action="{{ route('sekolah.distributions.update', $d) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="action" value="terima_catatan">
+                                                <div class="mb-6">
+                                                    <label for="catatan-{{ $d->id }}" class="block mb-2 text-[10px] font-black text-gray-400 uppercase tracking-widest text-left ml-1">Deskripsi Masalah</label>
+                                                    <textarea id="catatan-{{ $d->id }}" name="catatan" rows="4"
+                                                              dusk="catatan-{{ $d->id }}"
+                                                              class="block p-4 w-full text-sm text-gray-900 bg-gray-50 rounded-2xl border border-gray-200 focus:ring-4 focus:ring-rose-500/10 focus:border-rose-500 transition-all outline-none placeholder:text-gray-400"
+                                                              placeholder="Jelaskan kendala atau porsi yang tidak sesuai..." required></textarea>
+                                                </div>
+                                                <button type="submit" dusk="submit-komplain-{{ $d->id }}" class="w-full text-white inline-flex items-center justify-center bg-rose-600 hover:bg-rose-700 shadow-lg shadow-rose-200 focus:ring-4 focus:outline-none focus:ring-rose-300 font-black uppercase tracking-widest rounded-2xl text-xs px-5 py-4 text-center transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                                                    Kirim Komplain
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @elseif($d->status === 'Komplain')
-                            <!-- PBI-38: Resolution Action -->
-                            <form action="{{ route('sekolah.distributions.update', $d) }}" method="POST" class="w-full">
-                                @csrf
-                                @method('PATCH')
-                                <input type="hidden" name="action" value="resolve_komplain">
-                                <button type="submit" dusk="resolve-komplain-{{ $d->id }}" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center transition-all">
-                                    Tandai Selesai
-                                </button>
-                            </form>
-                        @else
-                            <span class="text-gray-400 text-xs italic">Sudah dikonfirmasi</span>
-                        @endif
-                    </div>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="6" class="px-6 py-12 text-center">
-                    <div class="flex flex-col items-center justify-center text-gray-400">
-                        <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        </div>
-                        <p class="text-lg font-medium text-gray-500">
-                            @if($tab === 'history')
-                                Belum ada riwayat pengiriman.
+                            @elseif($d->status === 'Komplain')
+                                <form action="{{ route('sekolah.distributions.update', $d) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="action" value="resolve_komplain">
+                                    <button type="submit" dusk="resolve-komplain-{{ $d->id }}"
+                                            class="p-2.5 text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white rounded-xl transition-all shadow-sm border border-blue-100 group-hover:scale-110"
+                                            title="Tandai Masalah Selesai">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                    </button>
+                                </form>
                             @else
-                                Belum ada distribusi aktif (Dikirim).
+                                <span class="text-[10px] font-black uppercase tracking-widest text-gray-400 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">Confirmed</span>
                             @endif
-                        </p>
-                    </div>
-                </td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="7" class="px-8 py-16 text-center">
+                        <div class="flex flex-col items-center justify-center text-gray-400">
+                            <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            </div>
+                            <p class="text-lg font-bold text-gray-500 tracking-tight">
+                                @if($tab === 'history')
+                                    Belum ada riwayat pengiriman.
+                                @else
+                                    Belum ada distribusi aktif (Dikirim).
+                                @endif
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @if($distributions->hasPages())
-<div class="mt-6">
+<div class="mt-8">
     {{ $distributions->links() }}
 </div>
 @endif

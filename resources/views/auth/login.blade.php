@@ -18,7 +18,7 @@
 
             <div class="relative z-10 max-w-xl text-center">
                 <div class="inline-flex items-center justify-center w-28 h-28 bg-white/10 backdrop-blur-xl rounded-[2.5rem] mb-10 border border-white/20 shadow-2xl transform hover:rotate-6 transition-transform duration-500">
-                    <span class="text-7xl">🌿</span>
+                    <span class="text-7xl">🥗</span>
                 </div>
                 <h1 class="text-6xl font-[900] text-white tracking-tighter mb-6 drop-shadow-sm">
                     GiziTrack
@@ -52,7 +52,7 @@
                 <!-- Mobile Only Branding -->
                 <div class="lg:hidden flex flex-col items-center mb-10">
                     <div class="w-20 h-20 bg-emerald-50 rounded-2xl flex items-center justify-center mb-4 border border-emerald-100 shadow-sm">
-                        <span class="text-5xl">🌿</span>
+                        <span class="text-5xl">🥗</span>
                     </div>
                     <h1 class="text-3xl font-black text-gray-900 tracking-tight">GiziTrack</h1>
                 </div>

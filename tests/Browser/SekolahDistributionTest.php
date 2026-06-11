@@ -87,18 +87,24 @@ class SekolahDistributionTest extends DuskTestCase
                 ->loginAs($sekolah)
                 ->visit("/sekolah/distributions")
                 ->waitFor("@btn-komplain-{$distribution->id}")
+                ->pause(1000)
                 ->press("@btn-komplain-{$distribution->id}")
+                ->pause(1000)
                 ->whenAvailable(
                     "#complaint-modal-{$distribution->id}",
                     function ($modal) use ($distribution) {
                         $modal
                             ->type(
-                                "@catatan-{$distribution->id}",
+                                "textarea[dusk='catatan-{$distribution->id}']",
                                 "Porsi kurang 5, rasa hambar.",
                             )
-                            ->press("@submit-komplain-{$distribution->id}");
+                            ->pause(500)
+                            ->press(
+                                "button[dusk='submit-komplain-{$distribution->id}']",
+                            );
                     },
                 )
+                ->pause(1000)
                 ->assertSee(
                     "Komplain berhasil dikirim dan sedang dalam penanganan.",
                 )

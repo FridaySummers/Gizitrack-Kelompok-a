@@ -10,11 +10,11 @@ class DistribusiController extends Controller
 {
     public function index()
     {
-        $distribusis = Distribusi::with(['requestChanges'])
+        $distribusis = Distribusi::with(["requestChanges"])
             ->latest()
             ->paginate(10);
 
-        return view("admin.distribusi.index", compact("distribusis"));
+        return view("distribusi.index", compact("distribusis"));
     }
 
     public function create()

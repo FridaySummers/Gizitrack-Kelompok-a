@@ -3,98 +3,122 @@
 @section('title', 'Edit Distribusi')
 
 @section('content')
-<div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow">
-
-    <h2 class="text-lg font-semibold mb-4">Edit Distribusi</h2>
-
-    <!-- 🔥 TAMBAHAN KODE BUAT NAMPILIN PESAN ERROR VALIDASI 🔥 -->
-    @if ($errors->any())
-        <div class="mb-4 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 text-sm rounded">
-            <ul class="list-disc pl-5">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    <!-- ==================================================== -->
-
-    <form action="{{ route('vendor.distribusi.update', $distribusi->id) }}" method="POST"
-          x-data="{ porsiAwal: {{ $distribusi->jumlah_porsi }}, porsiBaru: {{ $distribusi->jumlah_porsi }} }">
-        @csrf
-        @method('PUT')
-
-        <!-- Tanggal -->
-        <div class="mb-4">
-            <label class="block text-sm mb-1">Tanggal Pengiriman</label>
-            <input type="date" name="tanggal_pengiriman"
-                value="{{ $distribusi->tanggal_pengiriman }}"
-                class="w-full border rounded px-3 py-2">
-        </div>
-
-        <!-- Sekolah -->
-        <div class="mb-4">
-            <label class="block text-sm mb-1">Sekolah Tujuan</label>
-            <input type="text" name="sekolah_tujuan"
-                value="{{ $distribusi->sekolah_tujuan }}"
-                class="w-full border rounded px-3 py-2">
-        </div>
-
-        <!-- Porsi -->
-        <div class="mb-4">
-            <label class="block text-sm mb-1">Jumlah Porsi</label>
-            <input type="number" name="jumlah_porsi"
-                value="{{ $distribusi->jumlah_porsi }}"
-                x-model="porsiBaru"
-                class="w-full border rounded px-3 py-2">
-
-            <!-- Indikator perubahan porsi -->
-            <div x-show="porsiAwal != porsiBaru" x-cloak
-                 class="mt-2 flex items-center gap-2 text-sm">
-                <span class="text-gray-500">Porsi awal:</span>
-                <span class="font-medium text-gray-700" x-text="porsiAwal"></span>
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                </svg>
-                <span class="font-medium text-emerald-600" x-text="porsiBaru"></span>
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-3xl border border-gray-100 shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
+        {{-- Header Form --}}
+        <div class="p-8 border-b border-gray-50 bg-gray-50/50">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-emerald-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                </div>
+                <div>
+                    <h2 class="text-xl font-black text-gray-800 uppercase tracking-tight">Revisi Data Distribusi</h2>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">ID Transaksi: #{{ $distribusi->id }}</p>
+                </div>
             </div>
         </div>
 
-        <!-- Alasan Perubahan (muncul saat porsi berubah) -->
-        <div x-show="porsiAwal != porsiBaru" x-cloak class="mb-4">
-            <label class="block text-sm mb-1 text-amber-700 font-medium">
-                ⚠️ Alasan Perubahan Porsi
-            </label>
-            <textarea name="alasan_perubahan" rows="3"
-                placeholder="Contoh: Selisih persiapan, bahan baku kurang 20 porsi"
-                class="w-full border border-amber-300 rounded px-3 py-2 text-sm focus:ring-amber-500 focus:border-amber-500 bg-amber-50">{{ old('alasan_perubahan') }}</textarea>
-            <p class="text-xs text-gray-500 mt-1">Perubahan porsi akan tercatat sebagai histori</p>
-        </div>
+        {{-- Error Alerts --}}
+        @if ($errors->any())
+            <div class="mx-8 mt-8 p-4 rounded-2xl bg-rose-50 border border-rose-100 text-rose-700 animate-fade-in">
+                <div class="flex items-center gap-2 mb-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    <p class="font-black text-xs uppercase tracking-widest">Validasi Gagal</p>
+                </div>
+                <ul class="list-disc list-inside text-sm font-medium ml-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <!-- Status -->
-        <div class="mb-4">
-            <label class="block text-sm mb-1">Status</label>
-            <select name="status" class="w-full border rounded px-3 py-2">
-                <option {{ $distribusi->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                <option {{ $distribusi->status == 'Dikirim' ? 'selected' : '' }}>Dikirim</option>
+        <form action="{{ route('vendor.distribusi.update', $distribusi->id) }}" method="POST" class="p-8 space-y-6"
+              x-data="{ porsiAwal: {{ $distribusi->jumlah_porsi }}, porsiBaru: {{ $distribusi->jumlah_porsi }} }">
+            @csrf
+            @method('PUT')
 
-                <option {{ $distribusi->status == 'Diterima' ? 'selected' : '' }}>Diterima</option>
-                <option {{ $distribusi->status == 'Diterima Sebagian' ? 'selected' : '' }}>Diterima Sebagian</option>
-                <option {{ $distribusi->status == 'Kendala' ? 'selected' : '' }}>Kendala</option>
-            </select>
-        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{-- Tanggal --}}
+                <div class="space-y-2">
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Tanggal Pengiriman</label>
+                    <input type="date" name="tanggal_pengiriman"
+                        value="{{ $distribusi->tanggal_pengiriman }}"
+                        class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-bold">
+                </div>
 
-        <!-- Button -->
-        <div class="flex gap-2">
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-                Update
-            </button>
+                {{-- Status --}}
+                <div class="space-y-2">
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Status Logistik</label>
+                    <select name="status" class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-bold">
+                        <option value="Pending" {{ $distribusi->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="Dikirim" {{ $distribusi->status == 'Dikirim' ? 'selected' : '' }}>Dikirim</option>
+                        <option value="Diterima" {{ $distribusi->status == 'Diterima' ? 'selected' : '' }}>Diterima</option>
+                        <option value="Diterima Sebagian" {{ $distribusi->status == 'Diterima Sebagian' ? 'selected' : '' }}>Diterima Sebagian</option>
+                        <option value="Kendala" {{ $distribusi->status == 'Kendala' ? 'selected' : '' }}>Kendala</option>
+                    </select>
+                </div>
+            </div>
 
-            <a href="{{ route('vendor.distribusi.index') }}"
-               class="bg-gray-400 text-white px-4 py-2 rounded">
-                Batal
-            </a>
-        </div>
-    </form>
+            {{-- Sekolah --}}
+            <div class="space-y-2">
+                <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Institusi Tujuan</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-1 4h1m2-8v2m0 2v2m0-2h2m-2 0H9"></path></svg>
+                    </div>
+                    <input type="text" name="sekolah_tujuan"
+                        value="{{ $distribusi->sekolah_tujuan }}"
+                        class="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-bold">
+                </div>
+            </div>
+
+            {{-- Porsi --}}
+            <div class="space-y-2">
+                <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Volume Porsi</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <input type="number" name="jumlah_porsi"
+                        value="{{ $distribusi->jumlah_porsi }}"
+                        x-model="porsiBaru"
+                        class="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-black text-lg">
+                </div>
+
+                {{-- Indikator perubahan porsi --}}
+                <template x-if="porsiAwal != porsiBaru">
+                    <div class="mt-3 p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-center gap-3 animate-fade-in">
+                        <div class="w-6 h-6 bg-amber-500 rounded-lg flex items-center justify-center text-white shrink-0">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                        </div>
+                        <p class="text-[11px] font-bold text-amber-800 leading-tight">
+                            Porsi diubah dari <span class="underline" x-text="porsiAwal"></span> menjadi <span class="underline" x-text="porsiBaru"></span>. Wajib mencantumkan alasan.
+                        </p>
+                    </div>
+                </template>
+            </div>
+
+            {{-- Alasan Perubahan --}}
+            <div x-show="porsiAwal != porsiBaru" x-cloak x-transition class="space-y-2">
+                <label class="block text-[10px] font-black text-amber-600 uppercase tracking-widest ml-1">Justifikasi Perubahan</label>
+                <textarea name="alasan_perubahan" rows="3"
+                    placeholder="Contoh: Selisih persiapan dapur, bahan baku kurang 20 porsi..."
+                    class="block w-full p-4 bg-amber-50/50 border border-amber-200 text-gray-800 text-sm rounded-2xl focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all outline-none placeholder:text-amber-300 font-medium">{{ old('alasan_perubahan') }}</textarea>
+            </div>
+
+            {{-- Footer Buttons --}}
+            <div class="pt-6 flex flex-col sm:flex-row gap-3">
+                <button type="submit" class="flex-1 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-widest rounded-2xl shadow-lg shadow-emerald-200 transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                    Simpan Perubahan
+                </button>
+
+                <a href="{{ route('vendor.distribusi.index') }}"
+                   class="px-8 py-4 bg-gray-100 hover:bg-gray-200 text-gray-500 font-black text-xs uppercase tracking-widest rounded-2xl transition-all text-center">
+                    Batal
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection
