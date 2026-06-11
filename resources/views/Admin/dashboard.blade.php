@@ -67,6 +67,38 @@
     </div>
 </div>
 
+@if(auth()->user()->isSuperAdmin() && count($recentUsers) > 0)
+<!-- Quick Impersonation Section (Super Admin Only) -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 mb-8 overflow-hidden relative group">
+    <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500 group-hover:w-2 transition-all"></div>
+    <div class="flex flex-col gap-6 relative z-10">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+            <div>
+                <h3 class="text-lg font-black text-gray-800 uppercase tracking-tight">Akses Cepat Mode Impersonasi</h3>
+                <p class="text-sm text-gray-500 mt-1 font-medium">Masuk sebagai akun lain untuk simulasi atau troubleshooting tanpa password.</p>
+            </div>
+            <a href="{{ route('super_admin.users.index') }}" class="text-xs font-black uppercase tracking-widest text-amber-600 hover:text-amber-700 bg-amber-50 px-4 py-2 rounded-xl border border-amber-100/50 transition-all">Lihat Semua Akun →</a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            @foreach($recentUsers as $user)
+            <div class="p-4 bg-gray-50/50 rounded-xl border border-gray-100 flex items-center justify-between group/user hover:bg-white hover:shadow-md transition-all duration-300">
+                <div class="overflow-hidden">
+                    <p class="text-sm font-black text-gray-800 truncate">{{ $user->name }}</p>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ $user->role->label() }}</p>
+                </div>
+                <a href="{{ route('super_admin.impersonate.take', $user->id) }}"
+                   class="p-2 text-amber-600 bg-amber-100/50 hover:bg-amber-600 hover:text-white rounded-lg transition-all"
+                   title="Login Sebagai {{ $user->name }}">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                </a>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+@endif
+
 <!-- Export Report Section -->
 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 mb-8 overflow-hidden relative group">
     <!-- Dekorasi aksen hijau di kiri -->

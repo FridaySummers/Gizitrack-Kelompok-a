@@ -39,8 +39,12 @@ Route::get("/dashboard", function () {
 
 // ── 3. PROFILE ROUTES ─────────────────────────────────────────────
 Route::middleware(["auth", "role:vendor,sekolah"])->group(function () {
-    Route::get("/profile", [ProfileController::class, "edit"])->name("profile.edit");
-    Route::patch("/profile", [ProfileController::class, "update"])->name("profile.update");
+    Route::get("/profile", [ProfileController::class, "edit"])->name(
+        "profile.edit",
+    );
+    Route::patch("/profile", [ProfileController::class, "update"])->name(
+        "profile.update",
+    );
 });
 
 // ── 4. SUPER ADMIN ────────────────────────────────────────────────
@@ -48,15 +52,33 @@ Route::middleware(["auth", "role:super_admin"])
     ->prefix("super-admin")
     ->name("super_admin.")
     ->group(function () {
-        Route::resource("users", SuperAdminUserController::class)->except(["show"]);
+        Route::resource("users", SuperAdminUserController::class)->except([
+            "show",
+        ]);
+
+        // Impersonation: Take session
+        Route::get("impersonate/{user}", [
+            \App\Http\Controllers\SuperAdmin\ImpersonateController::class,
+            "take",
+        ])->name("impersonate.take");
     });
 
-// ── 5. ADMIN SHARED: admin + super_admin ──────────────────────────
+// ── 5. IMPERSONATION LEAVE (GLOBAL) ───────────────────────────────
+Route::middleware(["auth"])
+    ->get("impersonate/leave", [
+        \App\Http\Controllers\SuperAdmin\ImpersonateController::class,
+        "leave",
+    ])
+    ->name("impersonate.leave");
+
+// ── 6. ADMIN SHARED: admin + super_admin ──────────────────────────
 Route::middleware(["auth", "role:admin,super_admin"])
     ->prefix("admin")
     ->name("admin.")
     ->group(function () {
-        Route::get("/dashboard", [AdminDashboard::class, "index"])->name("dashboard");
+        Route::get("/dashboard", [AdminDashboard::class, "index"])->name(
+            "dashboard",
+        );
 
         // PBI-40: Read Seluruh Logistik / Audit Trail
         Route::get("/distributions", [
@@ -113,7 +135,9 @@ Route::middleware(["auth", "role:vendor"])
     ->prefix("vendor")
     ->name("vendor.")
     ->group(function () {
-        Route::get("/dashboard", [VendorDashboard::class, "index"])->name("dashboard");
+        Route::get("/dashboard", [VendorDashboard::class, "index"])->name(
+            "dashboard",
+        );
 
         Route::get("distribusi/riwayat", [
             DistribusiController::class,
@@ -130,7 +154,9 @@ Route::middleware(["auth", "role:sekolah"])
     ->prefix("sekolah")
     ->name("sekolah.")
     ->group(function () {
-        Route::get("/dashboard", [SekolahDashboard::class, "index"])->name("dashboard");
+        Route::get("/dashboard", [SekolahDashboard::class, "index"])->name(
+            "dashboard",
+        );
 
         Route::get("/distributions", [
             SekolahDistributionController::class,

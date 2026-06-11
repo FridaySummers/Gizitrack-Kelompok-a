@@ -15,6 +15,14 @@ class DashboardController extends Controller
 
         $distribusiTerbaru = \App\Models\Distribusi::latest()->take(5)->get();
 
+        $recentUsers = [];
+        if (auth()->user()->isSuperAdmin()) {
+            $recentUsers = \App\Models\User::where("id", "!=", auth()->id())
+                ->latest()
+                ->take(5)
+                ->get();
+        }
+
         return view(
             "admin.dashboard",
             compact(
@@ -22,6 +30,7 @@ class DashboardController extends Controller
                 "totalVendor",
                 "totalSekolah",
                 "distribusiTerbaru",
+                "recentUsers",
             ),
         );
     }
