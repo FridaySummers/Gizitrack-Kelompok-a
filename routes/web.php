@@ -120,6 +120,11 @@ Route::middleware(["auth", "role:admin,super_admin"])
             \App\Http\Controllers\Admin\ReportsController::class,
             "export",
         ])->name("reports.export");
+
+        Route::get("/reports/export-excel", [
+            \App\Http\Controllers\Admin\ReportsController::class,
+            "exportExcel",
+        ])->name("reports.export_excel");
     });
 
 // ── 6. ADMIN ONLY: User Management ────────────────────────────────
