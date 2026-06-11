@@ -1,18 +1,18 @@
 # 🥗 GiziTrack UI/UX Overhaul & System Refinement
 **Release Date:** June 11, 2026  
-**Version:** 2.0.0-Premium  
+**Version:** 2.0.0-Enterprise  
 **Focus:** Enterprise SaaS Standardization & Visual Excellence
 
 ## 💎 Global UI Standardization
 
-### 🌑 Premium Sidebar Transformation
+### 🌑 Enterprise Sidebar Transformation
 - **Thematic Core:** Transitioned the sidebar to a Deep Emerald theme (`bg-emerald-900`) for high-impact visual anchoring.
 - **Professional Iconography:** Replaced all legacy emojis with **Professional SVG Heroicons**.
 - **High-Contrast Active States:** Current pages now feature a glowing `bg-emerald-800` state with pure white typography.
 - **Refined Branding:** Unified the "🥗 GiziTrack" logo across the sidebar and global application components.
 
 ### 🎨 60-30-10 Design System Implementation
-- **60% Dominance:** Unified background to a soft `bg-gray-50`. Content now lives in "Premium Cards" with `rounded-2xl`, `border-gray-100`, and soft shadows.
+- **60% Dominance:** Unified background to a soft `bg-gray-50`. Content now lives in "Enterprise Cards" with `rounded-2xl`, `border-gray-100`, and soft shadows.
 - **30% Secondary:** Standardized typography. Headers use `text-gray-800` (Bold/Black), while meta-labels use `text-gray-400` (Uppercase/Black).
 - **10% Accent:** Designated Vibrant Emerald (`bg-emerald-600`) for all primary call-to-actions (Export, Add, Save).
 
