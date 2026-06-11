@@ -1,21 +1,35 @@
-# GiziTrack 🥗
+# 🥗 GiziTrack - Premium Logistics Ecosystem
 
-Platform distribusi pangan berbasis web untuk monitoring distribusi makanan bergizi ke sekolah.
-
----
-
-## Tech Stack
-
-- **Backend**: Laravel 11 (PHP 8.2+)
-- **Frontend**: Blade + Tailwind CSS v3 + Flowbite
-- **Auth**: Laravel Breeze
-- **Database**: MySQL
+**GiziTrack** adalah platform tata kelola dan monitoring distribusi makanan bergizi gratis yang dirancang dengan standar Enterprise SaaS. Sistem ini memastikan transparansi, akuntabilitas, dan efisiensi dalam rantai pasok logistik gizi dari Vendor hingga ke Sekolah.
 
 ---
 
-## Requirement (Wajib Terinstall)
+## 💎 Fitur Unggulan (Core Features)
 
-Sebelum mulai, pastikan software berikut sudah ada di komputermu:
+- **🛡️ Superadmin Impersonation**: Memungkinkan Super Admin masuk sebagai user lain (Vendor/Sekolah) untuk troubleshooting tanpa perlu password.
+- **📍 Live Tracking (GPS)**: Monitoring posisi armada pengiriman secara real-time dengan koordinat GPS presisi.
+- **📊 Analytics Dashboard**: Visualisasi data distribusi, tren porsi harian, dan top performa instansi menggunakan Chart.js.
+- **📑 Monthly Reporting**: Ekspor laporan distribusi dalam format **PDF (Premium Design)**, **Excel**, dan **CSV** dengan filter periode fleksibel.
+- **⚡ Emergency Intervention**: Fitur revisi dan pembatalan distribusi darurat oleh Admin dengan pencatatan audit trail (Request Changes).
+- **📱 Responsive UI**: Antarmuka modern yang dioptimalkan untuk perangkat mobile dan desktop.
+
+---
+
+## 🎨 Design System: GiziTrack 2.0 (Premium)
+
+Kami menerapkan aturan **60-30-10 Design System** untuk estetika profesional:
+
+| Elemen | Spesifikasi | Kode Tailwind |
+|---|---|---|
+| **Primary (60%)** | Clean Slate Background | `bg-gray-50` |
+| **Secondary (30%)** | Deep Emerald Sidebar | `bg-emerald-900` |
+| **Accent (10%)** | Vibrant Action Emerald | `bg-emerald-600` |
+| **Cards** | Premium Floating Card | `rounded-2xl border-gray-100 shadow-sm` |
+| **Typography** | Modern Figtree | `font-black text-gray-800` |
+
+---
+
+## 🛠️ Requirement (Wajib Terinstall)
 
 | Software | Versi Minimum | Cek dengan |
 |---|---|---|
@@ -27,227 +41,73 @@ Sebelum mulai, pastikan software berikut sudah ada di komputermu:
 
 ---
 
-## Cara Setup (Wajib Dibaca Semua Anggota)
+## 🚀 Cara Setup
 
-### 1. Clone Repository
-
+### 1. Persiapan Awal
 ```bash
 git clone https://github.com/khadafiadisaputra/Gizitrack-Kelompok-a.git
 cd Gizitrack-Kelompok-a
-```
-
-### 2. Install Dependency PHP
-
-```bash
 composer install
-```
-
-### 3. Install Dependency Frontend (termasuk Flowbite)
-
-```bash
 npm install
-```
-
-### 4. Buat File `.env`
-
-```bash
 cp .env.example .env
-```
-
-Lalu buka file `.env` yang baru dibuat, sesuaikan bagian ini:
-
-```env
-DB_DATABASE=gizitrack
-DB_USERNAME=root
-DB_PASSWORD=isi_password_mysql_kamu
-```
-
-### 5. Generate App Key
-
-```bash
 php artisan key:generate
 ```
 
-### 6. Buat Database
-
-Buka MySQL/phpMyAdmin, buat database baru bernama `gizitrack`.
-
-### 7. Jalankan Migration & Seeder
-
-```bash
-php artisan migrate --seed
+### 2. Konfigurasi Database
+Buat database bernama `gizitrack` di MySQL Anda, lalu sesuaikan `.env`:
+```env
+DB_DATABASE=gizitrack
+DB_USERNAME=root
+DB_PASSWORD=your_password
 ```
 
-Perintah ini akan membuat semua tabel dan mengisi akun testing awal.
-
-### 8. Build Assets Frontend
-
+### 3. Migrasi & Build
 ```bash
+php artisan migrate --seed
 npm run build
 ```
 
-> Atau untuk development dengan hot-reload:
-> ```bash
-> npm run dev
-> ```
-
-### 9. Jalankan Aplikasi
-
-Buka **dua terminal** secara bersamaan:
-
-**Terminal 1** (frontend compiler, biarkan jalan terus):
-```bash
-npm run dev
-```
-
-**Terminal 2** (server Laravel):
-```bash
-php artisan serve
-```
-
-Buka browser → `http://localhost:8000`
-
 ---
 
-## Akun Testing
+## 🔑 Akun Testing (Development Only)
 
 | Role | Email | Password |
 |---|---|---|
-| Admin | `admin@gizitrack.test` | `password` |
-| Vendor | `vendor@gizitrack.test` | `password` |
-| Sekolah | `sekolah@gizitrack.test` | `password` |
+| **Super Admin** | `superadmin@gizitrack.test` | `password` |
+| **Admin** | `admin@gizitrack.test` | `password` |
+| **Vendor** | `vendor@gizitrack.test` | `password` |
+| **Sekolah** | `sekolah@gizitrack.test` | `password` |
 
 ---
 
-## Struktur Folder Penting
+## 📂 Struktur Folder Penting
 
 ```
-app/Http/Controllers/
-├── Admin/           → Fitur khusus Admin
-├── Vendor/          → Fitur khusus Vendor
-├── Sekolah/         → Fitur khusus Sekolah
-└── Auth/            → Controller autentikasi (login, register, logout)
-
-app/Models/
-├── User.php         → Model user dengan role (admin/vendor/sekolah)
-├── Distribusi.php   → Model distribusi makanan
-├── Menu.php         → Model menu makanan
-└── Feedback.php     → Model feedback sekolah
+app/
+├── Exports/         → Logika ekspor Excel (Maatwebsite Excel)
+├── Http/Controllers/
+│   ├── Admin/       → Analytics & Global Distributions
+│   ├── SuperAdmin/  → Account Management & Impersonation
+│   ├── Vendor/      → Dashboard & Menu Management
+│   └── Sekolah/     → Monitoring & Feedback
+├── Models/          → Distribusi, User, Menu, Feedback, RequestChange
 
 resources/views/
-├── layouts/
-│   ├── sidebar.blade.php   → Layout utama (sidebar + topbar)
-│   ├── app.blade.php       → Layout default Laravel
-│   └── guest.blade.php     → Layout halaman guest (login/register)
-├── admin/          → Halaman Blade untuk Admin
-├── vendor/         → Halaman Blade untuk Vendor
-│   └── menu/       → CRUD menu vendor
-├── sekolah/        → Halaman Blade untuk Sekolah
-│   ├── distributions/  → Status & konfirmasi distribusi
-│   └── feedbacks/      → Kelola feedback
-└── distribusi/     → Halaman distribusi untuk vendor
-
-routes/
-└── web.php        → Semua route (dikelompokkan per role dengan middleware role)
-
-database/migrations/    → Schema database
-database/seeders/      → Data testing awal
+├── Admin/           → Portal Admin & Analytics
+├── super_admin/     → Portal Super Admin
+├── vendor/          → Portal Vendor
+├── sekolah/         → Portal Sekolah
+├── layouts/         → Sidebar Premium & App Wrappers
+└── auth/            → Modern Split-Screen Login Pages
 ```
 
 ---
 
-## Desain UI
+## 🛡️ Aturan Git & Standar Kode
 
-Project menggunakan design system GiziTrack:
-
-| Elemen | Style |
-|---|---|
-| Primary Color | Emerald-500 (`#10b981`) |
-| Layout | Sidebar kiri 240px + Main content |
-| Card | `bg-white rounded-xl border border-gray-100 shadow-sm` |
-| Button Primary | `bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg` |
-| Status Badge | Color-coded sesuai status distribusi |
+- **Prefix Commit**: `[GIZITRACK-XX]` (Sesuai ID Task)
+- **Standard**: Laravel Pint (PHP) & Tailwind Standalone
+- **Testing**: Gunakan **Laravel Dusk** untuk pengujian UI otomatis. Pastikan selector `dusk="..."` tidak dihapus saat modifikasi view.
 
 ---
-
-## Panduan Menambahkan Fitur (Untuk Anggota Tim)
-
-### Langkah Umum
-
-Misalnya kamu ditugaskan membuat fitur **Kelola Menu** (Vendor):
-
-**1. Buat Controller**
-```bash
-php artisan make:controller Vendor/MenuController --resource
-```
-
-**2. Tambahkan Route** di `routes/web.php`, di dalam group `vendor`:
-```php
-Route::resource('menu', MenuController::class);
-```
-
-**3. Buat Migration** (jika butuh tabel baru):
-```bash
-php artisan make:migration create_menus_table
-```
-
-**4. Buat Model**:
-```bash
-php artisan make:model Menu
-```
-
-**5. Buat View** di `resources/views/vendor/menu/` dengan layout sidebar:
-```blade
-@extends('layouts.sidebar')
-
-@section('title', 'Menu Saya')
-
-@section('content')
-{{-- konten halaman --}}
-@endsection
-```
-
----
-
-## Aturan Git (Wajib Diikuti)
-
-- ❌ Jangan pernah push langsung ke branch `main`
-- ✅ Buat branch baru untuk setiap fitur: `feature/nama-fitur`
-- ✅ Contoh: `feature/kelola-menu`, `feature/login-system`
-- ✅ Setelah selesai, buat Pull Request ke `main`
-
-### Format Pesan Commit
-
-Gunakan format: `jenis: deskripsi singkat`
-
-- `feat`: untuk fitur baru
-- `fix`: untuk perbaikan bug
-- `docs`: perubahan dokumentasi
-- `style`: perubahan tampilan (CSS/Layout) tanpa mengubah logika
-- `chore`: task rutin atau cleanup
-
-### Cara Buat Branch Baru (via Sourcetree)
-
-1. Klik **Branch** di toolbar atas
-2. Beri nama branch: `feature/nama-fiturmu`
-3. Klik **Create Branch**
-4. Kerjakan fiturmu di branch ini
-
----
-
-## Jika Ada Error Umum
-
-**`php artisan` tidak dikenali**
-→ Pastikan kamu sudah berada di dalam folder `gizitrack/`
-
-**Error `APP_KEY` kosong**
-→ Jalankan `php artisan key:generate`
-
-**Error koneksi database**
-→ Cek kembali `DB_USERNAME` dan `DB_PASSWORD` di file `.env`
-
-**Tampilan tidak ada style (putih polos)**
-→ Jalankan `npm run build` atau pastikan `npm run dev` sedang berjalan
-
-**Error Flowbite / JS**
-→ Hapus `node_modules` dan `package-lock.json`, lalu jalankan `npm install` ulang
+*GiziTrack - Healthy Food Logistics, Managed Professionally.*
