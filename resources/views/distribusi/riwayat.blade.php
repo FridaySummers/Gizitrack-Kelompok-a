@@ -130,7 +130,6 @@
                     $statusColors = [
                         'Pending' => 'amber',
                         'Dikirim' => 'blue',
-                        'Di Perjalanan' => 'blue',
                         'Diterima' => 'emerald',
                         'Diterima Sebagian' => 'orange',
                         'Komplain' => 'red',

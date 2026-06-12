@@ -55,6 +55,7 @@
                         <option value="Dikirim" {{ $distribusi->status == 'Dikirim' ? 'selected' : '' }}>Dikirim</option>
                         <option value="Diterima" {{ $distribusi->status == 'Diterima' ? 'selected' : '' }}>Diterima</option>
                         <option value="Diterima Sebagian" {{ $distribusi->status == 'Diterima Sebagian' ? 'selected' : '' }}>Diterima Sebagian</option>
+                        <option value="Komplain" {{ $distribusi->status == 'Komplain' ? 'selected' : '' }}>Komplain</option>
                         <option value="Kendala" {{ $distribusi->status == 'Kendala' ? 'selected' : '' }}>Kendala</option>
                     </select>
                 </div>

@@ -103,7 +103,6 @@
                             $statusMap = [
                                 'Pending' => ['color' => 'amber', 'icon' => 'clock'],
                                 'Dikirim' => ['color' => 'blue', 'icon' => 'truck'],
-                                'Di Perjalanan' => ['color' => 'blue', 'icon' => 'truck'],
                                 'Diterima' => ['color' => 'emerald', 'icon' => 'check'],
                                 'Diterima Sebagian' => ['color' => 'orange', 'icon' => 'alert'],
                                 'Komplain' => ['color' => 'red', 'icon' => 'x'],

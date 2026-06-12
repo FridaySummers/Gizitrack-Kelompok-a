@@ -260,7 +260,6 @@
                         const statusColors = {
                             'Pending': 'bg-amber-50 text-amber-700 border-amber-100',
                             'Dikirim': 'bg-blue-50 text-blue-700 border-blue-100',
-                            'Di Perjalanan': 'bg-blue-50 text-blue-700 border-blue-100',
                             'Terkirim': 'bg-emerald-50 text-emerald-700 border-emerald-100',
                             'Diterima': 'bg-green-50 text-green-700 border-green-100',
                             'Diterima Sebagian': 'bg-orange-50 text-orange-700 border-orange-100',

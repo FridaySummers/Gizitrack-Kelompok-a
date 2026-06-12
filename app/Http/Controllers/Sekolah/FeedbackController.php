@@ -12,12 +12,13 @@ use Illuminate\Support\Str;
 
 class FeedbackController extends Controller
 {
+    /*
     public function index()
     {
         $feedbacks = Feedback::with('distribution')
             ->latest()
             ->paginate(10);
-        
+
         return view('sekolah.feedbacks.index', compact('feedbacks'));
     }
 
@@ -26,37 +27,43 @@ class FeedbackController extends Controller
         $distributions = Distribusi::all();
         return view('sekolah.feedbacks.create', compact('distributions'));
     }
+    */
 
     public function store(Request $request)
     {
         $request->validate([
-            'distribution_id' => 'required|exists:distribusis,id',
-            'catatan' => 'required|string|min:3',
+            "distribusi_id" => "required|exists:distribusis,id",
+            "catatan" => "required|string|min:3",
         ]);
 
         Feedback::create([
-            'distribution_id' => $request->distribution_id,
-            'user_id' => $this->fallbackUserId(),
-            'catatan' => $request->catatan,
+            "distribusi_id" => $request->distribusi_id,
+            "user_id" => $this->fallbackUserId(),
+            "catatan" => $request->catatan,
         ]);
 
-        return redirect()->back()->with('success', 'Feedback berhasil dikirimkan!');
+        return redirect()
+            ->back()
+            ->with("success", "Feedback berhasil dikirimkan!");
     }
 
     protected function fallbackUserId(): int
     {
-        return User::value('id') ?? User::create([
-            'name' => 'System User',
-            'email' => 'system@example.com',
-            'password' => Hash::make(Str::random(32)),
-            'role' => 'sekolah',
-        ])->id;
+        return User::value("id") ??
+            User::create([
+                "name" => "System User",
+                "email" => "system@example.com",
+                "password" => Hash::make(Str::random(32)),
+                "role" => "sekolah",
+            ])->id;
     }
 
     public function destroy(Feedback $feedback)
     {
         $feedback->delete();
 
-        return redirect()->back()->with('success', 'Feedback berhasil dihapus!');
+        return redirect()
+            ->back()
+            ->with("success", "Feedback berhasil dihapus!");
     }
 }
