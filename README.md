@@ -8,7 +8,7 @@
 
 ---
 
-## 🚀 Fitur Utama (Sprint 2 Achievement)
+## 🚀 Fitur Utama
 
 Sistem ini telah melewati fase pengembangan intensif dengan fokus pada keamanan tingkat tinggi dan analisis data real-time:
 
@@ -84,5 +84,13 @@ Sistem ini telah melewati fase pengembangan intensif dengan fokus pada keamanan 
 
 ## 👥 Kelompok A - SI4710
 Sistem ini dikembangkan sebagai solusi inovatif dalam manajemen logistik pangan nasional.
+| Nama Anggota |
+| :--- |
+| **Muhammad Fadhilah** |
+| **Muhammad Khadafi Adi Saputra** |
+| **Kirana Amelia Maharani** |
+| **Sanjaya Fathur Rahman** |
+| **Adlan Kholaif Daibain** |
+| **Nadia Miranda** |
 
 &copy; 2026 **GiziTrack System**. Versi 1.0.0-Stable.
