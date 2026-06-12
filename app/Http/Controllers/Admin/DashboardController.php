@@ -10,8 +10,25 @@ class DashboardController extends Controller
     public function index()
     {
         $totalDistribusi = \App\Models\Distribusi::count();
-        $totalVendor = \App\Models\User::where("role", "vendor")->count();
+        $totalKomplain = \App\Models\Distribusi::whereIn("status", [
+            "Komplain",
+            "Kendala",
+        ])->count();
         $totalSekolah = \App\Models\User::where("role", "sekolah")->count();
+        $totalPorsi = \App\Models\Distribusi::sum("jumlah_porsi");
+
+        $successRate =
+            $totalDistribusi > 0
+                ? round(
+                        (\App\Models\Distribusi::whereIn("status", [
+                            "Diterima",
+                            "Diterima Sebagian",
+                        ])->count() /
+                            $totalDistribusi) *
+                            100,
+                        1,
+                    ) . "%"
+                : "0%";
 
         $distribusiTerbaru = \App\Models\Distribusi::latest()->take(5)->get();
 
@@ -27,8 +44,10 @@ class DashboardController extends Controller
             "admin.dashboard",
             compact(
                 "totalDistribusi",
-                "totalVendor",
+                "totalKomplain",
                 "totalSekolah",
+                "totalPorsi",
+                "successRate",
                 "distribusiTerbaru",
                 "recentUsers",
             ),

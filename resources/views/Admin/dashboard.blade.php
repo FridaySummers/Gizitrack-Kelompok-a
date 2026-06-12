@@ -30,28 +30,16 @@
         <p class="text-4xl font-black text-gray-800 mt-2" id="total-distribusi">{{ $totalDistribusi ?? 0 }}</p>
     </div>
 
-    {{-- Total Porsi --}}
+    {{-- Total Komplain --}}
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
         <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center group-hover:bg-emerald-100 transition-colors duration-300">
-                <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-1 4h1m2-8v2m0 2v2m0-2h2m-2 0H9"></path></svg>
+            <div class="w-12 h-12 bg-rose-50 rounded-xl flex items-center justify-center group-hover:bg-rose-100 transition-colors duration-300">
+                <svg class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
             </div>
-            <span class="text-[10px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">Partner</span>
+            <span class="text-[10px] font-black uppercase tracking-widest text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">Masalah</span>
         </div>
-        <p class="text-xs text-gray-500 font-black uppercase tracking-widest">Total Porsi</p>
-        <p class="text-4xl font-black text-gray-800 mt-2" id="total-porsi">{{ $totalPorsi ?? 0 }}</p>
-    </div>
-
-    {{-- Success Rate --}}
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
-        <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center group-hover:bg-purple-100 transition-colors duration-300">
-                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <span class="text-[10px] font-black uppercase tracking-widest text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg">Kualitas</span>
-        </div>
-        <p class="text-xs text-gray-500 font-black uppercase tracking-widest">Tingkat Keberhasilan</p>
-        <p class="text-4xl font-black text-gray-800 mt-2" id="success-rate">{{ $successRate ?? '0%' }}</p>
+        <p class="text-xs text-gray-500 font-black uppercase tracking-widest">Total Komplain</p>
+        <p class="text-4xl font-black text-gray-800 mt-2" id="total-komplain">{{ $totalKomplain ?? 0 }}</p>
     </div>
 
     {{-- Total Sekolah --}}
@@ -127,7 +115,7 @@
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
-                Export Excel
+                Export Data (CSV)
             </button>
         </form>
     </div>
@@ -309,7 +297,9 @@
                     // Update stats directly on the UI
                     if(document.getElementById('total-distribusi')) document.getElementById('total-distribusi').textContent = data.total_distribusi || 0;
                     if(document.getElementById('total-sekolah')) document.getElementById('total-sekolah').textContent = data.total_sekolah || 0;
-                    // Note: totalVendor is passed from controller, keeping it as is unless we add it to the API response
+                    if(document.getElementById('total-porsi')) document.getElementById('total-porsi').textContent = data.total_porsi || 0;
+                    if(document.getElementById('success-rate')) document.getElementById('success-rate').textContent = (data.success_rate || 0) + '%';
+                    if(document.getElementById('total-komplain')) document.getElementById('total-komplain').textContent = data.total_komplain || 0;
                 })
                 .catch(error => console.error('Error loading summary data:', error));
         }

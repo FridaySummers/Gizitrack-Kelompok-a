@@ -31,7 +31,7 @@
                           d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4">
                     </path>
                 </svg>
-                Export Excel
+                Export Data (CSV)
             </a>
         </div>
     </div>
