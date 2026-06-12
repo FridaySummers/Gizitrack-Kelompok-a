@@ -135,7 +135,7 @@
                 <div class="mt-20 flex flex-col items-center justify-center space-y-4">
                     <div class="h-px w-12 bg-gray-100"></div>
                     <p class="text-[10px] text-gray-300 uppercase font-black tracking-[0.2em] text-center">
-                        &copy; 2026 GiziTrack System &bull; Versi 1.0
+                        &copy; 2026 GiziTrack System &bull; created by Group A - SI4710 &bull; Versi 1.0
                     </p>
                 </div>
             </div>

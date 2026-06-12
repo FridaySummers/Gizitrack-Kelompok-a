@@ -31,10 +31,11 @@
     27 => 'Laravel\\Pail\\PailServiceProvider',
     28 => 'Laravel\\Sail\\SailServiceProvider',
     29 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    30 => 'Carbon\\Laravel\\ServiceProvider',
-    31 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    32 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    33 => 'App\\Providers\\AppServiceProvider',
+    30 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    31 => 'Carbon\\Laravel\\ServiceProvider',
+    32 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    33 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    34 => 'App\\Providers\\AppServiceProvider',
   ),
   'eager' => 
   array (
@@ -52,10 +53,11 @@
     11 => 'Fruitcake\\LaravelDebugbar\\ServiceProvider',
     12 => 'Laravel\\Dusk\\DuskServiceProvider',
     13 => 'Laravel\\Pail\\PailServiceProvider',
-    14 => 'Carbon\\Laravel\\ServiceProvider',
-    15 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    16 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    17 => 'App\\Providers\\AppServiceProvider',
+    14 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    15 => 'Carbon\\Laravel\\ServiceProvider',
+    16 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    17 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    18 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (
