@@ -25,6 +25,10 @@ class AnalyticsController extends Controller
                 "Pending",
             )->count(),
             "total_porsi" => Distribusi::sum("jumlah_porsi"),
+            "total_komplain" => Distribusi::whereIn("status", [
+                "Komplain",
+                "Kendala",
+            ])->count(),
 
             // PBI-24 Advanced Metrics
             "total_sekolah" => Distribusi::distinct("sekolah_tujuan")->count(

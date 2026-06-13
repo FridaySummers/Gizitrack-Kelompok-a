@@ -1,253 +1,109 @@
-# GiziTrack 🥗
+# 🥗 GiziTrack - Sistem Informasi Distribusi Pangan Terintegrasi
 
-Platform distribusi pangan berbasis web untuk monitoring distribusi makanan bergizi ke sekolah.
+[![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
 
----
-
-## Tech Stack
-
-- **Backend**: Laravel 11 (PHP 8.2+)
-- **Frontend**: Blade + Tailwind CSS v3 + Flowbite
-- **Auth**: Laravel Breeze
-- **Database**: MySQL
+**GiziTrack** adalah platform tata kelola dan monitoring distribusi makanan bergizi gratis yang dirancang dengan standar Enterprise SaaS. Sistem ini memastikan transparansi, akuntabilitas, dan efisiensi dalam seluruh rantai pasok logistik gizi, mulai dari pengelolaan menu oleh Vendor hingga verifikasi penerimaan oleh pihak Sekolah.
 
 ---
 
-## Requirement (Wajib Terinstall)
+## 🚀 Fitur Utama
 
-Sebelum mulai, pastikan software berikut sudah ada di komputermu:
+Sistem ini telah melewati fase pengembangan intensif dengan fokus pada keamanan tingkat tinggi, stabilitas backend, dan analisis data real-time:
 
-| Software | Versi Minimum | Cek dengan |
-|---|---|---|
-| PHP | 8.2+ | `php -v` |
-| Composer | 2.x | `composer -v` |
-| Node.js | 18+ | `node -v` |
-| NPM | 9+ | `npm -v` |
-| MySQL | 8.x | — |
-
----
-
-## Cara Setup (Wajib Dibaca Semua Anggota)
-
-### 1. Clone Repository
-
-```bash
-git clone https://github.com/khadafiadisaputra/Gizitrack-Kelompok-a.git
-cd Gizitrack-Kelompok-a
-```
-
-### 2. Install Dependency PHP
-
-```bash
-composer install
-```
-
-### 3. Install Dependency Frontend (termasuk Flowbite)
-
-```bash
-npm install
-```
-
-### 4. Buat File `.env`
-
-```bash
-cp .env.example .env
-```
-
-Lalu buka file `.env` yang baru dibuat, sesuaikan bagian ini:
-
-```env
-DB_DATABASE=gizitrack
-DB_USERNAME=root
-DB_PASSWORD=isi_password_mysql_kamu
-```
-
-### 5. Generate App Key
-
-```bash
-php artisan key:generate
-```
-
-### 6. Buat Database
-
-Buka MySQL/phpMyAdmin, buat database baru bernama `gizitrack`.
-
-### 7. Jalankan Migration & Seeder
-
-```bash
-php artisan migrate --seed
-```
-
-Perintah ini akan membuat semua tabel dan mengisi akun testing awal.
-
-### 8. Build Assets Frontend
-
-```bash
-npm run build
-```
-
-> Atau untuk development dengan hot-reload:
-> ```bash
-> npm run dev
-> ```
-
-### 9. Jalankan Aplikasi
-
-Buka **dua terminal** secara bersamaan:
-
-**Terminal 1** (frontend compiler, biarkan jalan terus):
-```bash
-npm run dev
-```
-
-**Terminal 2** (server Laravel):
-```bash
-php artisan serve
-```
-
-Buka browser → `http://localhost:8000`
+-   **🛡️ Keamanan & Autentikasi Berlapis**:
+    -   Sistem Middleware Role-Based Access Control (RBAC) yang sangat ketat dengan pembatasan *Super Admin Access*.
+    -   **2-Times Password Verification**: Proteksi ekstra untuk rute sensitif (pembuatan user, update profil).
+    -   **Audit Trail & Admin Interventions**: Arsitektur pelacakan jejak aktivitas serta fitur Intervensi Darurat untuk pembatalan/revisi entri data oleh Admin.
+-   **📊 Dashboard Analytics Real-Time**:
+    -   Visualisasi data menggunakan Chart.js untuk memantau tren distribusi, visualisasi timeline pengiriman, dan backend logic metrik KPI.
+-   **🏫 Pusat Resolusi Sekolah**:
+    -   Modul verifikasi penerimaan logistik (Diterima, Diterima Sebagian, Komplain) yang dibangun menggunakan isolasi *Database Transaction* (`try-catch`) untuk keamanan data.
+-   **📦 Manajemen Vendor & Logistik**:
+    -   Pengelolaan siklus CRUD menu gizi dengan integrasi form TKPI (kalkulasi kalori) dan otorisasi kustom via *Laravel Policy*.
+    -   Pelacakan koordinat harian secara waktu nyata (*Live Tracking*) serta otomatisasi manifes status pengiriman.
+-   **📄 Pelaporan Enterprise & Automated Testing**:
+    -   Ekspor data otomatis (PDF/CSV) untuk analisis eksternal.
+    -   Integrasi pengujian otomatis *End-to-End* skala penuh berbasis browser menggunakan **Laravel Dusk** untuk pengujian skenario positif dan negatif.
 
 ---
 
-## Akun Testing
+## 🛠️ Tech Stack
 
-| Role | Email | Password |
-|---|---|---|
-| Admin | `admin@gizitrack.test` | `password` |
-| Vendor | `vendor@gizitrack.test` | `password` |
-| Sekolah | `sekolah@gizitrack.test` | `password` |
-
----
-
-## Struktur Folder Penting
-
-```
-app/Http/Controllers/
-├── Admin/           → Fitur khusus Admin
-├── Vendor/          → Fitur khusus Vendor
-├── Sekolah/         → Fitur khusus Sekolah
-└── Auth/            → Controller autentikasi (login, register, logout)
-
-app/Models/
-├── User.php         → Model user dengan role (admin/vendor/sekolah)
-├── Distribusi.php   → Model distribusi makanan
-├── Menu.php         → Model menu makanan
-└── Feedback.php     → Model feedback sekolah
-
-resources/views/
-├── layouts/
-│   ├── sidebar.blade.php   → Layout utama (sidebar + topbar)
-│   ├── app.blade.php       → Layout default Laravel
-│   └── guest.blade.php     → Layout halaman guest (login/register)
-├── admin/          → Halaman Blade untuk Admin
-├── vendor/         → Halaman Blade untuk Vendor
-│   └── menu/       → CRUD menu vendor
-├── sekolah/        → Halaman Blade untuk Sekolah
-│   ├── distributions/  → Status & konfirmasi distribusi
-│   └── feedbacks/      → Kelola feedback
-└── distribusi/     → Halaman distribusi untuk vendor
-
-routes/
-└── web.php        → Semua route (dikelompokkan per role dengan middleware role)
-
-database/migrations/    → Schema database
-database/seeders/      → Data testing awal
-```
+-   **Core Framework**: Laravel 11 (PHP 8.2+)
+-   **Frontend Engine**: Tailwind CSS & Flowbite (Modern SaaS UI)
+-   **Database**: MySQL / MariaDB
+-   **Asset Bundler**: Vite
+-   **Library Tambahan**: DomPDF, Maatwebsite Excel, Chart.js, Alpine.js, Laravel Dusk.
 
 ---
 
-## Desain UI
+## ⚙️ Panduan Instalasi & Deployment
 
-Project menggunakan design system GiziTrack:
+### Prasyarat
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- MySQL Server
 
-| Elemen | Style |
-|---|---|
-| Primary Color | Emerald-500 (`#10b981`) |
-| Layout | Sidebar kiri 240px + Main content |
-| Card | `bg-white rounded-xl border border-gray-100 shadow-sm` |
-| Button Primary | `bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg` |
-| Status Badge | Color-coded sesuai status distribusi |
+### Langkah-langkah Instalasi
+1.  **Clone Repositori**:
+    ```bash
+    git clone https://github.com/FridaySummers/gizitrack-kelompok-a.git
+    cd gizitrack-kelompok-a
+    ```
 
----
+2.  **Instalasi Dependensi**:
 
-## Panduan Menambahkan Fitur (Untuk Anggota Tim)
+    ```bash
+    composer install
+    npm install
+    ```
 
-### Langkah Umum
+3.  **Konfigurasi Lingkungan**:
 
-Misalnya kamu ditugaskan membuat fitur **Kelola Menu** (Vendor):
+    Salin file `.env.example` menjadi `.env` dan sesuaikan kredensial database Anda.
 
-**1. Buat Controller**
-```bash
-php artisan make:controller Vendor/MenuController --resource
-```
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
-**2. Tambahkan Route** di `routes/web.php`, di dalam group `vendor`:
-```php
-Route::resource('menu', MenuController::class);
-```
+    > **Catatan:** Untuk production, pastikan `APP_ENV=production` dan `APP_DEBUG=false`.
 
-**3. Buat Migration** (jika butuh tabel baru):
-```bash
-php artisan make:migration create_menus_table
-```
+4.  **Migrasi & Seeding**:
 
-**4. Buat Model**:
-```bash
-php artisan make:model Menu
-```
+    ```bash
+    php artisan migrate --seed
+    ```
 
-**5. Buat View** di `resources/views/vendor/menu/` dengan layout sidebar:
-```blade
-@extends('layouts.sidebar')
+5.  **Optimasi Akhir (Production Ready)**:
 
-@section('title', 'Menu Saya')
+    Jalankan script optimasi yang telah disediakan untuk me-cache konfigurasi dan membangun aset frontend.
 
-@section('content')
-{{-- konten halaman --}}
-@endsection
-```
+    ```bash
+    chmod +x optimize.sh
+    ./optimize.sh
+    ```
 
 ---
 
-## Aturan Git (Wajib Diikuti)
+## 👥 Kelompok A - SI4710: Highlight Fitur & Kontribusi Tim
 
-- ❌ Jangan pernah push langsung ke branch `main`
-- ✅ Buat branch baru untuk setiap fitur: `feature/nama-fitur`
-- ✅ Contoh: `feature/kelola-menu`, `feature/login-system`
-- ✅ Setelah selesai, buat Pull Request ke `main`
+Sistem ini dikembangkan secara kolaboratif melalui pembagian *Product Backlog Item* (PBI) spesifik pada setiap anggota:
 
-### Format Pesan Commit
+| Anggota Tim & GitHub | Cakupan PBI | Fokus Kontribusi & Modul Utama |
+| :--- | :--- | :--- |
+| **Sanjaya Fathur Rahman**<br>[@FridaySummers](https://github.com/FridaySummers) | PBI 19-22, 36-38 | **UI Overhaul & Pusat Resolusi** — Merombak total visual UI dashboard/sidebar, mengembangkan arsitektur backend aman via *Database Transaction* untuk modul komplain sekolah, dan memimpin investigasi penanganan galat `SQLSTATE` & *Code Cleanup*. |
+| **Muhammad Khadafi Adi Saputra**<br>[@khadafiadisaputra](https://github.com/khadafiadisaputra) | PBI 11-14, 28-30, 32 | **Dashboard Analytics & Menu Vendor** — Implementasi CRUD Menu Vendor, form TKPI, otorisasi kustom (*Laravel Policy*), backend logic metrik KPI, grafik Chart.js, ekspor laporan, serta memimpin penyusunan otomatisasi pengujian browser. |
+| **Muhammad Fadhilah**<br>[@Fadilah170](https://github.com/Fadilah170) | PBI 7-10, 27, 43-44 | **Account Management & Auth** — Membangun fitur registrasi entitas dengan skema keamanan *2-Times Password Verification*, sistem peringkat/leaderboard skor vendor berbasis resolusi, manajemen CRUD akun oleh admin, dan penulisan berkas unit testing akun. |
+| **Adlan Kholaif Daibain**<br>[@Adlankh](https://github.com/Adlankh) | PBI 3-6, 40-42 | **Profile Management & Admin Interventions** — Fitur Intervensi Darurat (pembatalan/revisi entri data oleh Admin), CRUD admin operasional oleh Super Admin, arsitektur *Audit Trail* (`created_by`), dan pembatasan middleware Super Admin Access. |
+| **Kirana Amelia Maharani**<br>[@kiranaameliaa](https://github.com/kiranaameliaa) | PBI 17-18, 33-35 | **Logistics & Request Change** — Mengembangkan fitur pelacakan harian secara waktu nyata (*live tracking*), otomatisasi manifes status pengiriman (Otomatis Dikirim), sistem *Request Change* menu dari sisi vendor, dan riwayat logistik. |
+| **Nadia Miranda**<br>[@Nadiamiranda07](https://github.com/Nadiamiranda07) | PBI 16, 37-39 | **Dashboard Monitoring & Visual Timeline** — Stabilisasi komponen visual, perancangan dashboard monitoring performa distribusi, visualisasi timeline pengiriman di halaman sekolah, serta pembaruan UI harian pada panel vendor. |
 
-Gunakan format: `jenis: deskripsi singkat`
-
-- `feat`: untuk fitur baru
-- `fix`: untuk perbaikan bug
-- `docs`: perubahan dokumentasi
-- `style`: perubahan tampilan (CSS/Layout) tanpa mengubah logika
-- `chore`: task rutin atau cleanup
-
-### Cara Buat Branch Baru (via Sourcetree)
-
-1. Klik **Branch** di toolbar atas
-2. Beri nama branch: `feature/nama-fiturmu`
-3. Klik **Create Branch**
-4. Kerjakan fiturmu di branch ini
+> **Automated Dusk Testing (Bersama):** Seluruh anggota tim berkontribusi dalam integrasi suite pengujian otomatis *End-to-End* berskala penuh berbasis browser menggunakan **Laravel Dusk** untuk memastikan seluruh rute PBI fungsional teruji secara aman.
 
 ---
 
-## Jika Ada Error Umum
-
-**`php artisan` tidak dikenali**
-→ Pastikan kamu sudah berada di dalam folder `gizitrack/`
-
-**Error `APP_KEY` kosong**
-→ Jalankan `php artisan key:generate`
-
-**Error koneksi database**
-→ Cek kembali `DB_USERNAME` dan `DB_PASSWORD` di file `.env`
-
-**Tampilan tidak ada style (putih polos)**
-→ Jalankan `npm run build` atau pastikan `npm run dev` sedang berjalan
-
-**Error Flowbite / JS**
-→ Hapus `node_modules` dan `package-lock.json`, lalu jalankan `npm install` ulang
+&copy; 2026 **GiziTrack System**. Versi 1.0.0-Stable.

@@ -20,6 +20,7 @@ class Distribusi extends Model
         "tanggal_pengiriman",
         "status",
         "catatan_kendala",
+        "created_by",
     ];
 
     // Relationships

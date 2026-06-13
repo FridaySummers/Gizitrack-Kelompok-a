@@ -11,7 +11,14 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ["name", "email", "password", "role", "no_hp", "alamat"];
+    protected $fillable = [
+        "name",
+        "email",
+        "password",
+        "role",
+        "no_hp",
+        "alamat",
+    ];
 
     protected $hidden = ["password", "remember_token"];
 
@@ -19,8 +26,8 @@ class User extends Authenticatable
     {
         return [
             "email_verified_at" => "datetime",
-            "password"          => "hashed",
-            "role"              => UserRole::class,
+            "password" => "hashed",
+            "role" => UserRole::class,
         ];
     }
 
@@ -43,5 +50,20 @@ class User extends Authenticatable
     public function isSekolah(): bool
     {
         return $this->role === UserRole::Sekolah;
+    }
+
+    public function menus()
+    {
+        return $this->hasMany(Menu::class, "vendor_id");
+    }
+
+    public function distribusiAsVendor()
+    {
+        return $this->hasMany(Distribusi::class, "vendor_id");
+    }
+
+    public function distribusiAsSekolah()
+    {
+        return $this->hasMany(Distribusi::class, "sekolah_id");
     }
 }

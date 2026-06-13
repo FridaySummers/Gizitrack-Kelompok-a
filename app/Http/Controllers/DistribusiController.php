@@ -10,7 +10,10 @@ class DistribusiController extends Controller
 {
     public function index()
     {
-        $distribusis = Distribusi::paginate(10);
+        $distribusis = Distribusi::with(["requestChanges"])
+            ->latest()
+            ->paginate(10);
+
         return view("distribusi.index", compact("distribusis"));
     }
 
@@ -25,14 +28,25 @@ class DistribusiController extends Controller
             "sekolah_tujuan" => "required|string|max:255",
             "jumlah_porsi" => "required|integer|min:1",
             "tanggal_pengiriman" => "required|date",
+            "latitude" => "nullable|numeric",
+            "longitude" => "nullable|numeric",
         ]);
 
-        Distribusi::create([
+        $data = [
             "sekolah_tujuan" => $request->sekolah_tujuan,
             "jumlah_porsi" => $request->jumlah_porsi,
             "tanggal_pengiriman" => $request->tanggal_pengiriman,
             "status" => "Dikirim",
-        ]);
+            "latitude" => $request->latitude,
+            "longitude" => $request->longitude,
+            "created_by" => auth()->id(),
+        ];
+
+        if ($request->latitude || $request->longitude) {
+            $data["last_updated"] = now();
+        }
+
+        Distribusi::create($data);
 
         return redirect()
             ->route("vendor.distribusi.index")
@@ -53,6 +67,8 @@ class DistribusiController extends Controller
             "jumlah_porsi" => "required|integer|min:1",
             "status" => "required|string",
             "alasan_perubahan" => "nullable|string|max:500",
+            "latitude" => "nullable|numeric",
+            "longitude" => "nullable|numeric",
         ]);
 
         $distribusi = Distribusi::findOrFail($id);
@@ -67,12 +83,24 @@ class DistribusiController extends Controller
             ]);
         }
 
-        $distribusi->update([
+        $data = [
             "tanggal_pengiriman" => $request->tanggal_pengiriman,
             "sekolah_tujuan" => $request->sekolah_tujuan,
             "jumlah_porsi" => $request->jumlah_porsi,
             "status" => $request->status,
-        ]);
+            "latitude" => $request->latitude,
+            "longitude" => $request->longitude,
+        ];
+
+        // Track last_updated if coordinates changed
+        if (
+            $distribusi->latitude != $request->latitude ||
+            $distribusi->longitude != $request->longitude
+        ) {
+            $data["last_updated"] = now();
+        }
+
+        $distribusi->update($data);
 
         return redirect()
             ->route("vendor.distribusi.index")
