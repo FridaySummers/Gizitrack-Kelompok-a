@@ -53,6 +53,7 @@
                             <option value="Dikirim" @selected($d->status === 'Dikirim')>Dikirim</option>
                             <option value="Diterima" @selected($d->status === 'Diterima')>Diterima</option>
                             <option value="Diterima Sebagian" @selected($d->status === 'Diterima Sebagian')>Diterima Sebagian</option>
+                            <option value="Komplain" @selected($d->status === 'Komplain')>Komplain</option>
                             <option value="Kendala" @selected($d->status === 'Kendala')>Kendala</option>
                         </select>
                     </div>

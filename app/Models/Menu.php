@@ -11,10 +11,15 @@ class Menu extends Model
 
     // Tambahin ini biar Laravel izinin input data ke kolom-kolom ini
     protected $fillable = [
-        'name',
-        'description',
-        'calories',
-        'price',
-        'vendor_id', 
+        "name",
+        "description",
+        "calories",
+        "price",
+        "vendor_id",
     ];
+
+    public function vendor()
+    {
+        return $this->belongsTo(User::class, "vendor_id");
+    }
 }

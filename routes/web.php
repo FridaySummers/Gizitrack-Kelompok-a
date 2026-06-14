@@ -42,9 +42,9 @@ Route::middleware(["auth", "role:vendor,sekolah"])->group(function () {
     Route::get("/profile", [ProfileController::class, "edit"])->name(
         "profile.edit",
     );
-    Route::patch("/profile", [ProfileController::class, "update"])->name(
-        "profile.update",
-    );
+    Route::patch("/profile", [ProfileController::class, "update"])
+        ->middleware("password.confirm")
+        ->name("profile.update");
 });
 
 // ── 4. SUPER ADMIN ────────────────────────────────────────────────
@@ -52,9 +52,12 @@ Route::middleware(["auth", "role:super_admin"])
     ->prefix("super-admin")
     ->name("super_admin.")
     ->group(function () {
-        Route::resource("users", SuperAdminUserController::class)->except([
-            "show",
-        ]);
+        Route::resource("users", SuperAdminUserController::class)
+            ->except(["show"])
+            ->middleware([
+                "create" => "password.confirm",
+                "store" => "password.confirm",
+            ]);
 
         // Impersonation: Take session
         Route::get("impersonate/{user}", [
@@ -132,7 +135,12 @@ Route::middleware(["auth", "role:admin"])
     ->prefix("admin")
     ->name("admin.")
     ->group(function () {
-        Route::resource("users", AdminUserController::class)->except(["show"]);
+        Route::resource("users", AdminUserController::class)
+            ->except(["show"])
+            ->middleware([
+                "create" => "password.confirm",
+                "store" => "password.confirm",
+            ]);
     });
 
 // ── 7. VENDOR ─────────────────────────────────────────────────────

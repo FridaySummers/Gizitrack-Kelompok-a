@@ -39,6 +39,7 @@ class DistribusiController extends Controller
             "status" => "Dikirim",
             "latitude" => $request->latitude,
             "longitude" => $request->longitude,
+            "created_by" => auth()->id(),
         ];
 
         if ($request->latitude || $request->longitude) {

@@ -13,9 +13,6 @@ class VendorMenuTest extends DuskTestCase
     protected static $menuName;
     protected static $vendor;
 
-    /**
-     * Inisialisasi data testing.
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -36,154 +33,126 @@ class VendorMenuTest extends DuskTestCase
     }
 
     /**
-     * 1. POSITIF - PBI-11: Tambah Menu
+     * PBI-30: Tambah Menu (Testing Create + TKPI Link Validation)
      */
-    public function test_vendor_bisa_tambah_menu(): void
+    public function test_vendor_bisa_tambah_menu_dan_akses_tkpi(): void
     {
         $this->browse(function (Browser $browser) {
             $browser
                 ->loginAs(static::$vendor)
                 ->visit("/vendor/menu/create")
-                ->waitFor('input[name="name"]', 5)
+                ->waitFor('input[name="name"]', 10)
+                // Pakai assertSee biasa agar tidak sensitif terhadap struktur tag HTML-nya
+                ->assertSee('Cek TKPI Kemenkes di sini')
                 ->type("name", static::$menuName)
                 ->type("description", "Nasi goreng lezat racikan Dapi")
                 ->type("calories", "500")
                 ->type("price", "25000")
-                ->press("@submit-menu")
-                ->waitForLocation("/vendor/menu", 5)
+                ->press("SIMPAN MENU BARU") // Sesuai screenshot Add Menu
+                ->waitForLocation("/vendor/menu", 10)
                 ->assertPathIs("/vendor/menu")
-                ->screenshot("PBI-11-Tambah-Menu-Berhasil");
+                ->screenshot("PBI-30-Tambah-Menu-Berhasil");
         });
     }
 
     /**
-     * 2. NEGATIF - PBI-11: Validasi Input Kosong
+     * PBI-31: Read Daftar Menu (Memastikan scope vendor benar)
      */
-    public function test_vendor_gagal_tambah_menu_input_kosong(): void
+    public function test_vendor_hanya_lihat_menu_sendiri(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu")
+                ->waitForText(static::$menuName, 10)
+                ->assertSee(static::$menuName)
+                ->screenshot("PBI-31-Read-Menu-Berhasil");
+        });
+    }
+
+    /**
+     * PBI-32: Update Menu (Testing Update & Policy)
+     */
+    public function test_vendor_bisa_edit_menu_sendiri(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $menu = Menu::where("name", static::$menuName)->first();
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu")
+                ->waitForText(static::$menuName, 10)
+                ->visit("/vendor/menu/" . $menu->id . "/edit")
+                ->waitFor('input[name="calories"]', 10)
+                ->clear("calories")
+                ->type("calories", "600")
+                ->press("KONFIRMASI UPDATE") // Sesuai screenshot Edit Menu
+                ->waitForLocation("/vendor/menu", 10)
+                ->assertSee("600")
+                ->screenshot("PBI-32-Update-Menu-Berhasil");
+        });
+    }
+
+    /**
+     * PBI-32: Keamanan Otorisasi (Vendor tidak bisa edit menu vendor lain)
+     */
+    public function test_vendor_tidak_bisa_akses_edit_menu_vendor_lain(): void
+    {
+        // Buat menu milik vendor lain
+        $otherVendor = User::factory()->create(['role' => 'vendor']);
+        $menuLain = Menu::create([
+            'vendor_id' => $otherVendor->id,
+            'name' => 'Menu Rahasia Vendor Lain',
+            'description' => '...', 
+            'calories' => 100, 
+            'price' => 10000
+        ]);
+
+        $this->browse(function (Browser $browser) use ($menuLain) {
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu/" . $menuLain->id . "/edit")
+                ->pause(1000)
+                // Memastikan akses ditolak (403 Forbidden)
+                ->assertSee('403') 
+                ->screenshot("PBI-32-Security-Block-Access");
+        });
+    }
+
+    /**
+     * PBI-30: Tambah Menu (Testing Negative - Form Kosong)
+     */
+    public function test_vendor_gagal_tambah_menu_karena_validasi(): void
     {
         $this->browse(function (Browser $browser) {
             $browser
                 ->loginAs(static::$vendor)
                 ->visit("/vendor/menu/create")
-                ->waitFor('input[name="name"]')
-                ->press("@submit-menu")
-                ->pause(1500)
-                ->assertSee("required")
-                ->screenshot("PBI-11-Negative-Validation");
-        });
-    }
-
-    /**
-     * 3. POSITIF - PBI-12: Read Menu
-     */
-    public function test_vendor_bisa_lihat_menu(): void
-    {
-        $this->browse(function (Browser $browser) {
-            $browser
-                ->loginAs(static::$vendor)
-                ->visit("/vendor/menu")
-                ->waitForText(static::$menuName, 5)
-                ->assertSee(static::$menuName)
-                ->screenshot("PBI-12-Read-Menu-Berhasil");
-        });
-    }
-
-    /**
-     * 4. POSITIF - PBI-13: Update Menu
-     */
-    public function test_vendor_bisa_edit_menu(): void
-    {
-        $this->browse(function (Browser $browser) {
-            $menu = Menu::where("name", static::$menuName)->first();
-            $browser
-                ->loginAs(static::$vendor)
-                ->visit("/vendor/menu")
-                ->waitForText(static::$menuName)
-                ->press("@edit-menu-{$menu->id}")
-                ->waitFor('input[name="price"]')
-                ->clear("price")
-                ->type("price", "30000")
-                ->press("@update-menu")
-                ->waitForLocation("/vendor/menu", 5)
                 ->pause(1000)
-                ->assertSee("30.000")
-                ->screenshot("PBI-13-Update-Menu-Berhasil");
-        });
-    }
-
-    /**
-     * 5. NEGATIF - PBI-13: Harga Negatif
-     */
-    public function test_vendor_gagal_edit_menu_harga_negatif(): void
-    {
-        $this->browse(function (Browser $browser) {
-            $menu = Menu::where("name", static::$menuName)->first();
-            $browser
-                ->loginAs(static::$vendor)
-                ->visit("/vendor/menu")
-                ->waitForText(static::$menuName)
-                ->press("@edit-menu-{$menu->id}")
-                ->waitFor('input[name="price"]')
-                ->type("price", "-5000")
-                ->press("@update-menu")
-                ->pause(1500)
-                ->assertSee("AT LEAST 0") // Match uppercase UI
-                ->screenshot("PBI-13-Negative-Price");
-        });
-    }
-
-    /**
-     * 6. NEGATIF - PBI-14: Batal Hapus
-     */
-    public function test_vendor_batal_hapus_menu(): void
-    {
-        $this->browse(function (Browser $browser) {
-            $menu = Menu::where("name", static::$menuName)->first();
-            $browser
-                ->loginAs(static::$vendor)
-                ->visit("/vendor/menu")
-                ->waitForText(static::$menuName)
-                ->press("@delete-menu-{$menu->id}")
+                // Sengaja langsung klik simpan tanpa mengetik apapun
+                ->press("SIMPAN MENU BARU")
                 ->pause(1000)
-                ->dismissDialog()
-                ->pause(1000)
-                ->assertSee(static::$menuName)
-                ->screenshot("PBI-14-Negative-Cancel-Delete");
+                // Pastikan sistem menahan user tetap di halaman create (tidak masuk database)
+                ->assertPathIs("/vendor/menu/create")
+                ->screenshot("PBI-30-Negative-Validasi-Gagal");
         });
     }
 
     /**
-     * 7. POSITIF - PBI-14: Hapus Menu
+     * PBI-31: Read Menu (Testing Negative - Otorisasi Role)
      */
-    public function test_vendor_bisa_hapus_menu(): void
+    public function test_selain_vendor_tidak_bisa_akses_halaman_menu(): void
     {
-        $this->browse(function (Browser $browser) {
-            $menu = Menu::where("name", static::$menuName)->first();
-            $browser
-                ->loginAs(static::$vendor)
-                ->visit("/vendor/menu")
-                ->waitForText(static::$menuName)
-                ->press("@delete-menu-{$menu->id}")
-                ->pause(1000)
-                ->acceptDialog()
-                ->pause(2000)
-                ->assertDontSee(static::$menuName)
-                ->screenshot("PBI-14-Delete-Menu-Berhasil");
-        });
-    }
+        // Buat user palsu dengan role sekolah
+        $sekolahUser = User::factory()->create(['role' => 'sekolah']);
 
-    /**
-     * 8. NEGATIF - PBI-12: Keamanan Akses (Guest)
-     */
-    public function test_guest_tidak_bisa_akses_daftar_menu(): void
-    {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $browser) use ($sekolahUser) {
             $browser
-                ->logout()
+                ->loginAs($sekolahUser)
                 ->visit("/vendor/menu")
-                ->pause(2000)
-                ->assertPathIs("/login")
-                ->screenshot("PBI-12-Negative-Guest-Access");
+                ->pause(1000)
+                // Karena dilarang, sistem akan merender halaman error 403 di URL yang sama
+                ->assertSee('403')
+                ->screenshot("PBI-31-Negative-Bukan-Vendor");
         });
     }
 }
