@@ -117,4 +117,42 @@ class VendorMenuTest extends DuskTestCase
                 ->screenshot("PBI-32-Security-Block-Access");
         });
     }
+
+    /**
+     * PBI-30: Tambah Menu (Testing Negative - Form Kosong)
+     */
+    public function test_vendor_gagal_tambah_menu_karena_validasi(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser
+                ->loginAs(static::$vendor)
+                ->visit("/vendor/menu/create")
+                ->pause(1000)
+                // Sengaja langsung klik simpan tanpa mengetik apapun
+                ->press("SIMPAN MENU BARU")
+                ->pause(1000)
+                // Pastikan sistem menahan user tetap di halaman create (tidak masuk database)
+                ->assertPathIs("/vendor/menu/create")
+                ->screenshot("PBI-30-Negative-Validasi-Gagal");
+        });
+    }
+
+    /**
+     * PBI-31: Read Menu (Testing Negative - Otorisasi Role)
+     */
+    public function test_selain_vendor_tidak_bisa_akses_halaman_menu(): void
+    {
+        // Buat user palsu dengan role sekolah
+        $sekolahUser = User::factory()->create(['role' => 'sekolah']);
+
+        $this->browse(function (Browser $browser) use ($sekolahUser) {
+            $browser
+                ->loginAs($sekolahUser)
+                ->visit("/vendor/menu")
+                ->pause(1000)
+                // Karena dilarang, sistem akan merender halaman error 403 di URL yang sama
+                ->assertSee('403')
+                ->screenshot("PBI-31-Negative-Bukan-Vendor");
+        });
+    }
 }
