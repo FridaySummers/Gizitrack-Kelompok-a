@@ -2,71 +2,50 @@
 
 namespace Tests\Browser;
 
-use App\Models\User;
 use Laravel\Dusk\Browser;
-use Tests\DuskTestCase;
 
-/**
- * TC.User.Create.001
- * Menguji penambahan data user dengan data valid (Nama, Email, Role, Password, Konfirmasi Password)
- * Type: Positive
- */
-class UserCreatePositiveTest extends DuskTestCase
+class UserCreatePositiveTest extends AdminUserManagementDuskTestCase
 {
-    /**
-     * TC.User.Create.001 - Admin berhasil menambah user baru dengan data valid.
-     */
     public function testCreateUserWithValidData(): void
     {
-        // Precondition: admin sudah login dan berada di halaman /admin/users
-        $admin =
-            User::where("role", "admin")->first() ??
-            User::create([
-                "name" => "Admin Test",
-                "email" => "admin_create_pos_" . uniqid() . "@test.com",
-                "password" => bcrypt("password123"),
-                "role" => "admin",
-            ]);
+        $admin = $this->seederAdmin();
+        $newName = 'Katering Sehat Baru';
+        $newEmail = 'vendor_baru_' . uniqid() . '@test.com';
 
-        $newName = "Vendor Dusk " . uniqid();
-        $newEmail = "vendor_dusk_" . uniqid() . "@test.com";
-
-        $this->browse(function (Browser $browser) use (
-            $admin,
-            $newName,
-            $newEmail,
-        ) {
-            // Step 1: Visit /admin/users — Halaman daftar user ditampilkan
+        $this->browse(function (Browser $browser) use ($admin, $newName, $newEmail) {
+            // Step 1
             $browser
                 ->loginAs($admin)
-                ->visit("/admin/users")
-                ->assertSee("Kelola Akun");
+                ->visit('/admin/users')
+                ->assertSee('Kelola Akun Vendor & Sekolah');
 
-            // Step 2: Click tombol "Tambah Akun" — Form create user ditampilkan
+            // Step 2
+            $browser->clickLink('Tambah Akun Baru');
+            $this->confirmPasswordIfRequired($browser);
+
+            // Step 3
             $browser
-                ->clickLink("Tambah Akun Baru")
-                ->assertSee("REGISTRASI AKUN BARU");
+                ->assertSee('Registrasi Akun Baru')
+                ->assertPathIs('/admin/users/create');
 
-            // Step 3: Type nama pada field name — Field name terisi
-            $browser->type("name", $newName);
+            // Step 4
+            $browser
+                ->type('name', $newName)
+                ->type('email', $newEmail)
+                ->select('role', 'vendor')
+                ->type('password', 'Password123!')
+                ->type('password_confirmation', 'Password123!');
 
-            // Step 4: Type email valid unik pada field email — Field email terisi
-            $browser->type("email", $newEmail);
+            // Step 5
+            $browser
+                ->press('@submit-user')
+                ->waitForLocation('/admin/users');
 
-            // Step 5: Select role "Admin" pada field role — Role berhasil dipilih
-            $browser->select("role", "admin");
-
-            // Step 6: Type password pada field password — Field password terisi
-            $browser->type("password", "Password123!");
-
-            // Step 7: Type password yang sama pada field password_confirmation
-            $browser->type("password_confirmation", "Password123!");
-
-            // Step 8: Click tombol "Simpan" — Data berhasil disimpan
-            $browser->press("@submit-user")->pause(1500);
-
-            // Step 9: AssertSee nama user di tabel — Data user muncul di list
-            $browser->assertPathIs("/admin/users")->assertSee($newName);
+            // Step 6
+            $browser
+                ->assertPathIs('/admin/users')
+                ->assertSee('Akun berhasil didaftarkan!')
+                ->assertSee($newName);
         });
     }
 }

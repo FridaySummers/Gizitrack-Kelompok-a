@@ -53,11 +53,16 @@ Route::middleware(["auth", "role:super_admin"])
     ->name("super_admin.")
     ->group(function () {
         Route::resource("users", SuperAdminUserController::class)
-            ->except(["show"])
-            ->middleware([
-                "create" => "password.confirm",
-                "store" => "password.confirm",
-            ]);
+            ->except(["show", "create", "store"]);
+            
+        Route::get("users/create", [SuperAdminUserController::class, "create"])
+            ->name("users.create")
+            ->middleware("password.confirm");
+            
+        Route::post("users", [SuperAdminUserController::class, "store"])
+            ->name("users.store")
+            ->middleware("password.confirm");
+
 
         // Impersonation: Take session
         Route::get("impersonate/{user}", [
@@ -136,11 +141,15 @@ Route::middleware(["auth", "role:admin"])
     ->name("admin.")
     ->group(function () {
         Route::resource("users", AdminUserController::class)
-            ->except(["show"])
-            ->middleware([
-                "create" => "password.confirm",
-                "store" => "password.confirm",
-            ]);
+            ->except(["show", "create", "store"]);
+            
+        Route::get("users/create", [AdminUserController::class, "create"])
+            ->name("users.create")
+            ->middleware("password.confirm");
+            
+        Route::post("users", [AdminUserController::class, "store"])
+            ->name("users.store")
+            ->middleware("password.confirm");
     });
 
 // ── 7. VENDOR ─────────────────────────────────────────────────────
