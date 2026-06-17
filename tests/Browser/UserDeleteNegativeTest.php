@@ -3,41 +3,20 @@
 namespace Tests\Browser;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Dusk\Browser;
-use Tests\DuskTestCase;
 
-/**
- * TC.User.Delete.002
- * Menguji batal hapus user pada popup konfirmasi
- * Type: Negative
- */
-class UserDeleteNegativeTest extends DuskTestCase
+class UserDeleteNegativeTest extends AdminUserManagementDuskTestCase
 {
-    /**
-     * TC.User.Delete.002 - Data user tidak terhapus setelah membatalkan konfirmasi.
-     *
-     * Catatan implementasi:
-     * Tombol "Hapus" menggunakan native browser confirm() dialog via onsubmit attribute.
-     * Laravel Dusk menangani pembatalan dialog ini dengan ->dismissDialog() setelah klik tombol.
-     */
     public function testDeleteUserCancelledByDialog(): void
     {
-        // Precondition: admin sudah login dan terdapat data user
-        $admin =
-            User::where("role", "admin")->first() ??
-            User::create([
-                "name" => "Admin Test",
-                "email" => "admin_del_neg_" . uniqid() . "@test.com",
-                "password" => bcrypt("password123"),
-                "role" => "admin",
-            ]);
+        $admin = $this->seederAdmin();
 
-        // Buat user yang akan dicoba dihapus namun dibatalkan
         $userToKeep = User::create([
-            "name" => "User To Keep Neg",
-            "email" => "user_del_neg_" . uniqid() . "@test.com",
-            "password" => bcrypt("password123"),
-            "role" => "sekolah",
+            'name' => 'User To Keep Neg',
+            'email' => 'user_del_neg_' . uniqid() . '@test.com',
+            'password' => Hash::make('password123'),
+            'role' => 'sekolah',
         ]);
 
         $keptName = $userToKeep->name;
@@ -47,22 +26,25 @@ class UserDeleteNegativeTest extends DuskTestCase
             $userToKeep,
             $keptName,
         ) {
-            // Step 1: Visit /admin/users — Halaman daftar user ditampilkan
+            // Step 1
             $browser
                 ->loginAs($admin)
-                ->visit("/admin/users")
-                ->assertSee("Kelola Akun");
+                ->visit('/admin/users')
+                ->assertSee('User To Keep Neg');
 
-            // Step 2: Click tombol "Hapus" — Muncul popup konfirmasi (native dialog)
-            // Step 3: AssertSee "Yakin ingin menghapus akun" — pesan tampil di dialog
-            // Step 4: Click tombol "Batal" — Dismiss native confirm dialog (Cancel)
-            $browser->press("@delete-user-{$userToKeep->id}");
+            // Step 2
+            $browser
+                ->press('@delete-user-' . $userToKeep->id)
+                ->dismissDialog()
+                ->pause(1000);
 
-            // Dismiss dialog = klik "Cancel" / "Batal" pada native confirm()
-            $browser->dismissDialog()->pause(1000);
+            // Step 3
+            $browser
+                ->assertPathIs('/admin/users')
+                ->assertSee($keptName);
 
-            // Step 5: AssertSee nama user — Data masih ada di tabel (tidak terhapus)
-            $browser->assertPathIs("/admin/users")->assertSee($keptName);
+            // Step 4
+            $browser->assertDontSee('Akun berhasil dihapus!');
         });
     }
 }

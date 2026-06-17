@@ -2,58 +2,29 @@
 
 namespace Tests\Browser;
 
-use App\Models\User;
 use Laravel\Dusk\Browser;
-use Tests\DuskTestCase;
 
-/**
- * TC.User.Read.002
- * Menguji pencarian user yang tidak ditemukan
- * Type: Negative
- *
- * Catatan: Halaman /admin/users tidak memiliki fitur pencarian (search field).
- * Test ini memverifikasi bahwa jika tidak ada data user sama sekali, tabel
- * menampilkan pesan "Belum ada akun vendor atau sekolah" (pesan @empty dari blade).
- * Jika fitur search ditambahkan di kemudian hari, test ini perlu diperbarui
- * sesuai implementasi search tersebut.
- */
-class UserReadNegativeTest extends DuskTestCase
+class UserReadNegativeTest extends AdminUserManagementDuskTestCase
 {
-    /**
-     * TC.User.Read.002 - Halaman menampilkan pesan ketika tidak ada data user.
-     *
-     * Karena fitur search belum diimplementasikan di halaman /admin/users,
-     * test ini memverifikasi pesan empty state yang ditampilkan blade ketika
-     * tidak ada data user yang tersedia.
-     */
-    public function testReadUserListShowsEmptyMessage(): void
+    public function testVendorCannotAccessAdminUserList(): void
     {
-        // Precondition: admin sudah login
-        // Buat admin khusus untuk test ini agar tabel hanya berisi admin tersebut
-        // dan tidak ada user lain (vendor/sekolah)
-        $admin = User::where('role', 'admin')->first()
-            ?? User::create([
-                'name'     => 'Admin Test',
-                'email'    => 'admin_read_neg_' . uniqid() . '@test.com',
-                'password' => bcrypt('password123'),
-                'role'     => 'admin',
-            ]);
+        $vendor = $this->seederVendor();
+        $this->seederAdmin();
 
-        $this->browse(function (Browser $browser) use ($admin) {
+        $this->browse(function (Browser $browser) use ($vendor) {
+            // Step 1
+            $browser->loginAs($vendor)->visit('/admin/users');
 
-            // Step 1: Visit /admin/users — Halaman daftar user ditampilkan
-            $browser->loginAs($admin)
-                ->visit('/admin/users')
-                ->assertSee('Kelola Akun');
+            // Step 2
+            $browser->assertSee('403')->assertSee('Otoritas Ditolak');
 
-            // Step 2 & 3: Karena tidak ada fitur search, verifikasi halaman tampil dengan benar
-            // Jika tabel kosong (tidak ada user selain admin), tampil pesan empty state
-            // AssertSee "Belum ada akun vendor atau sekolah" atau verifikasi tabel ditampilkan
-            $browser->assertPresent('table');
+            // Step 3
+            $browser
+                ->assertDontSee('Kelola Akun Vendor & Sekolah')
+                ->assertDontSee('Tambah Akun Baru');
 
-            // Jika tidak ada data vendor/sekolah, pesan empty state akan tampil
-            // Halaman tetap berjalan normal tanpa error
-            $browser->assertPathIs('/admin/users');
+            // Step 4
+            $browser->assertDontSee('Dapur Nusantara');
         });
     }
 }

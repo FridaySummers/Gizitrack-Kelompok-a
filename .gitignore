@@ -11,6 +11,7 @@
 .env.production
 .phpactor.json
 .phpunit.result.cache
+/database/dusk.sqlite
 Homestead.json
 Homestead.yaml
 npm-debug.log

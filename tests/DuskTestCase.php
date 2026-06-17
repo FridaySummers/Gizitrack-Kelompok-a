@@ -31,6 +31,7 @@ abstract class DuskTestCase extends BaseTestCase
             $this->shouldStartMaximized() ? '--start-maximized' : '--window-size=1280,800',
             '--disable-search-engine-choice-screen',
             '--disable-smooth-scrolling',
+            '--incognito',
         ])->unless($this->hasHeadlessDisabled(), function (Collection $items) {
             return $items->merge([
                 '--disable-gpu',

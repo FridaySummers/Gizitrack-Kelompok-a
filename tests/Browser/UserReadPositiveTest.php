@@ -2,53 +2,51 @@
 
 namespace Tests\Browser;
 
-use App\Models\User;
 use Laravel\Dusk\Browser;
-use Tests\DuskTestCase;
 
-/**
- * TC.User.Read.001
- * Menguji tampilan daftar user
- * Type: Positive
- */
-class UserReadPositiveTest extends DuskTestCase
+class UserReadPositiveTest extends AdminUserManagementDuskTestCase
 {
-    /**
-     * TC.User.Read.001 - Data user ditampilkan di tabel.
-     */
     public function testReadUserList(): void
     {
-        // Precondition: admin sudah login dan terdapat data user
-        $admin = User::where('role', 'admin')->first()
-            ?? User::create([
-                'name'     => 'Admin Test',
-                'email'    => 'admin_read_pos_' . uniqid() . '@test.com',
-                'password' => bcrypt('password123'),
-                'role'     => 'admin',
-            ]);
+        $admin = $this->seederAdmin();
+        $this->seederVendor();
+        $this->seederSekolah();
 
-        // Pastikan ada minimal satu data user lain di database
-        $sampleUser = User::where('role', '!=', 'admin')->first()
-            ?? User::create([
-                'name'     => 'Sample Vendor',
-                'email'    => 'sample_vendor_' . uniqid() . '@test.com',
-                'password' => bcrypt('password123'),
-                'role'     => 'vendor',
-            ]);
-
-        $this->browse(function (Browser $browser) use ($admin, $sampleUser) {
-
-            // Step 1: Visit /admin/users — Halaman daftar user ditampilkan
-            $browser->loginAs($admin)
+        $this->browse(function (Browser $browser) use ($admin) {
+            // Step 1
+            $browser
+                ->loginAs($admin)
                 ->visit('/admin/users')
-                ->assertSee('Kelola Akun');
+                ->waitFor('table');
 
-            // Step 2: Wait for table users — Tabel user muncul
-            $browser->waitFor('table');
+            // Step 2
+            $browser
+                ->assertSee('Kelola Akun Vendor & Sekolah')
+                ->assertSee('Nama Pengguna')
+                ->assertSee('Role Akses');
 
-            // Step 3: AssertSee data user (nama/email/role) — Data user terlihat di tabel
-            $browser->assertSee($sampleUser->name)
-                ->assertSee($sampleUser->email);
+            // Step 3
+            $browser
+                ->assertSee('Dapur Nusantara')
+                ->assertSee('vendor@gizitrack.test')
+                ->assertSee('Vendor');
+
+            // Step 4
+            $browser
+                ->assertSee('SDN 01 Pagi')
+                ->assertSee('sekolah@gizitrack.test')
+                ->assertSee('Sekolah');
+
+            // Step 5
+            $browser
+                ->assertSee('Admin GiziTrack')
+                ->assertSee('Akun Anda')
+                ->assertSee('Locked');
+
+            // Step 6
+            $browser
+                ->assertPathIs('/admin/users')
+                ->assertDontSee('Super Admin');
         });
     }
 }
